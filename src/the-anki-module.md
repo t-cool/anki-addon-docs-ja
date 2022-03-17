@@ -1,16 +1,16 @@
-# The 'anki' Module
+# 'anki' モジュール
 
-All access to your collection and associated media go through a Python module called `anki`, located in `pylib/anki` in Anki's source repo.
+コレクションや関連メディアへのアクセスは、Anki のソースレポジトリの `pylib/anki` にある `anki` という Python モジュールを通して行われます。
 
-## The Collection
+## コレクション
 
-All operations on a collection file are accessed via a `Collection` object. The currently-open Collection is accessible via a global `mw.col`, where `mw` stands for `main window`. When using the `anki` module outside of Anki, you will need to create your own Collection object.
+コレクションファイルに対するすべての操作は `Collection` オブジェクトを介してアクセスされます。現在開いているコレクションは、グローバルな `mw.col` を介してアクセスできます。ここで `mw` は `main window` の略です。Anki の外部で `anki` モジュールを使用する場合は、独自のコレクションオブジェクトを作成する必要があります。
 
-Some basic examples of what you can do follow. Please note that you should put these in something like [testFunction()](./a-basic-addon.md). You can’t run them directly in an add-on, as add-ons are initialized during Anki startup, before any collection or profile has been loaded.
+以下に、いくつかの基本的な例を示します。これらは [testFunction()](./a-basic-addon.md) のような場所に記述する必要があることに注意してください。アドオンは Anki 起動時に、コレクションやプロファイルが読み込まれる前に初期化されるため、アドオンで直接実行することはできません。
 
-Also please note that accessing the collection directly can lead to the UI temporarily freezing if the operation doesn't complete quickly - in practice you would typically run the code below in a background thread.
+また、コレクションに直接アクセスすると、操作が迅速に完了しない場合、UI が一時的にフリーズする可能性があることに注意してください。
 
-**Get a due card:**
+**期限のカードを取得する:**
 
 ```python
 card = mw.col.sched.getCard()
@@ -18,13 +18,13 @@ if not card:
     # current deck is finished
 ```
 
-**Answer the card:**
+**カードに答える:**
 
 ```python
 mw.col.sched.answerCard(card, ease)
 ```
 
-**Edit a note (append " new" to the end of each field):**
+**ノートを編集する（各フィールドの末尾に new を付ける）:**
 
 ```python
 note = card.note()
@@ -33,13 +33,13 @@ for (name, value) in note.items():
 mw.col.update_note(note)
 ```
 
-**Get card IDs for notes with tag x:**
+**タグ x を持つノートのカードの ID を取得する:**
 
 ```python
 ids = mw.col.find_cards("tag:x")
 ```
 
-**Get question and answer for each of those ids:**
+**それぞれの ID に対応する質問と回答を取得する:**
 
 ```python
 for id in ids:
@@ -48,44 +48,45 @@ for id in ids:
     answer = card.answer()
 ```
 
-**Make reviews due tomorrow**
+**レビューの期限を明日にする**
 
 ```python
 ids = mw.col.find_cards("is:due")
 mw.col.sched.set_due_date(ids, "1")
 ```
 
-**Import a text file into the collection**
+**テキストファイルをコレクションにインポートする**
 
-This API is a mess, and will be updated soon.
+このAPIは混乱していて、近々更新される予定です。
 
 ```python
 from anki.importing import TextImporter
 file = u"/path/to/text.txt"
-# select deck
+# デッキを選択する
 deck_id = mw.col.decks.id("ImportDeck")
 mw.col.decks.select(deck_id)
-# anki defaults to the last note type used in the selected deck
+# ankiは選択されたデッキで最後に使用されたノートタイプをデフォルトとします
 notetype = mw.col.models.by_name("Basic")
 deck = mw.col.decks.get(deck_id)
 deck['mid'] = notetype['id']
 mw.col.decks.save(deck)
-# and puts cards in the last deck used by the note type
+# ノートタイプで最後に使用したデッキにカードを入れる
 mw.col.set_aux_notetype_config(
     notetype["id"], "lastDeck", deck_id
 )
 mw.col.models.save(m)
-# import into the collection
+# コレクションに取り込む
 ti = TextImporter(mw.col, file)
 ti.initMapping()
 ti.run()
 ```
 
-Almost every GUI operation has an associated function in anki, so any of the operations that Anki makes available can also be called in an add-on.
+ほぼすべてのGUI操作には Anki と関連する関数があり、Anki が利用可能な操作はすべてアドオンでも呼び出すことができます。
 
-## Reading/Writing Objects
 
-Most objects in Anki can be read and written via methods in pylib.
+## オブジェクトの読み取り/書き込み
+
+Anki のほとんどのオブジェクトは、pylib のメソッドで読み書きが可能です。
 
 ```python
 card = col.get_card(card_id)
@@ -123,61 +124,60 @@ notetype = col.models.by_name("Basic")
 ...
 ```
 
-You should prefer these methods over directly accessing the database, as they take care of marking items as requiring a sync, and they prevent some forms of invalid data from being written to the database.
+データベースに直接アクセスするよりも、これらのメソッドを使用した方が、同期が必要な項目をマークしたり、無効なデータがデータベースに書き込まれるのを防いだりすることができるからです。
 
-For locating specific cards and notes, col.find_cards() and col.find_notes() is useful.
+特定のカードやノートを探すには、 col.find_cards() と col.find_notes() が便利です。
 
-## The Database
+## データベース
 
-:warning: You can easily cause problems by writing directly to the database. Where possible, please use methods such as the ones mentioned above instead.
+:warning: データベースに直接書き込むと、簡単に問題を起こすことができます。可能な限り、代わりに上記のようなメソッドを使用してください。
 
-Anki’s DB object supports the following functions:
+Anki の DB オブジェクトは、以下の機能をサポートしています。
 
-**scalar() returns a single item:**
+**scalar() は単一の項目を返します:**
 
 ```python
 showInfo("card count: %d" % mw.col.db.scalar("select count() from cards"))
 ```
 
-**list() returns a list of the first column in each row, eg \[1, 2,
-3\]:**
+**list() は、各行の最初の列のリストを返します:**
 
 ```python
 ids = mw.col.db.list("select id from cards limit 3")
 ```
 
-**all() returns a list of rows, where each row is a list:**
+**all() は、行のリストを返します:**
 
 ```python
 ids_and_ivl = mw.col.db.all("select id, ivl from cards")
 ```
 
-**execute() can also be used to iterate over a result set without building an intermediate list. eg:**
+**execute() は、中間リストを作成せずに結果セットを反復処理するために使用することもできます：**
 
 ```python
 for id, ivl in mw.col.db.execute("select id, ivl from cards limit 3"):
     showInfo("card id %d has ivl %d" % (id, ivl))
 ```
 
-**execute() allows you to perform an insert or update operation. Use named arguments with ?. eg:**
+**execute() を使用すると、挿入や更新の操作を実行することができます。名前付き引数を使用するには ? を使います:**
 
 ```python
 mw.col.db.execute("update cards set ivl = ? where id = ?", newIvl, cardId)
 ```
 
-Note that these changes won't sync, as they would if you used the functions mentioned in the previous section.
+なお、これらの変更は、前のセクションで説明した機能を使用した場合のように、同期されることはありません。
 
-**executemany() allows you to perform bulk update or insert operations. For large updates, this is much faster than calling execute() for each data point. eg:**
+**executemany() を使用すると、更新や挿入の操作を一括して行うことができます。大きな更新を行う場合は、データポイントごとに execute() をコールするよりもずっと高速になります:**
 
 ```python
 data = [[newIvl1, cardId1], [newIvl2, cardId2]]
 mw.col.db.executemany(same_sql_as_above, data)
 ```
 
-As above, these changes won't sync.
+上記のように、これらの変更は同期されません。
 
-Add-ons should never modify the schema of existing tables, as that may break future versions of Anki.
+アドオンによって既存のテーブルのスキーマが変更されると、Anki の将来のバージョンで問題が発生する可能性があるため、絶対に変更しないでください。
 
-If you need to store addon-specific data, consider using Anki’s [Configuration](addon-config.md#config-json) support.
+アドオン固有のデータを保存する必要がある場合は、Anki の [Configuration](addon-config.md#config-json) サポートの利用を検討してください。
 
-If you need the data to sync across devices, small options can be stored within mw.col.conf. Please don’t store large amounts of data there, as it’s currently sent on every sync.
+デバイス間でデータを同期する必要がある場合、小さなオプションは mw.col.conf 内に保存することができます。現在、同期ごとに送信されるため、大量のデータをそこに保存しないようにしてください。
