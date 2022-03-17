@@ -190,9 +190,9 @@ hooks.
 <p><strong>PyCharm 内からアドオンを実行することはできませんのでご注意ください。エラーが発生します。</strong></p>
 <p>アドオンは Anki 内から実行する必要があります。これは <a href="a-basic-addon.html">基本的なアドオン</a> のセクションで説明します。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="mypy"><a class="header" href="#mypy">MyPy</a></h1>
-<h2 id="using-mypy"><a class="header" href="#using-mypy">Using MyPy</a></h2>
-<p>The type hints you installed when <a href="./editor-setup.html">setting up PyCharm</a> can also be used to check your code is correct, using a tool called MyPy. My Py will catch some cases where you’ve called Anki functions incorrectly, such as when you've typed a function name in incorrectly, or passed a string when an integer was expected.</p>
-<p>In PyCharm, click on Terminal in the bottom left, and type 'mypy myaddon'. After some processing, it will show a success or tell you any mistakes you’ve made. For example, if you specified a hook incorrectly:</p>
+<h2 id="mypy-の利用"><a class="header" href="#mypy-の利用">MyPy の利用</a></h2>
+<p><a href="./editor-setup.html">PyCharmのセットアップ</a> の際にインストールした型ヒントは、MyPy というツールを使って、コードが正しいかどうかを確認することもできます。MyPy は、Anki の関数を誤って呼び出した場合、例えば関数名を間違って入力した場合や、整数を想定していたのに文字列を渡してしまった場合などに、その誤りを発見してくれます。</p>
+<p>PyCharm で左下の Terminal をクリックし、'mypy myaddon' と入力してください。いくつかの処理の後、成功が表示されるか、またはあなたが犯したミスを教えてくれます。例えば、フックを間違って指定した場合を見てみましょう。</p>
 <pre><code class="language-python">from aqt import gui_hooks
 
 def myfunc() -&gt; None:
@@ -200,33 +200,33 @@ def myfunc() -&gt; None:
 
 gui_hooks.reviewer_did_show_answer.append(myfunc)
 </code></pre>
-<p>Then mypy will report:</p>
+<p>すると mypy は次のように報告します:</p>
 <pre><code>myaddon/__init__.py:5: error: Argument 1 to &quot;append&quot; of &quot;list&quot; has incompatible type &quot;Callable[[], Any]&quot;; expected &quot;Callable[[Card], None]&quot;
 Found 1 error in 1 file (checked 1 source file)
 </code></pre>
-<p>..which is telling you that the hook expects a function which takes a card as the first argument, eg</p>
+<p>これは、フックが最初の引数としてカードを受け取る関数を期待していることを伝えています。</p>
 <pre><code class="language-python">from anki.cards import Card
 
 def myfunc(card: Card) -&gt; None:
   print(&quot;myfunc&quot;)
 </code></pre>
-<h2 id="checking-existing-add-ons"><a class="header" href="#checking-existing-add-ons">Checking Existing Add-Ons</a></h2>
-<p>Mypy has a &quot;check_untyped_defs&quot; option that will give you some type checking even if your own code lacks type hints, but to get the most out of it, you will need to add type hints to your own code. This can take some initial time, but pays off in the long term, as it becomes easier to navigate your own code, and allows you to catch errors in parts of the code you might not regularly exercise yourself. It is also makes it easier to check for any problems caused by updating to a newer Anki version.</p>
-<p>If you have a large existing add-on, you may wish to look into tools like monkeytype to automatically add types to your code.</p>
+<h2 id="既存のアドオンの確認"><a class="header" href="#既存のアドオンの確認">既存のアドオンの確認</a></h2>
+<p>Mypy には &quot;check_untyped_defs&quot; オプションがあり、自分のコードに型ヒントがない場合でもある程度の型チェックを行うことができますが、これを最大限に活用するには、自分のコードに型ヒントを追加する必要があります。これは初期に時間がかかるかもしれませんが、長期的に見ると、自分のコードをナビゲートするのが容易になり、自分では定期的に実行しないようなコードの部分のエラーをキャッチすることができるようになるため有益です。また、新しい Anki バージョンに更新したときに発生した問題を簡単にチェックすることもできます。</p>
+<p>既存の大規模なアドオンがある場合は、コードに自動的に型を追加する monkeytype のようなツールを検討するのもよいでしょう。</p>
 <details>
 <summary>Monkeytype</summary>
-To use monkeytype with an add-on called 'test', you could do something like the following:
+monkeytypeを test というアドオンで使うには、次のような方法があります。
 <pre><code class="language-shell">% /usr/local/bin/python3.8 -m venv pyenv
 % cd pyenv &amp;&amp; . bin/activate
 (pyenv) % pip install aqt monkeytype
 (pyenv) % monkeytype run bin/anki
 </code></pre>
-<p>Then click around in your add-on to gather the runtime type information, and close Anki when you're done.</p>
-<p>After doing so, you'll need to comment out any top-level actions (such as code modifying menus outside of a function), as that will trip up monkeytype. Finally, you can generate the modified files with:</p>
+<p>その後、アドオン内をクリックしてランタイムタイプの情報を収集し、終了したら Anki を閉じます。</p>
+<p>この後、トップレベルのアクション（関数外のメニューを変更するコードなど）は monkeytype がトリップしてしまうので、コメントアウトする必要があります。最後に、修正したファイルを次のように生成します:</p>
 <pre><code class="language-shell">(pyenv) % PYTHONPATH=~/Library/Application\ Support/Anki2/addons21 monkeytype apply test
 </code></pre>
 </details>
-<p>Here are some example add-ons that use type hints:</p>
+<p>以下は、タイプヒントを使用するアドオンの例です:</p>
 <p><a href="https://github.com/ankitects/anki-addons/blob/master/demos/">https://github.com/ankitects/anki-addons/blob/master/demos/</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="add-on-folders"><a class="header" href="#add-on-folders">Add-on Folders</a></h1>
 <p>You can access the top level add-ons folder by going to the Tools.

@@ -1,10 +1,10 @@
 # MyPy
 
-## Using MyPy
+## MyPy の利用
 
-The type hints you installed when [setting up PyCharm](./editor-setup.md) can also be used to check your code is correct, using a tool called MyPy. My Py will catch some cases where you’ve called Anki functions incorrectly, such as when you've typed a function name in incorrectly, or passed a string when an integer was expected.
+[PyCharmのセットアップ](./editor-setup.md) の際にインストールした型ヒントは、MyPy というツールを使って、コードが正しいかどうかを確認することもできます。MyPy は、Anki の関数を誤って呼び出した場合、例えば関数名を間違って入力した場合や、整数を想定していたのに文字列を渡してしまった場合などに、その誤りを発見してくれます。
 
-In PyCharm, click on Terminal in the bottom left, and type 'mypy myaddon'. After some processing, it will show a success or tell you any mistakes you’ve made. For example, if you specified a hook incorrectly:
+PyCharm で左下の Terminal をクリックし、'mypy myaddon' と入力してください。いくつかの処理の後、成功が表示されるか、またはあなたが犯したミスを教えてくれます。例えば、フックを間違って指定した場合を見てみましょう。
 
 ```python
 from aqt import gui_hooks
@@ -15,12 +15,12 @@ def myfunc() -> None:
 gui_hooks.reviewer_did_show_answer.append(myfunc)
 ```
 
-Then mypy will report:
+すると mypy は次のように報告します:
 
     myaddon/__init__.py:5: error: Argument 1 to "append" of "list" has incompatible type "Callable[[], Any]"; expected "Callable[[Card], None]"
     Found 1 error in 1 file (checked 1 source file)
 
-..which is telling you that the hook expects a function which takes a card as the first argument, eg
+これは、フックが最初の引数としてカードを受け取る関数を期待していることを伝えています。
 
 ```python
 from anki.cards import Card
@@ -29,15 +29,15 @@ def myfunc(card: Card) -> None:
   print("myfunc")
 ```
 
-## Checking Existing Add-Ons
+## 既存のアドオンの確認
 
-Mypy has a "check_untyped_defs" option that will give you some type checking even if your own code lacks type hints, but to get the most out of it, you will need to add type hints to your own code. This can take some initial time, but pays off in the long term, as it becomes easier to navigate your own code, and allows you to catch errors in parts of the code you might not regularly exercise yourself. It is also makes it easier to check for any problems caused by updating to a newer Anki version.
+Mypy には "check_untyped_defs" オプションがあり、自分のコードに型ヒントがない場合でもある程度の型チェックを行うことができますが、これを最大限に活用するには、自分のコードに型ヒントを追加する必要があります。これは初期に時間がかかるかもしれませんが、長期的に見ると、自分のコードをナビゲートするのが容易になり、自分では定期的に実行しないようなコードの部分のエラーをキャッチすることができるようになるため有益です。また、新しい Anki バージョンに更新したときに発生した問題を簡単にチェックすることもできます。
 
-If you have a large existing add-on, you may wish to look into tools like monkeytype to automatically add types to your code.
+既存の大規模なアドオンがある場合は、コードに自動的に型を追加する monkeytype のようなツールを検討するのもよいでしょう。
 
 <details>
 <summary>Monkeytype</summary>
-To use monkeytype with an add-on called 'test', you could do something like the following:
+monkeytypeを test というアドオンで使うには、次のような方法があります。
 
 ```shell
 % /usr/local/bin/python3.8 -m venv pyenv
@@ -46,9 +46,9 @@ To use monkeytype with an add-on called 'test', you could do something like the 
 (pyenv) % monkeytype run bin/anki
 ```
 
-Then click around in your add-on to gather the runtime type information, and close Anki when you're done.
+その後、アドオン内をクリックしてランタイムタイプの情報を収集し、終了したら Anki を閉じます。
 
-After doing so, you'll need to comment out any top-level actions (such as code modifying menus outside of a function), as that will trip up monkeytype. Finally, you can generate the modified files with:
+この後、トップレベルのアクション（関数外のメニューを変更するコードなど）は monkeytype がトリップしてしまうので、コメントアウトする必要があります。最後に、修正したファイルを次のように生成します:
 
 ```shell
 (pyenv) % PYTHONPATH=~/Library/Application\ Support/Anki2/addons21 monkeytype apply test
@@ -56,6 +56,6 @@ After doing so, you'll need to comment out any top-level actions (such as code m
 
 </details>
 
-Here are some example add-ons that use type hints:
+以下は、タイプヒントを使用するアドオンの例です:
 
 <https://github.com/ankitects/anki-addons/blob/master/demos/>
