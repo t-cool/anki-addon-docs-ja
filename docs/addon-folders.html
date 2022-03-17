@@ -146,36 +146,20 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="add-on-folders"><a class="header" href="#add-on-folders">Add-on Folders</a></h1>
-<p>You can access the top level add-ons folder by going to the
-Tools&gt;Add-ons menu item in the main Anki window. Click on the View
-Files button, and a folder will pop up. If you had no add-ons installed,
-the top level add-ons folder will be shown. If you had an add-on
-selected, the add-on’s module folder will be shown, and you will need to
-go up one level.</p>
-<p>The add-ons folder is named &quot;addons21&quot;, corresponding to Anki 2.1. If
-you have an &quot;addons&quot; folder, it is because you have previously used Anki
-2.0.x.</p>
-<p>Each add-on uses one folder inside the add-on folder. Anki looks for a
-file called <code>__init__.py</code> file inside the folder, eg:</p>
+<p>You can access the top level add-ons folder by going to the Tools.
+Add-ons menu item in the main Anki window. Click on the View Files button, and a folder will pop up. If you had no add-ons installed, the top level add-ons folder will be shown. If you had an add-on selected, the add-on’s module folder will be shown, and you will need to go up one level.</p>
+<p>The add-ons folder is named &quot;addons21&quot;, corresponding to Anki 2.1. If you have an &quot;addons&quot; folder, it is because you have previously used Anki 2.0.x.</p>
+<p>Each add-on uses one folder inside the add-on folder. Anki looks for a file called <code>__init__.py</code> file inside the folder, eg:</p>
 <pre><code>addons21/myaddon/__init__.py
 </code></pre>
 <p>If <code>__init__.py</code> does not exist, Anki will ignore the folder.</p>
-<p>When choosing a folder name, it is recommended to stick to a-z and 0-9
-characters to avoid problems with Python’s module system.</p>
-<p>While you can use whatever folder name you wish for folders you create
-yourself, when you download an add-on from AnkiWeb, Anki will use the
-item’s ID as the folder name, such as:</p>
+<p>When choosing a folder name, it is recommended to stick to a-z and 0-9 characters to avoid problems with Python’s module system.</p>
+<p>While you can use whatever folder name you wish for folders you create yourself, when you download an add-on from AnkiWeb, Anki will use the item's ID as the folder name, such as:</p>
 <pre><code>addons21/48927303923/__init__.py
 </code></pre>
-<p>Anki will also place a meta.json file in the folder, which keeps track
-of the original add-on name, when it was downloaded, and whether it’s
-enabled or not.</p>
-<p>You should not store user data in the add-on folder, as it’s <a href="addon-config.html#config-json">deleted
-when the user upgrades an add-on</a>.</p>
-<p>If you followed the steps in the <a href="editor-setup.html">editor setup</a> section, you
-can either copy your myaddon folder into Anki’s add-on folder to test it, or on
-Mac or Linux, create a symlink from the folder’s original location into your
-add-ons folder.</p>
+<p>Anki will also place a meta.json file in the folder, which keeps track of the original add-on name, when it was downloaded, and whether it’s enabled or not.</p>
+<p>You should not store user data in the add-on folder, as it’s <a href="addon-config.html#config-json">deleted when the user upgrades an add-on</a>.</p>
+<p>If you followed the steps in the <a href="editor-setup.html">editor setup</a> section, you can either copy your myaddon folder into Anki’s add-on folder to test it, or on Mac or Linux, create a symlink from the folder’s original location into your add-ons folder.</p>
 
                     </main>
 

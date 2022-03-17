@@ -145,52 +145,35 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="editor-setup"><a class="header" href="#editor-setup">Editor Setup</a></h1>
-<p>While you can write an add-on with a basic text editor such as Notepad,
-setting up a proper Python editor/development environment (IDE) will make
-your life considerably easier.</p>
-<h2 id="pycharm-setup"><a class="header" href="#pycharm-setup">PyCharm setup</a></h2>
-<p>The free community edition of PyCharm has good out of the box support
-for Python: <a href="https://www.jetbrains.com/pycharm/">https://www.jetbrains.com/pycharm/</a>. You can also use other
-editors like Visual Studio Code, but we find PyCharm gives the best results.</p>
-<p>Over the last year, Anki’s codebase has been updated to add type hints to almost
-all of the code. These type hints make development easier, by providing better
-code completion, and by catching errors using tools like mypy. As an add-on
-author, you can take advantage of this type hinting as well.</p>
-<p>To get started with your first add-on:</p>
+                        <h1 id="エディターの設定"><a class="header" href="#エディターの設定">エディターの設定</a></h1>
+<p>メモ帳などの基本的なテキストエディタでアドオンを書くこともできますが、適切な Python エディタ/開発環境（IDE）をセットアップすることで、かなり楽になります。</p>
+<h2 id="pycharm-のセットアップ"><a class="header" href="#pycharm-のセットアップ">PyCharm のセットアップ</a></h2>
+<p>PyCharm の無償コミュニティ版では、Python のサポートが充実しています: <a href="https://www.jetbrains.com/Pycharm/">https://www.jetbrains.com/Pycharm/</a>。Visual Studio Code のような他のエディタも使えますが、PyCharm が最も良い結果を出すことが分かっています。</p>
+<p>昨年、Anki のコードベースは更新され、ほぼすべてのコードにタイプヒントが追加されました。これらの型ヒントは、より良いコード補完を提供し、mypy などのツールを使用してエラーを検出することで、開発を容易にします。アドオン作者として、あなたもこのタイプヒントを活用することができます。</p>
+<p>最初のアドオンを始めるには、以下の流れで進めます：</p>
 <ul>
 <li>
-<p>Open PyCharm and create a new project.</p>
+<p>PyCharm を起動し、新規プロジェクトを作成します。</p>
 </li>
 <li>
-<p>Right click/ctrl+click on your project on the left and create a new
-Python package called &quot;myaddon&quot;</p>
+<p>左側のプロジェクトを右クリック/ctrl+クリックし、&quot;myaddon &quot; という Python パッケージを新規に作成します。</p>
 </li>
 </ul>
-<p>Now you’ll need to fetch Anki’s bundled source code so you can get type
-completion. As of Anki 2.1.24, these are available on PyPI. <strong>You will need to
-be using a 64 bit version of Python, and your Python version must match a
-version the Anki version you are fetching supports.</strong>. To install Anki via
-PyCharm, click on Python Console in the bottom left and type the following in:</p>
+<p>ここで、Anki にバンドルされているソースコードを取得し、型式補完ができるようにする必要があります。Anki 2.1.24 は現在、PyPI で入手可能です。<strong>Python の 64 ビット版を使用する必要があり、Python のバージョンは取得する Anki のバージョンがサポートするバージョンと一致する必要があります。</strong> Anki を PyCharm 経由でインストールするには、左下の Python Console をクリックし、次のように入力します。</p>
 <pre><code class="language-python">import subprocess
 
 subprocess.check_call([&quot;pip3&quot;, &quot;install&quot;, &quot;--upgrade&quot;, &quot;pip&quot;])
 subprocess.check_call([&quot;pip3&quot;, &quot;install&quot;, &quot;mypy&quot;, &quot;aqt&quot;])
 </code></pre>
-<p>Hit enter and wait. Once it completes, you should now have code completion.</p>
-<p>If you get an error, you are probably not using a 64 bit version of Python, or
-your Python version is not one the latest Anki version supports. Try running the
-commands above with &quot;-vvv&quot; to get more info.</p>
-<p>After installing, try out the code completion by double clicking on the
-<code>__init__.py</code> file. If you see a spinner down the bottom, wait for it to
-complete. Then type in:</p>
+<p>エンターキーを押して待ちます。完了したら、コード補完ができるはずです。</p>
+<p>エラーが出る場合は、Pythonの64ビット版を使用していないか、Python のバージョンがAnki の最新版でサポートされていない可能性があります。上記のコマンドを「-vvv」付きで実行すると、より詳細な情報が得られます。</p>
+<p>インストール後、<code>__init__.py</code> ファイルをダブルクリックして、コード補完を試してみてください。下の方にスピナーが表示されたら、完了するまで待ちます。その後、入力します。</p>
 <pre><code class="language-python">from anki import hooks
 hooks.
 </code></pre>
-<p>and you should see completions pop up.</p>
-<p><strong>Please note that you can not run your add-on from within PyCharm - you
-will get errors.</strong> Add-ons need to be run from within Anki, which is
-covered in the <a href="a-basic-addon.html">A Basic Add-on</a> section.</p>
+<p>すると、補完がポップアップ表示されるはずです。</p>
+<p><strong>PyCharm 内からアドオンを実行することはできませんのでご注意ください。エラーが発生します。</strong></p>
+<p>アドオンは Anki 内から実行する必要があります。これは <a href="a-basic-addon.html">A Basic Add-on</a> セクションで説明されています。</p>
 
                     </main>
 

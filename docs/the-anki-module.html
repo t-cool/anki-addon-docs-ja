@@ -146,20 +146,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="the-anki-module"><a class="header" href="#the-anki-module">The 'anki' Module</a></h1>
-<p>All access to your collection and associated media go through a Python
-module called <code>anki</code>, located in <code>pylib/anki</code> in Anki's source repo.</p>
+<p>All access to your collection and associated media go through a Python module called <code>anki</code>, located in <code>pylib/anki</code> in Anki's source repo.</p>
 <h2 id="the-collection"><a class="header" href="#the-collection">The Collection</a></h2>
-<p>All operations on a collection file are accessed via a <code>Collection</code>
-object. The currently-open Collection is accessible via a global <code>mw.col</code>,
-where <code>mw</code> stands for <code>main window</code>. When using the <code>anki</code> module outside
-of Anki, you will need to create your own Collection object.</p>
-<p>Some basic examples of what you can do follow. Please note that you should put
-these in something like <a href="./a-basic-addon.html">testFunction()</a>. You can’t run them
-directly in an add-on, as add-ons are initialized during Anki startup, before
-any collection or profile has been loaded.</p>
-<p>Also please note that accessing the collection directly can lead to the UI
-temporarily freezing if the operation doesn't complete quickly - in practice
-you would typically run the code below in a background thread.</p>
+<p>All operations on a collection file are accessed via a <code>Collection</code> object. The currently-open Collection is accessible via a global <code>mw.col</code>, where <code>mw</code> stands for <code>main window</code>. When using the <code>anki</code> module outside of Anki, you will need to create your own Collection object.</p>
+<p>Some basic examples of what you can do follow. Please note that you should put these in something like <a href="./a-basic-addon.html">testFunction()</a>. You can’t run them directly in an add-on, as add-ons are initialized during Anki startup, before any collection or profile has been loaded.</p>
+<p>Also please note that accessing the collection directly can lead to the UI temporarily freezing if the operation doesn't complete quickly - in practice you would typically run the code below in a background thread.</p>
 <p><strong>Get a due card:</strong></p>
 <pre><code class="language-python">card = mw.col.sched.getCard()
 if not card:
@@ -209,9 +200,7 @@ ti = TextImporter(mw.col, file)
 ti.initMapping()
 ti.run()
 </code></pre>
-<p>Almost every GUI operation has an associated function in anki, so any of
-the operations that Anki makes available can also be called in an
-add-on.</p>
+<p>Almost every GUI operation has an associated function in anki, so any of the operations that Anki makes available can also be called in an add-on.</p>
 <h2 id="readingwriting-objects"><a class="header" href="#readingwriting-objects">Reading/Writing Objects</a></h2>
 <p>Most objects in Anki can be read and written via methods in pylib.</p>
 <pre><code class="language-python">card = col.get_card(card_id)
@@ -240,14 +229,10 @@ col.models.save(note)
 notetype = col.models.by_name(&quot;Basic&quot;)
 ...
 </code></pre>
-<p>You should prefer these methods over directly accessing the database,
-as they take care of marking items as requiring a sync, and they prevent
-some forms of invalid data from being written to the database.</p>
-<p>For locating specific cards and notes, col.find_cards() and
-col.find_notes() is useful.</p>
+<p>You should prefer these methods over directly accessing the database, as they take care of marking items as requiring a sync, and they prevent some forms of invalid data from being written to the database.</p>
+<p>For locating specific cards and notes, col.find_cards() and col.find_notes() is useful.</p>
 <h2 id="the-database"><a class="header" href="#the-database">The Database</a></h2>
-<p>:warning: You can easily cause problems by writing directly to the database.
-Where possible, please use methods such as the ones mentioned above instead.</p>
+<p>:warning: You can easily cause problems by writing directly to the database. Where possible, please use methods such as the ones mentioned above instead.</p>
 <p>Anki’s DB object supports the following functions:</p>
 <p><strong>scalar() returns a single item:</strong></p>
 <pre><code class="language-python">showInfo(&quot;card count: %d&quot; % mw.col.db.scalar(&quot;select count() from cards&quot;))
@@ -259,31 +244,22 @@ Where possible, please use methods such as the ones mentioned above instead.</p>
 <p><strong>all() returns a list of rows, where each row is a list:</strong></p>
 <pre><code class="language-python">ids_and_ivl = mw.col.db.all(&quot;select id, ivl from cards&quot;)
 </code></pre>
-<p><strong>execute() can also be used to iterate over a result set without
-building an intermediate list. eg:</strong></p>
+<p><strong>execute() can also be used to iterate over a result set without building an intermediate list. eg:</strong></p>
 <pre><code class="language-python">for id, ivl in mw.col.db.execute(&quot;select id, ivl from cards limit 3&quot;):
     showInfo(&quot;card id %d has ivl %d&quot; % (id, ivl))
 </code></pre>
-<p><strong>execute() allows you to perform an insert or update operation. Use
-named arguments with ?. eg:</strong></p>
+<p><strong>execute() allows you to perform an insert or update operation. Use named arguments with ?. eg:</strong></p>
 <pre><code class="language-python">mw.col.db.execute(&quot;update cards set ivl = ? where id = ?&quot;, newIvl, cardId)
 </code></pre>
-<p>Note that these changes won't sync, as they would if you used the functions
-mentioned in the previous section.</p>
-<p><strong>executemany() allows you to perform bulk update or insert operations.
-For large updates, this is much faster than calling execute() for each
-data point. eg:</strong></p>
+<p>Note that these changes won't sync, as they would if you used the functions mentioned in the previous section.</p>
+<p><strong>executemany() allows you to perform bulk update or insert operations. For large updates, this is much faster than calling execute() for each data point. eg:</strong></p>
 <pre><code class="language-python">data = [[newIvl1, cardId1], [newIvl2, cardId2]]
 mw.col.db.executemany(same_sql_as_above, data)
 </code></pre>
 <p>As above, these changes won't sync.</p>
-<p>Add-ons should never modify the schema of existing tables, as that may
-break future versions of Anki.</p>
-<p>If you need to store addon-specific data, consider using Anki’s
-<a href="addon-config.html#config-json">Configuration</a> support.</p>
-<p>If you need the data to sync across devices, small options can be stored
-within mw.col.conf. Please don’t store large amounts of data there, as
-it’s currently sent on every sync.</p>
+<p>Add-ons should never modify the schema of existing tables, as that may break future versions of Anki.</p>
+<p>If you need to store addon-specific data, consider using Anki’s <a href="addon-config.html#config-json">Configuration</a> support.</p>
+<p>If you need the data to sync across devices, small options can be stored within mw.col.conf. Please don’t store large amounts of data there, as it’s currently sent on every sync.</p>
 
                     </main>
 

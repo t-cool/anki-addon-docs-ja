@@ -155,75 +155,44 @@
 アドオンは、特定のアクションが発生したときに通知されるように登録することができます。例えば、ブラウズ画面がロードされたときに実行されるフックを登録したり、特定アクションが実行された際に UI に変化を加えることができます（例: 新しいメニューの UI を追加等）。</p>
 <p>Anki のアーキテクチャの概要は<a href="https://github.com/ankitects/anki/blob/main/docs/architecture.md">こちら</a> を参照してください。</p>
 <p>普通のテキストエディタで Anki のアドオンを開発することも可能ですが、コードエディターや IDE を使えば、開発がより楽になります。 詳しくは下記の「IDE と 型ヒント」のセクションをご覧ください。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="support"><a class="header" href="#support">Support</a></h1>
-<p>This document contains some hints to get you started, but it is not a
-comprehensive guide. To actually write an add-on, you will need to
-familiarize yourself with Anki’s source code, and the source code of
-other add-ons that do similiar things to what you are trying to
-accomplish.</p>
-<p>Because of our limited resources, <strong>no official support is available for
-add-on writing</strong>. If you have any questions, you will either need to
-find the answers yourself in the source code, or post your questions on
-the <a href="https://forums.ankiweb.net/c/development/12">development forum</a>.</p>
-<p>You can also use the add-on forum to request someone write an add-on for
-you. You may need to offer some money before anyone becomes interested
-in helping you.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="editor-setup"><a class="header" href="#editor-setup">Editor Setup</a></h1>
-<p>While you can write an add-on with a basic text editor such as Notepad,
-setting up a proper Python editor/development environment (IDE) will make
-your life considerably easier.</p>
-<h2 id="pycharm-setup"><a class="header" href="#pycharm-setup">PyCharm setup</a></h2>
-<p>The free community edition of PyCharm has good out of the box support
-for Python: <a href="https://www.jetbrains.com/pycharm/">https://www.jetbrains.com/pycharm/</a>. You can also use other
-editors like Visual Studio Code, but we find PyCharm gives the best results.</p>
-<p>Over the last year, Anki’s codebase has been updated to add type hints to almost
-all of the code. These type hints make development easier, by providing better
-code completion, and by catching errors using tools like mypy. As an add-on
-author, you can take advantage of this type hinting as well.</p>
-<p>To get started with your first add-on:</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="サポート"><a class="header" href="#サポート">サポート</a></h1>
+<p>この文書には、始めるためのヒントがいくつか含まれていますが、包括的なガイドではありません。実際にアドオンを作成するには、Anki のソースコードや、以下のソースコードに精通する必要があります。
+あなたが達成しようとしていることと似たようなことを行う他のアドオンです。</p>
+<p>私たちのリソースには限りがあるため、<strong>アドオンの作成に関する公式なサポートはありません</strong>。質問がある場合は、ソースコードから自分で答えを見つけるか、<a href="https://forums.ankiweb.net/c/development/12">開発フォーラム</a> に質問を投稿する必要があります。</p>
+<p>また、アドオンフォーラムを利用して、誰かにアドオンの作成を依頼することもできます。誰かがあなたの手助けをすることに興味を持つ前に、いくらか開発費を提供する必要があるかもしれません。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="エディターの設定"><a class="header" href="#エディターの設定">エディターの設定</a></h1>
+<p>メモ帳などの基本的なテキストエディタでアドオンを書くこともできますが、適切な Python エディタ/開発環境（IDE）をセットアップすることで、かなり楽になります。</p>
+<h2 id="pycharm-のセットアップ"><a class="header" href="#pycharm-のセットアップ">PyCharm のセットアップ</a></h2>
+<p>PyCharm の無償コミュニティ版では、Python のサポートが充実しています: <a href="https://www.jetbrains.com/Pycharm/">https://www.jetbrains.com/Pycharm/</a>。Visual Studio Code のような他のエディタも使えますが、PyCharm が最も良い結果を出すことが分かっています。</p>
+<p>昨年、Anki のコードベースは更新され、ほぼすべてのコードにタイプヒントが追加されました。これらの型ヒントは、より良いコード補完を提供し、mypy などのツールを使用してエラーを検出することで、開発を容易にします。アドオン作者として、あなたもこのタイプヒントを活用することができます。</p>
+<p>最初のアドオンを始めるには、以下の流れで進めます：</p>
 <ul>
 <li>
-<p>Open PyCharm and create a new project.</p>
+<p>PyCharm を起動し、新規プロジェクトを作成します。</p>
 </li>
 <li>
-<p>Right click/ctrl+click on your project on the left and create a new
-Python package called &quot;myaddon&quot;</p>
+<p>左側のプロジェクトを右クリック/ctrl+クリックし、&quot;myaddon &quot; という Python パッケージを新規に作成します。</p>
 </li>
 </ul>
-<p>Now you’ll need to fetch Anki’s bundled source code so you can get type
-completion. As of Anki 2.1.24, these are available on PyPI. <strong>You will need to
-be using a 64 bit version of Python, and your Python version must match a
-version the Anki version you are fetching supports.</strong>. To install Anki via
-PyCharm, click on Python Console in the bottom left and type the following in:</p>
+<p>ここで、Anki にバンドルされているソースコードを取得し、型式補完ができるようにする必要があります。Anki 2.1.24 は現在、PyPI で入手可能です。<strong>Python の 64 ビット版を使用する必要があり、Python のバージョンは取得する Anki のバージョンがサポートするバージョンと一致する必要があります。</strong> Anki を PyCharm 経由でインストールするには、左下の Python Console をクリックし、次のように入力します。</p>
 <pre><code class="language-python">import subprocess
 
 subprocess.check_call([&quot;pip3&quot;, &quot;install&quot;, &quot;--upgrade&quot;, &quot;pip&quot;])
 subprocess.check_call([&quot;pip3&quot;, &quot;install&quot;, &quot;mypy&quot;, &quot;aqt&quot;])
 </code></pre>
-<p>Hit enter and wait. Once it completes, you should now have code completion.</p>
-<p>If you get an error, you are probably not using a 64 bit version of Python, or
-your Python version is not one the latest Anki version supports. Try running the
-commands above with &quot;-vvv&quot; to get more info.</p>
-<p>After installing, try out the code completion by double clicking on the
-<code>__init__.py</code> file. If you see a spinner down the bottom, wait for it to
-complete. Then type in:</p>
+<p>エンターキーを押して待ちます。完了したら、コード補完ができるはずです。</p>
+<p>エラーが出る場合は、Pythonの64ビット版を使用していないか、Python のバージョンがAnki の最新版でサポートされていない可能性があります。上記のコマンドを「-vvv」付きで実行すると、より詳細な情報が得られます。</p>
+<p>インストール後、<code>__init__.py</code> ファイルをダブルクリックして、コード補完を試してみてください。下の方にスピナーが表示されたら、完了するまで待ちます。その後、入力します。</p>
 <pre><code class="language-python">from anki import hooks
 hooks.
 </code></pre>
-<p>and you should see completions pop up.</p>
-<p><strong>Please note that you can not run your add-on from within PyCharm - you
-will get errors.</strong> Add-ons need to be run from within Anki, which is
-covered in the <a href="a-basic-addon.html">A Basic Add-on</a> section.</p>
+<p>すると、補完がポップアップ表示されるはずです。</p>
+<p><strong>PyCharm 内からアドオンを実行することはできませんのでご注意ください。エラーが発生します。</strong></p>
+<p>アドオンは Anki 内から実行する必要があります。これは <a href="a-basic-addon.html">A Basic Add-on</a> セクションで説明されています。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="mypy"><a class="header" href="#mypy">MyPy</a></h1>
 <h2 id="using-mypy"><a class="header" href="#using-mypy">Using MyPy</a></h2>
-<p>The type hints you installed when <a href="./editor-setup.html">setting up PyCharm</a> can
-also be used to check your code is correct, using a tool called MyPy. My Py will
-catch some cases where you’ve called Anki functions incorrectly, such as when
-you've typed a function name in incorrectly, or passed a string when an integer
-was expected.</p>
-<p>In PyCharm, click on Terminal in the bottom left, and type 'mypy myaddon'. After
-some processing, it will show a success or tell you any mistakes you’ve made.
-For example, if you specified a hook incorrectly:</p>
+<p>The type hints you installed when <a href="./editor-setup.html">setting up PyCharm</a> can also be used to check your code is correct, using a tool called MyPy. My Py will catch some cases where you’ve called Anki functions incorrectly, such as when you've typed a function name in incorrectly, or passed a string when an integer was expected.</p>
+<p>In PyCharm, click on Terminal in the bottom left, and type 'mypy myaddon'. After some processing, it will show a success or tell you any mistakes you’ve made. For example, if you specified a hook incorrectly:</p>
 <pre><code class="language-python">from aqt import gui_hooks
 
 def myfunc() -&gt; None:
@@ -235,23 +204,15 @@ gui_hooks.reviewer_did_show_answer.append(myfunc)
 <pre><code>myaddon/__init__.py:5: error: Argument 1 to &quot;append&quot; of &quot;list&quot; has incompatible type &quot;Callable[[], Any]&quot;; expected &quot;Callable[[Card], None]&quot;
 Found 1 error in 1 file (checked 1 source file)
 </code></pre>
-<p>..which is telling you that the hook expects a function which takes a card as
-the first argument, eg</p>
+<p>..which is telling you that the hook expects a function which takes a card as the first argument, eg</p>
 <pre><code class="language-python">from anki.cards import Card
 
 def myfunc(card: Card) -&gt; None:
   print(&quot;myfunc&quot;)
 </code></pre>
 <h2 id="checking-existing-add-ons"><a class="header" href="#checking-existing-add-ons">Checking Existing Add-Ons</a></h2>
-<p>Mypy has a &quot;check_untyped_defs&quot; option that will give you some type checking
-even if your own code lacks type hints, but to get the most out of it, you will
-need to add type hints to your own code. This can take some initial time, but
-pays off in the long term, as it becomes easier to navigate your own code, and
-allows you to catch errors in parts of the code you might not regularly exercise
-yourself. It is also makes it easier to check for any problems caused by updating
-to a newer Anki version.</p>
-<p>If you have a large existing add-on, you may wish to look into tools like monkeytype
-to automatically add types to your code.</p>
+<p>Mypy has a &quot;check_untyped_defs&quot; option that will give you some type checking even if your own code lacks type hints, but to get the most out of it, you will need to add type hints to your own code. This can take some initial time, but pays off in the long term, as it becomes easier to navigate your own code, and allows you to catch errors in parts of the code you might not regularly exercise yourself. It is also makes it easier to check for any problems caused by updating to a newer Anki version.</p>
+<p>If you have a large existing add-on, you may wish to look into tools like monkeytype to automatically add types to your code.</p>
 <details>
 <summary>Monkeytype</summary>
 To use monkeytype with an add-on called 'test', you could do something like the following:
@@ -260,47 +221,28 @@ To use monkeytype with an add-on called 'test', you could do something like the 
 (pyenv) % pip install aqt monkeytype
 (pyenv) % monkeytype run bin/anki
 </code></pre>
-<p>Then click around in your add-on to gather the runtime type information, and close
-Anki when you're done.</p>
-<p>After doing so, you'll need to comment out any top-level actions (such as code modifying
-menus outside of a function), as that will trip up monkeytype. Finally, you can
-generate the modified files with:</p>
+<p>Then click around in your add-on to gather the runtime type information, and close Anki when you're done.</p>
+<p>After doing so, you'll need to comment out any top-level actions (such as code modifying menus outside of a function), as that will trip up monkeytype. Finally, you can generate the modified files with:</p>
 <pre><code class="language-shell">(pyenv) % PYTHONPATH=~/Library/Application\ Support/Anki2/addons21 monkeytype apply test
 </code></pre>
 </details>
 <p>Here are some example add-ons that use type hints:</p>
 <p><a href="https://github.com/ankitects/anki-addons/blob/master/demos/">https://github.com/ankitects/anki-addons/blob/master/demos/</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="add-on-folders"><a class="header" href="#add-on-folders">Add-on Folders</a></h1>
-<p>You can access the top level add-ons folder by going to the
-Tools&gt;Add-ons menu item in the main Anki window. Click on the View
-Files button, and a folder will pop up. If you had no add-ons installed,
-the top level add-ons folder will be shown. If you had an add-on
-selected, the add-on’s module folder will be shown, and you will need to
-go up one level.</p>
-<p>The add-ons folder is named &quot;addons21&quot;, corresponding to Anki 2.1. If
-you have an &quot;addons&quot; folder, it is because you have previously used Anki
-2.0.x.</p>
-<p>Each add-on uses one folder inside the add-on folder. Anki looks for a
-file called <code>__init__.py</code> file inside the folder, eg:</p>
+<p>You can access the top level add-ons folder by going to the Tools.
+Add-ons menu item in the main Anki window. Click on the View Files button, and a folder will pop up. If you had no add-ons installed, the top level add-ons folder will be shown. If you had an add-on selected, the add-on’s module folder will be shown, and you will need to go up one level.</p>
+<p>The add-ons folder is named &quot;addons21&quot;, corresponding to Anki 2.1. If you have an &quot;addons&quot; folder, it is because you have previously used Anki 2.0.x.</p>
+<p>Each add-on uses one folder inside the add-on folder. Anki looks for a file called <code>__init__.py</code> file inside the folder, eg:</p>
 <pre><code>addons21/myaddon/__init__.py
 </code></pre>
 <p>If <code>__init__.py</code> does not exist, Anki will ignore the folder.</p>
-<p>When choosing a folder name, it is recommended to stick to a-z and 0-9
-characters to avoid problems with Python’s module system.</p>
-<p>While you can use whatever folder name you wish for folders you create
-yourself, when you download an add-on from AnkiWeb, Anki will use the
-item’s ID as the folder name, such as:</p>
+<p>When choosing a folder name, it is recommended to stick to a-z and 0-9 characters to avoid problems with Python’s module system.</p>
+<p>While you can use whatever folder name you wish for folders you create yourself, when you download an add-on from AnkiWeb, Anki will use the item's ID as the folder name, such as:</p>
 <pre><code>addons21/48927303923/__init__.py
 </code></pre>
-<p>Anki will also place a meta.json file in the folder, which keeps track
-of the original add-on name, when it was downloaded, and whether it’s
-enabled or not.</p>
-<p>You should not store user data in the add-on folder, as it’s <a href="addon-config.html#config-json">deleted
-when the user upgrades an add-on</a>.</p>
-<p>If you followed the steps in the <a href="editor-setup.html">editor setup</a> section, you
-can either copy your myaddon folder into Anki’s add-on folder to test it, or on
-Mac or Linux, create a symlink from the folder’s original location into your
-add-ons folder.</p>
+<p>Anki will also place a meta.json file in the folder, which keeps track of the original add-on name, when it was downloaded, and whether it’s enabled or not.</p>
+<p>You should not store user data in the add-on folder, as it’s <a href="addon-config.html#config-json">deleted when the user upgrades an add-on</a>.</p>
+<p>If you followed the steps in the <a href="editor-setup.html">editor setup</a> section, you can either copy your myaddon folder into Anki’s add-on folder to test it, or on Mac or Linux, create a symlink from the folder’s original location into your add-ons folder.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="a-basic-add-on"><a class="header" href="#a-basic-add-on">A Basic Add-on</a></h1>
 <p>Add the following to <code>my_first_addon/__init__.py</code> in your add-ons folder:</p>
 <pre><code class="language-python"># import the main window object (mw) from aqt
@@ -332,20 +274,11 @@ Running it will display a dialog with the card count.</p>
 <p>If you make a mistake when entering in the plugin, Anki will show an
 error message on startup indicating where the problem is.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-anki-module"><a class="header" href="#the-anki-module">The 'anki' Module</a></h1>
-<p>All access to your collection and associated media go through a Python
-module called <code>anki</code>, located in <code>pylib/anki</code> in Anki's source repo.</p>
+<p>All access to your collection and associated media go through a Python module called <code>anki</code>, located in <code>pylib/anki</code> in Anki's source repo.</p>
 <h2 id="the-collection"><a class="header" href="#the-collection">The Collection</a></h2>
-<p>All operations on a collection file are accessed via a <code>Collection</code>
-object. The currently-open Collection is accessible via a global <code>mw.col</code>,
-where <code>mw</code> stands for <code>main window</code>. When using the <code>anki</code> module outside
-of Anki, you will need to create your own Collection object.</p>
-<p>Some basic examples of what you can do follow. Please note that you should put
-these in something like <a href="./a-basic-addon.html">testFunction()</a>. You can’t run them
-directly in an add-on, as add-ons are initialized during Anki startup, before
-any collection or profile has been loaded.</p>
-<p>Also please note that accessing the collection directly can lead to the UI
-temporarily freezing if the operation doesn't complete quickly - in practice
-you would typically run the code below in a background thread.</p>
+<p>All operations on a collection file are accessed via a <code>Collection</code> object. The currently-open Collection is accessible via a global <code>mw.col</code>, where <code>mw</code> stands for <code>main window</code>. When using the <code>anki</code> module outside of Anki, you will need to create your own Collection object.</p>
+<p>Some basic examples of what you can do follow. Please note that you should put these in something like <a href="./a-basic-addon.html">testFunction()</a>. You can’t run them directly in an add-on, as add-ons are initialized during Anki startup, before any collection or profile has been loaded.</p>
+<p>Also please note that accessing the collection directly can lead to the UI temporarily freezing if the operation doesn't complete quickly - in practice you would typically run the code below in a background thread.</p>
 <p><strong>Get a due card:</strong></p>
 <pre><code class="language-python">card = mw.col.sched.getCard()
 if not card:
@@ -395,9 +328,7 @@ ti = TextImporter(mw.col, file)
 ti.initMapping()
 ti.run()
 </code></pre>
-<p>Almost every GUI operation has an associated function in anki, so any of
-the operations that Anki makes available can also be called in an
-add-on.</p>
+<p>Almost every GUI operation has an associated function in anki, so any of the operations that Anki makes available can also be called in an add-on.</p>
 <h2 id="readingwriting-objects"><a class="header" href="#readingwriting-objects">Reading/Writing Objects</a></h2>
 <p>Most objects in Anki can be read and written via methods in pylib.</p>
 <pre><code class="language-python">card = col.get_card(card_id)
@@ -426,14 +357,10 @@ col.models.save(note)
 notetype = col.models.by_name(&quot;Basic&quot;)
 ...
 </code></pre>
-<p>You should prefer these methods over directly accessing the database,
-as they take care of marking items as requiring a sync, and they prevent
-some forms of invalid data from being written to the database.</p>
-<p>For locating specific cards and notes, col.find_cards() and
-col.find_notes() is useful.</p>
+<p>You should prefer these methods over directly accessing the database, as they take care of marking items as requiring a sync, and they prevent some forms of invalid data from being written to the database.</p>
+<p>For locating specific cards and notes, col.find_cards() and col.find_notes() is useful.</p>
 <h2 id="the-database"><a class="header" href="#the-database">The Database</a></h2>
-<p>:warning: You can easily cause problems by writing directly to the database.
-Where possible, please use methods such as the ones mentioned above instead.</p>
+<p>:warning: You can easily cause problems by writing directly to the database. Where possible, please use methods such as the ones mentioned above instead.</p>
 <p>Anki’s DB object supports the following functions:</p>
 <p><strong>scalar() returns a single item:</strong></p>
 <pre><code class="language-python">showInfo(&quot;card count: %d&quot; % mw.col.db.scalar(&quot;select count() from cards&quot;))
@@ -445,35 +372,24 @@ Where possible, please use methods such as the ones mentioned above instead.</p>
 <p><strong>all() returns a list of rows, where each row is a list:</strong></p>
 <pre><code class="language-python">ids_and_ivl = mw.col.db.all(&quot;select id, ivl from cards&quot;)
 </code></pre>
-<p><strong>execute() can also be used to iterate over a result set without
-building an intermediate list. eg:</strong></p>
+<p><strong>execute() can also be used to iterate over a result set without building an intermediate list. eg:</strong></p>
 <pre><code class="language-python">for id, ivl in mw.col.db.execute(&quot;select id, ivl from cards limit 3&quot;):
     showInfo(&quot;card id %d has ivl %d&quot; % (id, ivl))
 </code></pre>
-<p><strong>execute() allows you to perform an insert or update operation. Use
-named arguments with ?. eg:</strong></p>
+<p><strong>execute() allows you to perform an insert or update operation. Use named arguments with ?. eg:</strong></p>
 <pre><code class="language-python">mw.col.db.execute(&quot;update cards set ivl = ? where id = ?&quot;, newIvl, cardId)
 </code></pre>
-<p>Note that these changes won't sync, as they would if you used the functions
-mentioned in the previous section.</p>
-<p><strong>executemany() allows you to perform bulk update or insert operations.
-For large updates, this is much faster than calling execute() for each
-data point. eg:</strong></p>
+<p>Note that these changes won't sync, as they would if you used the functions mentioned in the previous section.</p>
+<p><strong>executemany() allows you to perform bulk update or insert operations. For large updates, this is much faster than calling execute() for each data point. eg:</strong></p>
 <pre><code class="language-python">data = [[newIvl1, cardId1], [newIvl2, cardId2]]
 mw.col.db.executemany(same_sql_as_above, data)
 </code></pre>
 <p>As above, these changes won't sync.</p>
-<p>Add-ons should never modify the schema of existing tables, as that may
-break future versions of Anki.</p>
-<p>If you need to store addon-specific data, consider using Anki’s
-<a href="addon-config.html#config-json">Configuration</a> support.</p>
-<p>If you need the data to sync across devices, small options can be stored
-within mw.col.conf. Please don’t store large amounts of data there, as
-it’s currently sent on every sync.</p>
+<p>Add-ons should never modify the schema of existing tables, as that may break future versions of Anki.</p>
+<p>If you need to store addon-specific data, consider using Anki’s <a href="addon-config.html#config-json">Configuration</a> support.</p>
+<p>If you need the data to sync across devices, small options can be stored within mw.col.conf. Please don’t store large amounts of data there, as it’s currently sent on every sync.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="command-line-use"><a class="header" href="#command-line-use">Command-Line Use</a></h1>
-<p>The <code>anki</code> module can be used separately from Anki's GUI. It is
-strongly recommended you use it instead of attempting to read or
-write a .anki2 file directly.</p>
+<p>The <code>anki</code> module can be used separately from Anki's GUI. It is strongly recommended you use it instead of attempting to read or write a .anki2 file directly.</p>
 <p>Install it with pip:</p>
 <pre><code class="language-shell">$ pip install anki
 </code></pre>
@@ -495,34 +411,23 @@ col.close()
 <li><a href="hooks-and-filters.html#legacy-hook-handling">Legacy Hook Handling</a></li>
 <li><a href="hooks-and-filters.html#adding-hooks">Adding Hooks</a></li>
 </ul>
-<p>Hooks are the way you should connect your add-on code to Anki. If the
-function you want to alter doesn’t already have a hook, please see the
-section below about adding new hooks.</p>
+<p>Hooks are the way you should connect your add-on code to Anki. If the function you want to alter doesn’t already have a hook, please see the section below about adding new hooks.</p>
 <p>There are two different kinds of &quot;hooks&quot;:</p>
 <ul>
 <li>
-<p>Regular hooks are functions that don’t return anything. They are run
-for their side effects, and may sometimes alter the objects they
-have been passed, such as inserting an extra item in a list.</p>
+<p>Regular hooks are functions that don’t return anything. They are run for their side effects, and may sometimes alter the objects they have been passed, such as inserting an extra item in a list.</p>
 </li>
 <li>
-<p>&quot;Filters&quot; are functions that return their first argument, after
-maybe changing it. An example filter is one that takes the text of a
-field during card display, and returns an altered version.</p>
+<p>&quot;Filters&quot; are functions that return their first argument, after maybe changing it. An example filter is one that takes the text of a field during card display, and returns an altered version.</p>
 </li>
 </ul>
-<p>The distinction is necessary because some data types in Python can be
-modified directly, and others can only be modified by creating a changed
-copy (such as strings).</p>
+<p>The distinction is necessary because some data types in Python can be modified directly, and others can only be modified by creating a changed copy (such as strings).</p>
 <h2 id="new-style-hooks"><a class="header" href="#new-style-hooks">New Style Hooks</a></h2>
 <p>A new style of hook was added in Anki 2.1.20.</p>
-<p>Imagine you wish to show a message each time the front side of a card is
-shown in the review screen. You’ve looked at the source code in
-reviewer.py, and seen the following line in the showQuestion() function:</p>
+<p>Imagine you wish to show a message each time the front side of a card is shown in the review screen. You’ve looked at the source code in reviewer.py, and seen the following line in the showQuestion() function:</p>
 <pre><code class="language-python">gui_hooks.reviewer_did_show_question(card)
 </code></pre>
-<p>To register a function to be called when this hook is run, you can do
-the following in your add-on:</p>
+<p>To register a function to be called when this hook is run, you can do the following in your add-on:</p>
 <pre><code class="language-python">from aqt import gui_hooks
 
 def myfunc(card):
@@ -530,8 +435,7 @@ def myfunc(card):
 
 gui_hooks.reviewer_did_show_question.append(myfunc)
 </code></pre>
-<p>Multiple add-ons can register for the same hook or filter - they will
-all be called in turn.</p>
+<p>Multiple add-ons can register for the same hook or filter - they will all be called in turn.</p>
 <p>To remove a hook, use code like:</p>
 <pre><code>gui_hooks.reviewer_did_show_question.remove(myfunc)
 </code></pre>
@@ -542,23 +446,16 @@ all be called in turn.</p>
 
 gui_hooks.reviewer_did_show_question.append(myfunc)
 </code></pre>
-<p>An easy way to see all hooks at a glance is to look at
-pylib/tools/genhooks.py and qt/tools/genhooks_gui.py.</p>
-<p>If you have set up type completion as described in an earlier section,
-you can also see the hooks in your IDE:</p>
+<p>An easy way to see all hooks at a glance is to look at pylib/tools/genhooks.py and qt/tools/genhooks_gui.py.</p>
+<p>If you have set up type completion as described in an earlier section, you can also see the hooks in your IDE:</p>
 <video controls autoplay loop muted>
  <source src="../img/autocomplete.mp4" type="video/mp4">
 </video>
-<p>In the above video, holding the command/ctrl key down while hovering
-will show a tooltip, including arguments and documentation if it exists.
-The argument names and types for the callback can be seen on the bottom
+<p>In the above video, holding the command/ctrl key down while hovering will show a tooltip, including arguments and documentation if it exists. The argument names and types for the callback can be seen on the bottom
 line.</p>
 <p>For some examples of how the new hooks are used, please see
 <a href="https://github.com/ankitects/anki-addons/blob/master/demos/">https://github.com/ankitects/anki-addons/blob/master/demos/</a>.</p>
-<p>Most of the new style hooks will also call the legacy hooks (described
-further below), so old add-ons will continue to work for now, but add-on authors
-are encouraged to update to the new style as it allows for code
-completion, and better error checking.</p>
+<p>Most of the new style hooks will also call the legacy hooks (described further below), so old add-ons will continue to work for now, but add-on authors are encouraged to update to the new style as it allows for code completion, and better error checking.</p>
 <h2 id="notable-hooks"><a class="header" href="#notable-hooks">Notable Hooks</a></h2>
 <p>For a full list of hooks, and their documentation, please see</p>
 <ul>
@@ -566,36 +463,22 @@ completion, and better error checking.</p>
 <li><a href="https://github.com/ankitects/anki/blob/master/pylib/tools/genhooks.py">The pylib hooks</a></li>
 </ul>
 <h3 id="webview"><a class="header" href="#webview">Webview</a></h3>
-<p>Many of Anki's screens are built with one or more webviews, and there are
-some hooks you can use to intercept their use.</p>
+<p>Many of Anki's screens are built with one or more webviews, and there are some hooks you can use to intercept their use.</p>
 <p>From Anki 2.1.22:</p>
 <ul>
-<li><code>gui_hooks.webview_will_set_content()</code> allows you to modify the HTML that
-various screens send to the webview. You can use this for adding your own
-HTML/CSS/Javascript to particular screens. This will not work for external
-pages - see the Anki 2.1.36 section below.</li>
-<li><code>gui_hooks.webview_did_receive_js_message()</code> allows you to intercept
-messages sent from Javascript. Anki provides a <code>pycmd(string)</code> function in
-Javascript which sends a message back to Python, and various screens such as
-reviewer.py respond to the messages. By using this hook, you can respond
-to your own messages as well.</li>
+<li><code>gui_hooks.webview_will_set_content()</code> allows you to modify the HTML that various screens send to the webview. You can use this for adding your own HTML/CSS/Javascript to particular screens. This will not work for external pages - see the Anki 2.1.36 section below.</li>
+<li><code>gui_hooks.webview_did_receive_js_message()</code> allows you to intercept messages sent from Javascript. Anki provides a <code>pycmd(string)</code> function in Javascript which sends a message back to Python, and various screens such as reviewer.py respond to the messages. By using this hook, you can respond to your own messages as well.</li>
 </ul>
 <p>From Anki 2.1.36:</p>
 <ul>
-<li><code>webview_did_inject_style_into_page()</code> gives you an opportunity to inject
-styling or content into external pages like the graphs screen and congratulations
-page that are loaded with load_ts_page().</li>
+<li><code>webview_did_inject_style_into_page()</code> gives you an opportunity to inject styling or content into external pages like the graphs screen and congratulations page that are loaded with load_ts_page().</li>
 </ul>
 <h2 id="legacy-hook-handling"><a class="header" href="#legacy-hook-handling">Legacy Hook Handling</a></h2>
-<p>Older versions of Anki used a different hook system, using the functions
-runHook(), addHook() and runFilter().</p>
-<p>For example, when the scheduler (anki/sched.py) discovers a leech, it
-calls:</p>
+<p>Older versions of Anki used a different hook system, using the functions runHook(), addHook() and runFilter().</p>
+<p>For example, when the scheduler (anki/sched.py) discovers a leech, it calls:</p>
 <pre><code class="language-python">runHook(&quot;leech&quot;, card)
 </code></pre>
-<p>If you wished to perform a special operation when a leech was
-discovered, such as moving the card to a &quot;Difficult&quot; deck, you could do
-it with the following code:</p>
+<p>If you wished to perform a special operation when a leech was discovered, such as moving the card to a &quot;Difficult&quot; deck, you could do it with the following code:</p>
 <pre><code class="language-python">from anki.hooks import addHook
 from aqt import mw
 
@@ -611,9 +494,7 @@ def onLeech(card):
 
 addHook(&quot;leech&quot;, onLeech)
 </code></pre>
-<p>An example of a filter is in aqt/editor.py. The editor calls the
-&quot;editFocusLost&quot; filter each time a field loses focus, so that add-ons
-can apply changes to the note:</p>
+<p>An example of a filter is in aqt/editor.py. The editor calls the &quot;editFocusLost&quot; filter each time a field loses focus, so that add-ons can apply changes to the note:</p>
 <pre><code class="language-python">if runFilter(
     &quot;editFocusLost&quot;, False, self.note, self.currentField):
     # something updated the note; schedule reload
@@ -622,13 +503,8 @@ can apply changes to the note:</p>
         self.checkValid()
     self.mw.progress.timer(100, onUpdate, False)
 </code></pre>
-<p>Each filter in this example accepts three arguments: a modified flag,
-the note, and the current field. If a filter makes no changes it returns
-the modified flag the same as it received it; if it makes a change it
-returns True. In this way, if any single add-on makes a change, the UI
-will reload the note to show updates.</p>
-<p>The Japanese Support add-on uses this hook to automatically generate one
-field from another. A slightly simplified version is presented below:</p>
+<p>Each filter in this example accepts three arguments: a modified flag, the note, and the current field. If a filter makes no changes it returns the modified flag the same as it received it; if it makes a change it returns True. In this way, if any single add-on makes a change, the UI will reload the note to show updates.</p>
+<p>The Japanese Support add-on uses this hook to automatically generate one field from another. A slightly simplified version is presented below:</p>
 <pre><code class="language-python">def onFocusLost(flag, n, fidx):
     from aqt import mw
     # japanese model?
@@ -666,13 +542,8 @@ field from another. A slightly simplified version is presented below:</p>
 addHook('editFocusLost', onFocusLost)
 </code></pre>
 <p>The first argument of a filter is the argument that should be returned.
-In the focus lost filter this is a flag, but in other cases it may be
-some other object. For example, in anki/collection.py, _renderQA()
-calls the &quot;mungeQA&quot; filter which contains the generated HTML for the
-front and back of cards. latex.py uses this filter to convert text in
-LaTeX tags into images.</p>
-<p>In Anki 2.1, a hook was added for adding buttons to the editor. It can
-be used like so:</p>
+In the focus lost filter this is a flag, but in other cases it may be some other object. For example, in anki/collection.py, _renderQA() calls the &quot;mungeQA&quot; filter which contains the generated HTML for the front and back of cards. latex.py uses this filter to convert text in LaTeX tags into images.</p>
+<p>In Anki 2.1, a hook was added for adding buttons to the editor. It can be used like so:</p>
 <pre><code class="language-python">from aqt.utils import showInfo
 from anki.hooks import addHook
 
@@ -690,31 +561,16 @@ def addMyButton(buttons, editor):
 addHook(&quot;setupEditorButtons&quot;, addMyButton)
 </code></pre>
 <h2 id="adding-hooks"><a class="header" href="#adding-hooks">Adding Hooks</a></h2>
-<p>If you want to modify a function that doesn’t already have a hook,
-please submit a pull request that adds the hooks you need.</p>
-<p>The hook definitions are located in <code>pylib/tools/genhooks.py</code> and
-<code>qt/tools/genhooks_gui.py</code>. When building Anki, the build scripts will
-automatically update the hook files with the definitions listed there.</p>
+<p>If you want to modify a function that doesn’t already have a hook, please submit a pull request that adds the hooks you need.</p>
+<p>The hook definitions are located in <code>pylib/tools/genhooks.py</code> and <code>qt/tools/genhooks_gui.py</code>. When building Anki, the build scripts will automatically update the hook files with the definitions listed there.</p>
 <p>Please see the docs/ folder in the source tree for more information.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="background-operations"><a class="header" href="#background-operations">Background Operations</a></h1>
-<p>If your add-on performs a long-running operation directly, the user interface will freeze
-until the operation completes - no progress window will be shown, and the app will look as
-if it's stuck. This is annoying for users, so care should be taken to avoid it happening.</p>
-<p>The reason it happens is because the user interface runs on the &quot;main thread&quot;. When your add-on
-performs a long-running operation directly, it also runs on the main thread, and it prevents
-the UI code from running again until your operation completes. The solution is to run your add-on
-code in a background thread, so that the UI can continue to function.</p>
-<p>A complicating factor is that any code you write that interacts with the UI also needs to be
-run on the main thread. If your add-on only ran in the background, and it attempted to access the
-UI, it would cause Anki to crash. So selectivity is required - UI operations should be run on
-the main thread, and long-running operations like collection and network access should be run in
-the background. Anki provides some tools to make this easier.</p>
+<p>If your add-on performs a long-running operation directly, the user interface will freeze until the operation completes - no progress window will be shown, and the app will look as if it's stuck. This is annoying for users, so care should be taken to avoid it happening.</p>
+<p>The reason it happens is because the user interface runs on the &quot;main thread&quot;. When your add-on performs a long-running operation directly, it also runs on the main thread, and it prevents the UI code from running again until your operation completes. The solution is to run your add-on code in a background thread, so that the UI can continue to function.</p>
+<p>A complicating factor is that any code you write that interacts with the UI also needs to be run on the main thread. If your add-on only ran in the background, and it attempted to access the UI, it would cause Anki to crash. So selectivity is required - UI operations should be run on the main thread, and long-running operations like collection and network access should be run in the background. Anki provides some tools to make this easier.</p>
 <h2 id="read-onlynon-undoable-operations"><a class="header" href="#read-onlynon-undoable-operations">Read-Only/Non-Undoable Operations</a></h2>
-<p>For long-running operations like gathering a group of notes, or things like network access, 
-<code>QueryOp</code> is recommended.</p>
-<p>In the following example, my_ui_action() will return quickly, and the operation
-will continue to run in the background until it completes. If it finishes
-successfully, on_success will be called.</p>
+<p>For long-running operations like gathering a group of notes, or things like network access, <code>QueryOp</code> is recommended.</p>
+<p>In the following example, my_ui_action() will return quickly, and the operation will continue to run in the background until it completes. If it finishes successfully, on_success will be called.</p>
 <pre><code class="language-python">from anki.collection import Collection
 from aqt.operations import QueryOp
 from aqt.utils import showInfo
@@ -749,8 +605,7 @@ def my_ui_action(note_ids: list[int]):
 </code></pre>
 <p><strong>Be careful not to directly call any Qt/UI routines inside the background operation!</strong></p>
 <ul>
-<li>If you need to modify the UI after an operation completes (eg show a tooltip),
-you should do it from the success function.</li>
+<li>If you need to modify the UI after an operation completes (eg show a tooltip), you should do it from the success function.</li>
 <li>If the operation needs data from the UI (eg a combo box value), that data should be gathered
 prior to executing the operation.</li>
 <li>If you need to update the UI during the background operation (eg to update the text of the
@@ -768,73 +623,41 @@ in a loop:</li>
     last_progress = time.time()
 </code></pre>
 <h2 id="collection-operations"><a class="header" href="#collection-operations">Collection Operations</a></h2>
-<p>A separate <code>CollectionOp</code> is provided for undoable operations that modify
-the collection. It functions similarly to QueryOp, but will also update the
-UI as changes are made (eg refresh the Browse screen if any notes are changed).</p>
-<p>Many undoable ops already have a <code>CollectionOp</code> defined in aqt/operations/*.py.
-You can often use one of them directly rather than having to create your own.
-For example:</p>
+<p>A separate <code>CollectionOp</code> is provided for undoable operations that modify the collection. It functions similarly to QueryOp, but will also update the UI as changes are made (eg refresh the Browse screen if any notes are changed).</p>
+<p>Many undoable ops already have a <code>CollectionOp</code> defined in aqt/operations/*.py. You can often use one of them directly rather than having to create your own. For example:</p>
 <pre><code class="language-python">from aqt.operations.note import remove_notes
 
 def my_ui_action(note_ids: list[int]) -&gt; None:
     remove_notes(parent=mw, note_ids=note_ids).run_in_background()
 </code></pre>
-<p>By default that routine will show a tooltip on success. You can call .success()
-or .failure() on it to provide an alternative routine.</p>
-<p>For more information on undo handling, including combining multiple operations
-into a single undo step, please see <a href="https://forums.ankiweb.net/t/add-on-porting-notes-for-anki-2-1-45/11212#undoredo-4">this forum
-page</a>.</p>
+<p>By default that routine will show a tooltip on success. You can call .success() or .failure() on it to provide an alternative routine.</p>
+<p>For more information on undo handling, including combining multiple operations into a single undo step, please see <a href="https://forums.ankiweb.net/t/add-on-porting-notes-for-anki-2-1-45/11212#undoredo-4">this forum page</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="qt-and-pyqt"><a class="header" href="#qt-and-pyqt">Qt and PyQt</a></h1>
-<p>As mentioned in the overview, Anki uses PyQt for a lot of its UI, and the Qt
-documentation and <a href="https://www.riverbankcomputing.com/static/Docs/PyQt6/sip-classes.html">PyQt
-documentation</a>
-are invaluable for learning how to display different GUI widgets.</p>
+<p>As mentioned in the overview, Anki uses PyQt for a lot of its UI, and the Qt documentation and <a href="https://www.riverbankcomputing.com/static/Docs/PyQt6/sip-classes.html">PyQt documentation</a> are invaluable for learning how to display different GUI widgets.</p>
 <h2 id="qt-versions"><a class="header" href="#qt-versions">Qt Versions</a></h2>
-<p>From Anki 2.1.50, separate builds are provided for PyQt5 and PyQt6. Generally
-speaking, if you write code that works in Qt6, and make sure to import any Qt
-classes from aqt.qt instead of directly from PyQt6, your code should also work
-in Qt5.</p>
+<p>From Anki 2.1.50, separate builds are provided for PyQt5 and PyQt6. Generally speaking, if you write code that works in Qt6, and make sure to import any Qt classes from aqt.qt instead of directly from PyQt6, your code should also work in Qt5.</p>
 <h2 id="designer-files"><a class="header" href="#designer-files">Designer Files</a></h2>
-<p>Parts of Anki's UI are defined in .ui files, located in <code>qt/aqt/forms</code>. Anki's
-build process converts them into .py files. If you wish to build your add-on's
-UI in a similar way, you will need to install Python, and install a program
-called Qt Designer (Designer.app on macOS). On Linux, it may be available in
-your distro's packages; on Windows and Mac, you'll need to install it as part of
-a <a href="https://download.qt.io/">Qt install</a>. Once installed, you will need to use a
-program provided in the pyqt6 pip package to compile the .ui files.</p>
-<p>Generated Python files for PyQt6 won't work with PyQt5 and vice versa, so if you
-wish to support both versions, you will need to build the .ui files twice, once
-with pyuic5, and once with pyuic6.</p>
+<p>Parts of Anki's UI are defined in .ui files, located in <code>qt/aqt/forms</code>. Anki's build process converts them into .py files. If you wish to build your add-on's UI in a similar way, you will need to install Python, and install a program called Qt Designer (Designer.app on macOS). On Linux, it may be available in your distro's packages; on Windows and Mac, you'll need to install it as part of a <a href="https://download.qt.io/">Qt install</a>. Once installed, you will need to use a program provided in the pyqt6 pip package to compile the .ui files.</p>
+<p>Generated Python files for PyQt6 won't work with PyQt5 and vice versa, so if you wish to support both versions, you will need to build the .ui files twice, once with pyuic5, and once with pyuic6.</p>
 <h2 id="garbage-collection"><a class="header" href="#garbage-collection">Garbage Collection</a></h2>
-<p>One particular thing to bear in mind is that objects are garbage
-collected in Python, so if you do something like:</p>
+<p>One particular thing to bear in mind is that objects are garbage collected in Python, so if you do something like:</p>
 <pre><code class="language-python">def myfunc():
     widget = QWidget()
     widget.show()
 </code></pre>
-<p>…​then the widget will disappear as soon as the function exits. To
-prevent this, assign top level widgets to an existing object, like:</p>
+<p>…​then the widget will disappear as soon as the function exits. To prevent this, assign top level widgets to an existing object, like:</p>
 <pre><code class="language-python">def myfunc():
     mw.myWidget = widget = QWidget()
     widget.show()
 </code></pre>
-<p>This is often not required when you create a Qt object and give it an
-existing object as the parent, as the parent will keep a reference to
-the object.</p>
+<p>This is often not required when you create a Qt object and give it an existing object as the parent, as the parent will keep a reference to the object.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="python-modules"><a class="header" href="#python-modules">Python Modules</a></h1>
-<p>From Anki 2.1.50, the packaged builds include most built-in Python
-modules. Earlier versions ship with only the standard modules necessary to run Anki.</p>
-<p>If your add-on uses a standard Python module that has not
-been included, or a package from PyPI, then your add-on will need to bundle the module.</p>
-<p>For pure Python modules, this is usually as simple as putting them in a
-subfolder, and adjusting sys.path. For modules that that require C extensions
-such as numpy, things get a fair bit more complicated, as you'll need to bundle
-the different module versions for each platform, and ensure you're bundling a
-version that is compatible with the version of Python Anki is packaged with.</p>
+<p>From Anki 2.1.50, the packaged builds include most built-in Python modules. Earlier versions ship with only the standard modules necessary to run Anki.</p>
+<p>If your add-on uses a standard Python module that has not been included, or a package from PyPI, then your add-on will need to bundle the module.</p>
+<p>For pure Python modules, this is usually as simple as putting them in a subfolder, and adjusting sys.path. For modules that that require C extensions such as numpy, things get a fair bit more complicated, as you'll need to bundle the different module versions for each platform, and ensure you're bundling a version that is compatible with the version of Python Anki is packaged with.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="add-on-config"><a class="header" href="#add-on-config">Add-on Config</a></h1>
 <h2 id="config-json"><a class="header" href="#config-json">Config JSON</a></h2>
-<p>If you include a config.json file with a JSON dictionary in it, Anki
-will allow users to edit it from the add-on manager.</p>
+<p>If you include a config.json file with a JSON dictionary in it, Anki will allow users to edit it from the add-on manager.</p>
 <p>A simple example: in config.json:</p>
 <pre><code>{&quot;myvar&quot;: 5}
 </code></pre>
@@ -846,39 +669,25 @@ will allow users to edit it from the add-on manager.</p>
 config = mw.addonManager.getConfig(__name__)
 print(&quot;var is&quot;, config['myvar'])
 </code></pre>
-<p>When updating your add-on, you can make changes to config.json. Any
-newly added keys will be merged with the existing configuration.</p>
-<p>If you change the value of existing keys in config.json, users who have
-customized their configuration will continue to see the old values
-unless they use the &quot;restore defaults&quot; button.</p>
-<p>If you need to programmatically modify the config, you can save your
-changes with:</p>
+<p>When updating your add-on, you can make changes to config.json. 
+Any newly added keys will be merged with the existing configuration.</p>
+<p>If you change the value of existing keys in config.json, users who have customized their configuration will continue to see the old values unless they use the &quot;restore defaults&quot; button.</p>
+<p>If you need to programmatically modify the config, you can save your changes with:</p>
 <pre><code class="language-python">mw.addonManager.writeConfig(__name__, config)
 </code></pre>
-<p>If no config.json file exists, getConfig() will return None - even if
-you have called writeConfig().</p>
-<p>Add-ons that manage options in their own GUI can have that GUI displayed
-when the config button is clicked:</p>
+<p>If no config.json file exists, getConfig() will return None - even if you have called writeConfig().</p>
+<p>Add-ons that manage options in their own GUI can have that GUI displayed when the config button is clicked:</p>
 <pre><code class="language-python">mw.addonManager.setConfigAction(__name__, myOptionsFunc)
 </code></pre>
-<p>Avoid key names starting with an underscore - they are reserved for
-future use by Anki.</p>
+<p>Avoid key names starting with an underscore - they are reserved for future use by Anki.</p>
 <h2 id="user-files"><a class="header" href="#user-files">User Files</a></h2>
-<p>When your add-on needs configuration data other than simple keys and
-values, it can use a special folder called user_files in the root of
-your add-on’s folder. Any files placed in this folder will be preserved
-when the add-on is upgraded. All other files in the add-on folder are
+<p>When your add-on needs configuration data other than simple keys and values, it can use a special folder called user_files in the root of your add-on’s folder. Any files placed in this folder will be preserved when the add-on is upgraded. All other files in the add-on folder are
 removed on upgrade.</p>
-<p>To ensure the user_files folder is created for the user, you can put a
-README.txt or similar file inside it before zipping up your add-on.</p>
-<p>When Anki upgrades an add-on, it will ignore any files in the .zip that
-already exist in the user_files folder.</p>
+<p>To ensure the user_files folder is created for the user, you can put a README.txt or similar file inside it before zipping up your add-on.</p>
+<p>When Anki upgrades an add-on, it will ignore any files in the .zip that already exist in the user_files folder.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="reviewer-javascript"><a class="header" href="#reviewer-javascript">Reviewer Javascript</a></h1>
-<p>For a general solution not specific to card review, see
-<a href="hooks-and-filters.html#webview">the webview section</a>.</p>
-<p>Anki provides a hook to modify the question and answer HTML before it is
-displayed in the review screen, preview dialog, and card layout screen.
-This can be useful for adding Javascript to the card.</p>
+<p>For a general solution not specific to card review, see <a href="hooks-and-filters.html#webview">the webview section</a>.</p>
+<p>Anki provides a hook to modify the question and answer HTML before it is displayed in the review screen, preview dialog, and card layout screen. This can be useful for adding Javascript to the card.</p>
 <p>An example:</p>
 <pre><code class="language-python">from aqt import gui_hooks
 def prepare(html, card, context):
@@ -888,20 +697,11 @@ document.body.style.background = &quot;blue&quot;;
 &lt;/script&gt;&quot;&quot;&quot;
 gui_hooks.card_will_show.append(prepare)
 </code></pre>
-<p>The hook takes three arguments: the HTML of the question or answer, the
-current card object (so you can limit your add-on to specific note types
-for example), and a string representing the context the hook is running
-in.</p>
+<p>The hook takes three arguments: the HTML of the question or answer, the current card object (so you can limit your add-on to specific note types for example), and a string representing the context the hook is running in.</p>
 <p>Make sure you return the modified HTML.</p>
-<p>Context is one of: &quot;reviewQuestion&quot;, &quot;reviewAnswer&quot;, &quot;clayoutQuestion&quot;,
-&quot;clayoutAnswer&quot;, &quot;previewQuestion&quot; or &quot;previewAnswer&quot;.</p>
-<p>The answer preview in the card layout screen, and the previewer set to
-&quot;show both sides&quot; will only use the &quot;Answer&quot; context. This means
-Javascript you append on the back side of the card should not depend on
-Javascript that is only added on the front.</p>
-<p>Because Anki fades the previous text out before revealing the new text,
-Javascript hooks are required to perform actions like scrolling at the
-correct time. You can use them like so:</p>
+<p>Context is one of: &quot;reviewQuestion&quot;, &quot;reviewAnswer&quot;, &quot;clayoutQuestion&quot;, &quot;clayoutAnswer&quot;, &quot;previewQuestion&quot; or &quot;previewAnswer&quot;.</p>
+<p>The answer preview in the card layout screen, and the previewer set to &quot;show both sides&quot; will only use the &quot;Answer&quot; context. This means Javascript you append on the back side of the card should not depend on Javascript that is only added on the front.</p>
+<p>Because Anki fades the previous text out before revealing the new text, Javascript hooks are required to perform actions like scrolling at the correct time. You can use them like so:</p>
 <pre><code class="language-python">from aqt import gui_hooks
 def prepare(html, card, context):
     return html + &quot;&quot;&quot;
@@ -914,8 +714,7 @@ gui_hooks.card_will_show.append(prepare)
 </code></pre>
 <ul>
 <li>
-<p>onUpdateHook fires after the new card has been placed in the DOM,
-but before it is shown.</p>
+<p>onUpdateHook fires after the new card has been placed in the DOM, but before it is shown.</p>
 </li>
 <li>
 <p>onShownHook fires after the card has faded in.</p>
@@ -923,20 +722,12 @@ but before it is shown.</p>
 </ul>
 <p>The hooks are reset each time the question or answer is shown.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="debugging"><a class="header" href="#debugging">Debugging</a></h1>
-<p>If your code throws an exception, it will be caught by Anki’s standard
-exception handler (which catches anything written to stderr). If you
-need to print information for debugging purposes, you can use
-aqt.utils.showInfo, or write it to stderr with
-sys.stderr.write(&quot;text\n&quot;).</p>
+<p>If your code throws an exception, it will be caught by Anki’s standard exception handler (which catches anything written to stderr). If you need to print information for debugging purposes, you can use aqt.utils.showInfo, or write it to stderr with sys.stderr.write(&quot;text\n&quot;).</p>
 <h2 id="webviews"><a class="header" href="#webviews">Webviews</a></h2>
-<p>If you set the env var QTWEBENGINE_REMOTE_DEBUGGING to 8080 prior to starting Anki,
-you can surf to http://localhost:8080 in Chrome to debug the visible webpages.</p>
+<p>If you set the env var QTWEBENGINE_REMOTE_DEBUGGING to 8080 prior to starting Anki, you can surf to http://localhost:8080 in Chrome to debug the visible webpages.</p>
 <h2 id="debug-console"><a class="header" href="#debug-console">Debug Console</a></h2>
-<p>Anki also includes a REPL. From within the program, press the <a href="https://docs.ankiweb.net/misc.html#debug-console">shortcut
-key</a> and a
-window will open up. You can enter expressions or statements into the
-top area, and then press ctrl+return/command+return to evaluate them. An
-example session follows:</p>
+<p>Anki also includes a REPL. From within the program, press the <a href="https://docs.ankiweb.net/misc.html#debug-console">shortcut key</a> and a window will open up. You can enter expressions or statements into the top area, and then press ctrl+return/command+return to evaluate them. 
+An example session follows:</p>
 <pre><code>&gt;&gt;&gt; mw
 &lt;no output&gt;
 
@@ -981,42 +772,19 @@ NameError: name 'invalidName' is not defined
 &gt;&gt;&gt; pp(bcard()) # shortcut for selected card in browser
 &lt;as above&gt;
 </code></pre>
-<p>Note that you need to explicitly print an expression in order to see
-what it evaluates to. Anki exports pp() (pretty print) in the scope to
-make it easier to quickly dump the details of objects, and the shortcut
-ctrl+shift+return will wrap the current text in the upper area with pp()
-and execute the result.</p>
+<p>Note that you need to explicitly print an expression in order to see what it evaluates to. Anki exports pp() (pretty print) in the scope to make it easier to quickly dump the details of objects, and the shortcut ctrl+shift+return will wrap the current text in the upper area with pp() and execute the result.</p>
 <h2 id="pdb"><a class="header" href="#pdb">PDB</a></h2>
-<p>If you’re on Linux or are running Anki from source, it’s also possible
-to debug your script with pdb. Place the following line somewhere in
-your code, and when Anki reaches that point it will kick into the
-debugger in the terminal:</p>
+<p>If you’re on Linux or are running Anki from source, it’s also possible to debug your script with pdb. Place the following line somewhere in your code, and when Anki reaches that point it will kick into the debugger in the terminal:</p>
 <pre><code class="language-python">    from aqt.qt import debug; debug()
 </code></pre>
-<p>Alternatively you can export DEBUG=1 in your shell and it will kick into
-the debugger on an uncaught exception.</p>
+<p>Alternatively you can export DEBUG=1 in your shell and it will kick into the debugger on an uncaught exception.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="monkey-patching-and-method-wrapping"><a class="header" href="#monkey-patching-and-method-wrapping">Monkey Patching and Method Wrapping</a></h1>
-<p>If you want to modify a function that doesn’t already have a hook, it’s
-possible to overwrite that function with a custom version instead. This
-is sometimes referred to as 'monkey patching'.</p>
-<p>Monkey patching is useful in the testing stage, and while waiting for
-new hooks to be integrated into Anki. But please don’t rely on it long
-term, as monkey patching is very fragile, and will tend to break as Anki
-is updated in the future.</p>
-<p>The only exception to the above is if you’re making extensive changes to
-Anki where adding new hooks would be impractical. In that case, you may
-unfortunately need to modify your add-on periodically as Anki is
-updated.</p>
-<p>In aqt/editor.py there is a function setupButtons() which creates the
-buttons like bold, italics and so on that you see in the editor. Let’s
-imagine you want to add another button in your add-on.</p>
-<p>Anki 2.1 no longer uses setupButtons(). The code below is still useful
-to understand how monkey patching works, but for adding buttons to the
-editor please see the setupEditorButtons hook described in the previous
-section.</p>
-<p>The simplest way is to copy and paste the function from the Anki source
-code, add your text to the bottom, and then overwrite the original, like
-so:</p>
+<p>If you want to modify a function that doesn’t already have a hook, it’s possible to overwrite that function with a custom version instead. This is sometimes referred to as 'monkey patching'.</p>
+<p>Monkey patching is useful in the testing stage, and while waiting for new hooks to be integrated into Anki. But please don’t rely on it long term, as monkey patching is very fragile, and will tend to break as Anki is updated in the future.</p>
+<p>The only exception to the above is if you’re making extensive changes to Anki where adding new hooks would be impractical. In that case, you may unfortunately need to modify your add-on periodically as Anki is updated.</p>
+<p>In aqt/editor.py there is a function setupButtons() which creates the buttons like bold, italics and so on that you see in the editor. Let’s imagine you want to add another button in your add-on.</p>
+<p>Anki 2.1 no longer uses setupButtons(). The code below is still useful to understand how monkey patching works, but for adding buttons to the editor please see the setupEditorButtons hook described in the previous section.</p>
+<p>The simplest way is to copy and paste the function from the Anki source code, add your text to the bottom, and then overwrite the original, like so:</p>
 <pre><code class="language-python">from aqt.editor import Editor
 
 def mySetupButtons(self):
@@ -1025,10 +793,7 @@ def mySetupButtons(self):
 
 Editor.setupButtons = mySetupButtons
 </code></pre>
-<p>This approach is fragile however, as if the original code is updated in
-a future version of Anki, you would also have to update your add-on. A
-better approach would be to save the original, and call it in our custom
-version:</p>
+<p>This approach is fragile however, as if the original code is updated in a future version of Anki, you would also have to update your add-on. A better approach would be to save the original, and call it in our custom version:</p>
 <pre><code class="language-python">from aqt.editor import Editor
 
 def mySetupButtons(self):
@@ -1038,8 +803,7 @@ def mySetupButtons(self):
 origSetupButtons = Editor.setupButtons
 Editor.setupButtons = mySetupButtons
 </code></pre>
-<p>Because this is a common operation, Anki provides a function called
-wrap() which makes this a little more convenient. A real example:</p>
+<p>Because this is a common operation, Anki provides a function called wrap() which makes this a little more convenient. A real example:</p>
 <pre><code class="language-python">from anki.hooks import wrap
 from aqt.editor import Editor
 from aqt.utils import showInfo
@@ -1057,9 +821,7 @@ def mySetupButtons(self):
 
 Editor.setupButtons = wrap(Editor.setupButtons, mySetupButtons)
 </code></pre>
-<p>By default, wrap() runs your custom code after the original code. You
-can pass a third argument, &quot;before&quot;, to reverse this. If you need to run
-code both before and after the original version, you can do so like so:</p>
+<p>By default, wrap() runs your custom code after the original code. You can pass a third argument, &quot;before&quot;, to reverse this. If you need to run code both before and after the original version, you can do so like so:</p>
 <pre><code class="language-python">from anki.hooks import wrap
 from aqt.editor import Editor
 
@@ -1077,10 +839,8 @@ Editor.setupButtons = wrap(Editor.setupButtons, mySetupButtons, &quot;around&quo
 <li><a href="sharing.html#sharing-outside-ankiweb">Sharing outside AnkiWeb</a></li>
 </ul>
 <h2 id="sharing-via-ankiweb"><a class="header" href="#sharing-via-ankiweb">Sharing via AnkiWeb</a></h2>
-<p>You can package up an add-on for distribution by zipping it up, and
-giving it a name ending in .ankiaddon.</p>
-<p>The top level folder should not be included in the zip file. For
-example, if you have a module like the following:</p>
+<p>You can package up an add-on for distribution by zipping it up, and giving it a name ending in .ankiaddon.</p>
+<p>The top level folder should not be included in the zip file. For example, if you have a module like the following:</p>
 <pre><code>addons21/myaddon/__init__.py
 addons21/myaddon/my.data
 </code></pre>
@@ -1088,30 +848,18 @@ addons21/myaddon/my.data
 <pre><code>__init__.py
 my.data
 </code></pre>
-<p>If you include the folder name in the zip like the following, AnkiWeb
-will not accept the zip file:</p>
+<p>If you include the folder name in the zip like the following, AnkiWeb will not accept the zip file:</p>
 <pre><code>myaddon/__init__.py
 myaddon/my.data
 </code></pre>
-<p>On Unix-based machines, you can create a properly-formed file with the
-following command:</p>
+<p>On Unix-based machines, you can create a properly-formed file with the following command:</p>
 <pre><code>$ cd myaddon &amp;&amp; zip -r ../myaddon.ankiaddon *
 </code></pre>
-<p>Python automatically creates <code>pycache</code> folders when your add-on is run.
-Please make sure you delete these prior to creating the zip file, as
-AnkiWeb can not accept zip files that contain <code>pycache</code> folders.</p>
-<p>Once you’ve created a .ankiaddon file, you can use the Upload button on
-<a href="https://ankiweb.net/shared/addons/">https://ankiweb.net/shared/addons/</a> to share the add-on with others.</p>
+<p>Python automatically creates <code>pycache</code> folders when your add-on is run. Please make sure you delete these prior to creating the zip file, as AnkiWeb can not accept zip files that contain <code>pycache</code> folders.</p>
+<p>Once you’ve created a .ankiaddon file, you can use the Upload button on <a href="https://ankiweb.net/shared/addons/">https://ankiweb.net/shared/addons/</a> to share the add-on with others.</p>
 <h2 id="sharing-outside-ankiweb"><a class="header" href="#sharing-outside-ankiweb">Sharing outside AnkiWeb</a></h2>
-<p>If you wish to distribute .ankiaddon files outside of AnkiWeb, your
-add-on folder needs to contain a 'manifest.json' file. The file should
-contain at least two keys: 'package' specifies the folder name the
-add-on will be stored in, and 'name' specifies the name that will be
-shown to the user. You can optionally include a 'conflicts' key which is
-a list of other packages that conflict with the add-on, and a 'mod' key
-which specifies when the add-on was updated.</p>
-<p>When Anki downloads add-ons from AnkiWeb, only the conflicts key is used
-from the manifest.</p>
+<p>If you wish to distribute .ankiaddon files outside of AnkiWeb, your add-on folder needs to contain a 'manifest.json' file. The file should contain at least two keys: 'package' specifies the folder name the add-on will be stored in, and 'name' specifies the name that will be shown to the user. You can optionally include a 'conflicts' key which is a list of other packages that conflict with the add-on, and a 'mod' key which specifies when the add-on was updated.</p>
+<p>When Anki downloads add-ons from AnkiWeb, only the conflicts key is used from the manifest.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="porting-anki-20-add-ons"><a class="header" href="#porting-anki-20-add-ons">Porting Anki 2.0 add-ons</a></h1>
 <ul>
 <li><a href="porting2.0.html#python-3">Python 3</a></li>
@@ -1124,122 +872,65 @@ from the manifest.</p>
 <li><a href="porting2.0.html#add-on-configuration">Add-on Configuration</a></li>
 </ul>
 <h2 id="python-3"><a class="header" href="#python-3">Python 3</a></h2>
-<p>Anki 2.1 requires Python 3 or later. After installing Python 3 on your
-machine, you can use the 2to3 tool to automatically convert your
-existing scripts to Python 3 code on a folder by folder basis, like:</p>
+<p>Anki 2.1 requires Python 3 or later. After installing Python 3 on your machine, you can use the 2to3 tool to automatically convert your existing scripts to Python 3 code on a folder by folder basis, like:</p>
 <pre><code>2to3-3.8 --output-dir=aqt3 -W -n aqt
 mv aqt aqt-old
 mv aqt3 aqt
 </code></pre>
-<p>Most simple code can be converted automatically, but there may be parts
-of the code that you need to manually modify.</p>
+<p>Most simple code can be converted automatically, but there may be parts of the code that you need to manually modify.</p>
 <h2 id="qt5--pyqt5"><a class="header" href="#qt5--pyqt5">Qt5 / PyQt5</a></h2>
-<p>The syntax for connecting signals and slots has changed in PyQt5. Recent
-PyQt4 versions support the new syntax as well, so the same syntax can be
-used for both Anki 2.0 and 2.1 add-ons.</p>
-<p>More info is available at
-<a href="http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html">http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html</a></p>
-<p>One add-on author reported that the following tool was useful to
-automatically convert the code:
+<p>The syntax for connecting signals and slots has changed in PyQt5. Recent PyQt4 versions support the new syntax as well, so the same syntax can be used for both Anki 2.0 and 2.1 add-ons.</p>
+<p>More info is available at <a href="http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html">http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html</a></p>
+<p>One add-on author reported that the following tool was useful to automatically convert the code:
 <a href="https://github.com/rferrazz/pyqt4topyqt5">https://github.com/rferrazz/pyqt4topyqt5</a></p>
-<p>The Qt modules are in 'PyQt5' instead of 'PyQt4'. You can do a
-conditional import, but an easier way is to import from aqt.qt - eg</p>
+<p>The Qt modules are in 'PyQt5' instead of 'PyQt4'. You can do a conditional import, but an easier way is to import from aqt.qt - eg</p>
 <pre><code>from aqt.qt import *
 </code></pre>
-<p>That will import all the Qt objects like QDialog without having to
-specify the Qt version.</p>
+<p>That will import all the Qt objects like QDialog without having to specify the Qt version.</p>
 <h2 id="single-py-add-ons-need-their-own-folder"><a class="header" href="#single-py-add-ons-need-their-own-folder">Single .py add-ons need their own folder</a></h2>
-<p>Each add-on is now stored in its own folder. If your add-on was
-previously called <code>demo.py</code>, you’ll need to create a <code>demo</code> folder with
-an <code>__init__.py</code> file.</p>
-<p>If you don’t care about 2.0 compatibility, you can just rename <code>demo.py</code>
-to <code>demo/__init__.py</code>.</p>
-<p>If you plan to support 2.0 with the same file, you can copy your
-original file into the folder (<code>demo.py</code> → <code>demo/demo.py</code>), and then
-import it relatively by adding the following to <code>demo/__init__.py</code>:</p>
+<p>Each add-on is now stored in its own folder. If your add-on was previously called <code>demo.py</code>, you’ll need to create a <code>demo</code> folder with an <code>__init__.py</code> file.</p>
+<p>If you don’t care about 2.0 compatibility, you can just rename <code>demo.py</code> to <code>demo/__init__.py</code>.</p>
+<p>If you plan to support 2.0 with the same file, you can copy your original file into the folder (<code>demo.py</code> → <code>demo/demo.py</code>), and then import it relatively by adding the following to <code>demo/__init__.py</code>:</p>
 <pre><code>from . import demo
 </code></pre>
-<p>The folder needs to be zipped up when uploading to AnkiWeb. For more
-info, please see <a href="sharing.html">sharing add-ons</a>.</p>
+<p>The folder needs to be zipped up when uploading to AnkiWeb. For more info, please see <a href="sharing.html">sharing add-ons</a>.</p>
 <h2 id="folders-are-deleted-when-upgrading"><a class="header" href="#folders-are-deleted-when-upgrading">Folders are deleted when upgrading</a></h2>
-<p>When an add-on is upgraded, all files in the add-on folder are deleted.
-The only exception is the special <a href="addon-config.html#user-files">user_files folder</a>. If
-your add-on requires more than simple key/value configuration, make sure
-you store the associated files in the user_files folder, or they will
-be lost on upgrade.</p>
+<p>When an add-on is upgraded, all files in the add-on folder are deleted. The only exception is the special <a href="addon-config.html#user-files">user_files folder</a>. If your add-on requires more than simple key/value configuration, make sure you store the associated files in the user_files folder, or they will be lost on upgrade.</p>
 <h2 id="supporting-both-20-and-21-in-one-codebase"><a class="header" href="#supporting-both-20-and-21-in-one-codebase">Supporting both 2.0 and 2.1 in one codebase</a></h2>
-<p>Most Python 3 code will run on Python 2 as well, so it is possible to
-update your add-ons in such a way that they run on both Anki 2.0 and
-2.1. Whether this is worth it depends on the changes you need to make.</p>
-<p>Most add-ons that affect the scheduler should require only minor changes
-to work on 2.1. Add-ons that alter the behaviour of the reviewer,
-browser or editor may require more work.</p>
-<p>The most difficult part is the change from the unsupported QtWebKit to
-QtWebEngine. If you do any non-trivial work with webviews, some work
-will be required to port your code to Anki 2.1, and you may find it
-difficult to support both Anki versions in the one codebase.</p>
-<p>If you find your add-on runs without modification, or requires only
-minor changes, you may find it easiest to add some if statements to your
-code and upload the same file for both 2.0.x and 2.1.x.</p>
-<p>If your add-on requires more significant changes, you may find it easier
-to stop providing updates for 2.0.x, or to maintain separate files for
-the two Anki versions.</p>
+<p>Most Python 3 code will run on Python 2 as well, so it is possible to update your add-ons in such a way that they run on both Anki 2.0 and 2.1. Whether this is worth it depends on the changes you need to make.</p>
+<p>Most add-ons that affect the scheduler should require only minor changes to work on 2.1. Add-ons that alter the behaviour of the reviewer, browser or editor may require more work.</p>
+<p>The most difficult part is the change from the unsupported QtWebKit to QtWebEngine. If you do any non-trivial work with webviews, some work will be required to port your code to Anki 2.1, and you may find it difficult to support both Anki versions in the one codebase.</p>
+<p>If you find your add-on runs without modification, or requires only minor changes, you may find it easiest to add some if statements to your code and upload the same file for both 2.0.x and 2.1.x.</p>
+<p>If your add-on requires more significant changes, you may find it easier to stop providing updates for 2.0.x, or to maintain separate files for the two Anki versions.</p>
 <h2 id="webview-changes"><a class="header" href="#webview-changes">Webview Changes</a></h2>
-<p>Qt 5 has dropped WebKit in favour of the Chromium-based WebEngine, so
-Anki’s webviews are now using WebEngine. Of note:</p>
+<p>Qt 5 has dropped WebKit in favour of the Chromium-based WebEngine, so Anki’s webviews are now using WebEngine. Of note:</p>
 <ul>
 <li>
-<p>You can now debug the webviews using an external Chrome instance, by
-setting the env var QTWEBENGINE_REMOTE_DEBUGGING to 8080 prior to
-starting Anki, then surfing to localhost:8080 in Chrome.</p>
+<p>You can now debug the webviews using an external Chrome instance, by setting the env var QTWEBENGINE_REMOTE_DEBUGGING to 8080 prior to starting Anki, then surfing to localhost:8080 in Chrome.</p>
 </li>
 <li>
-<p>WebEngine uses a different method of communicating back to Python.
-AnkiWebView() is a wrapper for webviews which provides a pycmd(str)
-function in Javascript which will call the ankiwebview’s
-onBridgeCmd(str) method. Various parts of Anki’s UI like reviewer.py
-and deckbrowser.py have had to be modified to use this.</p>
+<p>WebEngine uses a different method of communicating back to Python. AnkiWebView() is a wrapper for webviews which provides a pycmd(str) function in Javascript which will call the ankiwebview’s onBridgeCmd(str) method. Various parts of Anki’s UI like reviewer.py and deckbrowser.py have had to be modified to use this.</p>
 </li>
 <li>
-<p>Javascript is evaluated asynchronously, so if you need the result of
-a JS expression you can use ankiwebview’s evalWithCallback().</p>
+<p>Javascript is evaluated asynchronously, so if you need the result of a JS expression you can use ankiwebview’s evalWithCallback().</p>
 </li>
 <li>
-<p>As a result of this asynchronous behaviour, editor.saveNow() now
-requires a callback. If your add-on performs actions in the browser,
-you likely need to call editor.saveNow() first and then run the rest
-of your code in the callback. Calls to .onSearch() will need to be
-changed to .search()/.onSearchActivated() as well. See the browser’s
-.deleteNotes() for an example.</p>
+<p>As a result of this asynchronous behaviour, editor.saveNow() now requires a callback. If your add-on performs actions in the browser, you likely need to call editor.saveNow() first and then run the rest of your code in the callback. Calls to .onSearch() will need to be changed to .search()/.onSearchActivated() as well. See the browser’s .deleteNotes() for an example.</p>
 </li>
 <li>
-<p>Various operations that were supported by WebKit like
-setScrollPosition() now need to be implemented in javascript.</p>
+<p>Various operations that were supported by WebKit like setScrollPosition() now need to be implemented in javascript.</p>
 </li>
 <li>
-<p>Page actions like mw.web.triggerPageAction(QWebEnginePage.Copy) are
-also asynchronous, and need to be rewritten to use javascript or a
-delay.</p>
+<p>Page actions like mw.web.triggerPageAction(QWebEnginePage.Copy) are also asynchronous, and need to be rewritten to use javascript or a delay.</p>
 </li>
 <li>
-<p>WebEngine doesn’t provide a keyPressEvent() like WebKit did, so the
-code that catches shortcuts not attached to a menu or button has had
-to be changed. setStateShortcuts() fires a hook that can be used to
-adjust the shortcuts for a given state.</p>
+<p>WebEngine doesn’t provide a keyPressEvent() like WebKit did, so the code that catches shortcuts not attached to a menu or button has had to be changed. setStateShortcuts() fires a hook that can be used to adjust the shortcuts for a given state.</p>
 </li>
 </ul>
 <h2 id="reviewer-changes"><a class="header" href="#reviewer-changes">Reviewer Changes</a></h2>
-<p>Anki now fades the previous card out before fading the next card in, so
-the next card won’t be available in the DOM when the showQuestion hook
-fires. There are some new hooks you can use to run Javascript at the
-appropriate time - see <a href="reviewer-javascript.html">here</a> for more.</p>
+<p>Anki now fades the previous card out before fading the next card in, so the next card won’t be available in the DOM when the showQuestion hook fires. There are some new hooks you can use to run Javascript at the appropriate time - see <a href="reviewer-javascript.html">here</a> for more.</p>
 <h2 id="add-on-configuration"><a class="header" href="#add-on-configuration">Add-on Configuration</a></h2>
-<p>Many small 2.0 add-ons relied on users editing the sourcecode to
-customize them. This is no longer a good idea in 2.1, because changes
-made by the user will be overwritten when they check for and download
-updates. 2.1 provides a <a href="addon-config.html#config-json">Configuration</a> system to work
-around this. If you need to continue supporting 2.0 as well, you could
-use code like the following:</p>
+<p>Many small 2.0 add-ons relied on users editing the sourcecode to customize them. This is no longer a good idea in 2.1, because changes made by the user will be overwritten when they check for and download updates. 2.1 provides a <a href="addon-config.html#config-json">Configuration</a> system to work around this. If you need to continue supporting 2.0 as well, you could use code like the following:</p>
 <pre><code class="language-python">if getattr(getattr(mw, &quot;addonManager&quot;, None), &quot;getConfig&quot;, None):
     config = mw.addonManager.getConfig(__name__)
 else:

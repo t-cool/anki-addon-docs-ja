@@ -156,34 +156,23 @@
 <li><a href="#legacy-hook-handling">Legacy Hook Handling</a></li>
 <li><a href="#adding-hooks">Adding Hooks</a></li>
 </ul>
-<p>Hooks are the way you should connect your add-on code to Anki. If the
-function you want to alter doesn’t already have a hook, please see the
-section below about adding new hooks.</p>
+<p>Hooks are the way you should connect your add-on code to Anki. If the function you want to alter doesn’t already have a hook, please see the section below about adding new hooks.</p>
 <p>There are two different kinds of &quot;hooks&quot;:</p>
 <ul>
 <li>
-<p>Regular hooks are functions that don’t return anything. They are run
-for their side effects, and may sometimes alter the objects they
-have been passed, such as inserting an extra item in a list.</p>
+<p>Regular hooks are functions that don’t return anything. They are run for their side effects, and may sometimes alter the objects they have been passed, such as inserting an extra item in a list.</p>
 </li>
 <li>
-<p>&quot;Filters&quot; are functions that return their first argument, after
-maybe changing it. An example filter is one that takes the text of a
-field during card display, and returns an altered version.</p>
+<p>&quot;Filters&quot; are functions that return their first argument, after maybe changing it. An example filter is one that takes the text of a field during card display, and returns an altered version.</p>
 </li>
 </ul>
-<p>The distinction is necessary because some data types in Python can be
-modified directly, and others can only be modified by creating a changed
-copy (such as strings).</p>
+<p>The distinction is necessary because some data types in Python can be modified directly, and others can only be modified by creating a changed copy (such as strings).</p>
 <h2 id="new-style-hooks"><a class="header" href="#new-style-hooks">New Style Hooks</a></h2>
 <p>A new style of hook was added in Anki 2.1.20.</p>
-<p>Imagine you wish to show a message each time the front side of a card is
-shown in the review screen. You’ve looked at the source code in
-reviewer.py, and seen the following line in the showQuestion() function:</p>
+<p>Imagine you wish to show a message each time the front side of a card is shown in the review screen. You’ve looked at the source code in reviewer.py, and seen the following line in the showQuestion() function:</p>
 <pre><code class="language-python">gui_hooks.reviewer_did_show_question(card)
 </code></pre>
-<p>To register a function to be called when this hook is run, you can do
-the following in your add-on:</p>
+<p>To register a function to be called when this hook is run, you can do the following in your add-on:</p>
 <pre><code class="language-python">from aqt import gui_hooks
 
 def myfunc(card):
@@ -191,8 +180,7 @@ def myfunc(card):
 
 gui_hooks.reviewer_did_show_question.append(myfunc)
 </code></pre>
-<p>Multiple add-ons can register for the same hook or filter - they will
-all be called in turn.</p>
+<p>Multiple add-ons can register for the same hook or filter - they will all be called in turn.</p>
 <p>To remove a hook, use code like:</p>
 <pre><code>gui_hooks.reviewer_did_show_question.remove(myfunc)
 </code></pre>
@@ -203,23 +191,16 @@ all be called in turn.</p>
 
 gui_hooks.reviewer_did_show_question.append(myfunc)
 </code></pre>
-<p>An easy way to see all hooks at a glance is to look at
-pylib/tools/genhooks.py and qt/tools/genhooks_gui.py.</p>
-<p>If you have set up type completion as described in an earlier section,
-you can also see the hooks in your IDE:</p>
+<p>An easy way to see all hooks at a glance is to look at pylib/tools/genhooks.py and qt/tools/genhooks_gui.py.</p>
+<p>If you have set up type completion as described in an earlier section, you can also see the hooks in your IDE:</p>
 <video controls autoplay loop muted>
  <source src="../img/autocomplete.mp4" type="video/mp4">
 </video>
-<p>In the above video, holding the command/ctrl key down while hovering
-will show a tooltip, including arguments and documentation if it exists.
-The argument names and types for the callback can be seen on the bottom
+<p>In the above video, holding the command/ctrl key down while hovering will show a tooltip, including arguments and documentation if it exists. The argument names and types for the callback can be seen on the bottom
 line.</p>
 <p>For some examples of how the new hooks are used, please see
 <a href="https://github.com/ankitects/anki-addons/blob/master/demos/">https://github.com/ankitects/anki-addons/blob/master/demos/</a>.</p>
-<p>Most of the new style hooks will also call the legacy hooks (described
-further below), so old add-ons will continue to work for now, but add-on authors
-are encouraged to update to the new style as it allows for code
-completion, and better error checking.</p>
+<p>Most of the new style hooks will also call the legacy hooks (described further below), so old add-ons will continue to work for now, but add-on authors are encouraged to update to the new style as it allows for code completion, and better error checking.</p>
 <h2 id="notable-hooks"><a class="header" href="#notable-hooks">Notable Hooks</a></h2>
 <p>For a full list of hooks, and their documentation, please see</p>
 <ul>
@@ -227,36 +208,22 @@ completion, and better error checking.</p>
 <li><a href="https://github.com/ankitects/anki/blob/master/pylib/tools/genhooks.py">The pylib hooks</a></li>
 </ul>
 <h3 id="webview"><a class="header" href="#webview">Webview</a></h3>
-<p>Many of Anki's screens are built with one or more webviews, and there are
-some hooks you can use to intercept their use.</p>
+<p>Many of Anki's screens are built with one or more webviews, and there are some hooks you can use to intercept their use.</p>
 <p>From Anki 2.1.22:</p>
 <ul>
-<li><code>gui_hooks.webview_will_set_content()</code> allows you to modify the HTML that
-various screens send to the webview. You can use this for adding your own
-HTML/CSS/Javascript to particular screens. This will not work for external
-pages - see the Anki 2.1.36 section below.</li>
-<li><code>gui_hooks.webview_did_receive_js_message()</code> allows you to intercept
-messages sent from Javascript. Anki provides a <code>pycmd(string)</code> function in
-Javascript which sends a message back to Python, and various screens such as
-reviewer.py respond to the messages. By using this hook, you can respond
-to your own messages as well.</li>
+<li><code>gui_hooks.webview_will_set_content()</code> allows you to modify the HTML that various screens send to the webview. You can use this for adding your own HTML/CSS/Javascript to particular screens. This will not work for external pages - see the Anki 2.1.36 section below.</li>
+<li><code>gui_hooks.webview_did_receive_js_message()</code> allows you to intercept messages sent from Javascript. Anki provides a <code>pycmd(string)</code> function in Javascript which sends a message back to Python, and various screens such as reviewer.py respond to the messages. By using this hook, you can respond to your own messages as well.</li>
 </ul>
 <p>From Anki 2.1.36:</p>
 <ul>
-<li><code>webview_did_inject_style_into_page()</code> gives you an opportunity to inject
-styling or content into external pages like the graphs screen and congratulations
-page that are loaded with load_ts_page().</li>
+<li><code>webview_did_inject_style_into_page()</code> gives you an opportunity to inject styling or content into external pages like the graphs screen and congratulations page that are loaded with load_ts_page().</li>
 </ul>
 <h2 id="legacy-hook-handling"><a class="header" href="#legacy-hook-handling">Legacy Hook Handling</a></h2>
-<p>Older versions of Anki used a different hook system, using the functions
-runHook(), addHook() and runFilter().</p>
-<p>For example, when the scheduler (anki/sched.py) discovers a leech, it
-calls:</p>
+<p>Older versions of Anki used a different hook system, using the functions runHook(), addHook() and runFilter().</p>
+<p>For example, when the scheduler (anki/sched.py) discovers a leech, it calls:</p>
 <pre><code class="language-python">runHook(&quot;leech&quot;, card)
 </code></pre>
-<p>If you wished to perform a special operation when a leech was
-discovered, such as moving the card to a &quot;Difficult&quot; deck, you could do
-it with the following code:</p>
+<p>If you wished to perform a special operation when a leech was discovered, such as moving the card to a &quot;Difficult&quot; deck, you could do it with the following code:</p>
 <pre><code class="language-python">from anki.hooks import addHook
 from aqt import mw
 
@@ -272,9 +239,7 @@ def onLeech(card):
 
 addHook(&quot;leech&quot;, onLeech)
 </code></pre>
-<p>An example of a filter is in aqt/editor.py. The editor calls the
-&quot;editFocusLost&quot; filter each time a field loses focus, so that add-ons
-can apply changes to the note:</p>
+<p>An example of a filter is in aqt/editor.py. The editor calls the &quot;editFocusLost&quot; filter each time a field loses focus, so that add-ons can apply changes to the note:</p>
 <pre><code class="language-python">if runFilter(
     &quot;editFocusLost&quot;, False, self.note, self.currentField):
     # something updated the note; schedule reload
@@ -283,13 +248,8 @@ can apply changes to the note:</p>
         self.checkValid()
     self.mw.progress.timer(100, onUpdate, False)
 </code></pre>
-<p>Each filter in this example accepts three arguments: a modified flag,
-the note, and the current field. If a filter makes no changes it returns
-the modified flag the same as it received it; if it makes a change it
-returns True. In this way, if any single add-on makes a change, the UI
-will reload the note to show updates.</p>
-<p>The Japanese Support add-on uses this hook to automatically generate one
-field from another. A slightly simplified version is presented below:</p>
+<p>Each filter in this example accepts three arguments: a modified flag, the note, and the current field. If a filter makes no changes it returns the modified flag the same as it received it; if it makes a change it returns True. In this way, if any single add-on makes a change, the UI will reload the note to show updates.</p>
+<p>The Japanese Support add-on uses this hook to automatically generate one field from another. A slightly simplified version is presented below:</p>
 <pre><code class="language-python">def onFocusLost(flag, n, fidx):
     from aqt import mw
     # japanese model?
@@ -327,13 +287,8 @@ field from another. A slightly simplified version is presented below:</p>
 addHook('editFocusLost', onFocusLost)
 </code></pre>
 <p>The first argument of a filter is the argument that should be returned.
-In the focus lost filter this is a flag, but in other cases it may be
-some other object. For example, in anki/collection.py, _renderQA()
-calls the &quot;mungeQA&quot; filter which contains the generated HTML for the
-front and back of cards. latex.py uses this filter to convert text in
-LaTeX tags into images.</p>
-<p>In Anki 2.1, a hook was added for adding buttons to the editor. It can
-be used like so:</p>
+In the focus lost filter this is a flag, but in other cases it may be some other object. For example, in anki/collection.py, _renderQA() calls the &quot;mungeQA&quot; filter which contains the generated HTML for the front and back of cards. latex.py uses this filter to convert text in LaTeX tags into images.</p>
+<p>In Anki 2.1, a hook was added for adding buttons to the editor. It can be used like so:</p>
 <pre><code class="language-python">from aqt.utils import showInfo
 from anki.hooks import addHook
 
@@ -351,11 +306,8 @@ def addMyButton(buttons, editor):
 addHook(&quot;setupEditorButtons&quot;, addMyButton)
 </code></pre>
 <h2 id="adding-hooks"><a class="header" href="#adding-hooks">Adding Hooks</a></h2>
-<p>If you want to modify a function that doesn’t already have a hook,
-please submit a pull request that adds the hooks you need.</p>
-<p>The hook definitions are located in <code>pylib/tools/genhooks.py</code> and
-<code>qt/tools/genhooks_gui.py</code>. When building Anki, the build scripts will
-automatically update the hook files with the definitions listed there.</p>
+<p>If you want to modify a function that doesn’t already have a hook, please submit a pull request that adds the hooks you need.</p>
+<p>The hook definitions are located in <code>pylib/tools/genhooks.py</code> and <code>qt/tools/genhooks_gui.py</code>. When building Anki, the build scripts will automatically update the hook files with the definitions listed there.</p>
 <p>Please see the docs/ folder in the source tree for more information.</p>
 
                     </main>

@@ -146,11 +146,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="reviewer-javascript"><a class="header" href="#reviewer-javascript">Reviewer Javascript</a></h1>
-<p>For a general solution not specific to card review, see
-<a href="hooks-and-filters.html#webview">the webview section</a>.</p>
-<p>Anki provides a hook to modify the question and answer HTML before it is
-displayed in the review screen, preview dialog, and card layout screen.
-This can be useful for adding Javascript to the card.</p>
+<p>For a general solution not specific to card review, see <a href="hooks-and-filters.html#webview">the webview section</a>.</p>
+<p>Anki provides a hook to modify the question and answer HTML before it is displayed in the review screen, preview dialog, and card layout screen. This can be useful for adding Javascript to the card.</p>
 <p>An example:</p>
 <pre><code class="language-python">from aqt import gui_hooks
 def prepare(html, card, context):
@@ -160,20 +157,11 @@ document.body.style.background = &quot;blue&quot;;
 &lt;/script&gt;&quot;&quot;&quot;
 gui_hooks.card_will_show.append(prepare)
 </code></pre>
-<p>The hook takes three arguments: the HTML of the question or answer, the
-current card object (so you can limit your add-on to specific note types
-for example), and a string representing the context the hook is running
-in.</p>
+<p>The hook takes three arguments: the HTML of the question or answer, the current card object (so you can limit your add-on to specific note types for example), and a string representing the context the hook is running in.</p>
 <p>Make sure you return the modified HTML.</p>
-<p>Context is one of: &quot;reviewQuestion&quot;, &quot;reviewAnswer&quot;, &quot;clayoutQuestion&quot;,
-&quot;clayoutAnswer&quot;, &quot;previewQuestion&quot; or &quot;previewAnswer&quot;.</p>
-<p>The answer preview in the card layout screen, and the previewer set to
-&quot;show both sides&quot; will only use the &quot;Answer&quot; context. This means
-Javascript you append on the back side of the card should not depend on
-Javascript that is only added on the front.</p>
-<p>Because Anki fades the previous text out before revealing the new text,
-Javascript hooks are required to perform actions like scrolling at the
-correct time. You can use them like so:</p>
+<p>Context is one of: &quot;reviewQuestion&quot;, &quot;reviewAnswer&quot;, &quot;clayoutQuestion&quot;, &quot;clayoutAnswer&quot;, &quot;previewQuestion&quot; or &quot;previewAnswer&quot;.</p>
+<p>The answer preview in the card layout screen, and the previewer set to &quot;show both sides&quot; will only use the &quot;Answer&quot; context. This means Javascript you append on the back side of the card should not depend on Javascript that is only added on the front.</p>
+<p>Because Anki fades the previous text out before revealing the new text, Javascript hooks are required to perform actions like scrolling at the correct time. You can use them like so:</p>
 <pre><code class="language-python">from aqt import gui_hooks
 def prepare(html, card, context):
     return html + &quot;&quot;&quot;
@@ -186,8 +174,7 @@ gui_hooks.card_will_show.append(prepare)
 </code></pre>
 <ul>
 <li>
-<p>onUpdateHook fires after the new card has been placed in the DOM,
-but before it is shown.</p>
+<p>onUpdateHook fires after the new card has been placed in the DOM, but before it is shown.</p>
 </li>
 <li>
 <p>onShownHook fires after the card has faded in.</p>
