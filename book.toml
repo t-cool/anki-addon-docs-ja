@@ -1,0 +1,25 @@
+[book]
+authors = ["Ankitects Pty Ltd and contributors"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Anki のアドオンを書く"
+
+[build]
+create-missing = true
+
+[preprocessor.toc]
+command = "mdbook-toc"
+renderer = ["html"]
+
+[output.html]
+git-repository-url = "https://github.com/t-cool/anki-addon-docs-ja"
+cname = "addon-docs.ankiweb.net"
+
+
+
+[output.linkcheck]
+optional = true
+warning-policy = "warn"
+follow-web-links = true
+exclude = [ 'forums.ankiweb.net' ]
