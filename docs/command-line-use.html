@@ -145,18 +145,18 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="command-line-use"><a class="header" href="#command-line-use">Command-Line Use</a></h1>
-<p>The <code>anki</code> module can be used separately from Anki's GUI. It is strongly recommended you use it instead of attempting to read or write a .anki2 file directly.</p>
-<p>Install it with pip:</p>
+                        <h1 id="コマンドラインの使用"><a class="header" href="#コマンドラインの使用">コマンドラインの使用</a></h1>
+<p><code>anki</code> モジュールは、Anki の GUI とは別に使用することができます。.anki2 ファイルを直接読み書きする代わりに、このモジュールを使用することを強くお勧めします。</p>
+<p>pipでインストールします。</p>
 <pre><code class="language-shell">$ pip install anki
 </code></pre>
-<p>Then you create use it in a .py file, like so:</p>
+<p>.py ファイルの中で次のように作成します:</p>
 <pre><code class="language-python">from anki.collection import Collection
 col = Collection(&quot;/path/to/collection.anki2&quot;)
 print(col.sched.deck_due_tree())
 col.close()
 </code></pre>
-<p>See <a href="./the-anki-module.html">the Anki module</a> for more.</p>
+<p>詳しくは <a href="./the-anki-module.html">Ankiモジュール</a> をご覧ください。</p>
 
                     </main>
 

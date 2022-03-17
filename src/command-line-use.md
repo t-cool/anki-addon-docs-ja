@@ -1,14 +1,15 @@
-# Command-Line Use
+# コマンドラインの使用
 
-The `anki` module can be used separately from Anki's GUI. It is strongly recommended you use it instead of attempting to read or write a .anki2 file directly.
+`anki` モジュールは、Anki の GUI とは別に使用することができます。.anki2 ファイルを直接読み書きする代わりに、このモジュールを使用することを強くお勧めします。
 
-Install it with pip:
+pipでインストールします。
+
 
 ```shell
 $ pip install anki
 ```
 
-Then you create use it in a .py file, like so:
+.py ファイルの中で次のように作成します:
 
 ```python
 from anki.collection import Collection
@@ -17,4 +18,4 @@ print(col.sched.deck_due_tree())
 col.close()
 ```
 
-See [the Anki module](./the-anki-module.md) for more.
+詳しくは [Ankiモジュール](./the-anki-module.md) をご覧ください。

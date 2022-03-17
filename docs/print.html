@@ -384,18 +384,18 @@ mw.col.db.executemany(same_sql_as_above, data)
 <p>アドオンによって既存のテーブルのスキーマが変更されると、Anki の将来のバージョンで問題が発生する可能性があるため、絶対に変更しないでください。</p>
 <p>アドオン固有のデータを保存する必要がある場合は、Anki の <a href="addon-config.html#config-json">Configuration</a> サポートの利用を検討してください。</p>
 <p>デバイス間でデータを同期する必要がある場合、小さなオプションは mw.col.conf 内に保存することができます。現在、同期ごとに送信されるため、大量のデータをそこに保存しないようにしてください。</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="command-line-use"><a class="header" href="#command-line-use">Command-Line Use</a></h1>
-<p>The <code>anki</code> module can be used separately from Anki's GUI. It is strongly recommended you use it instead of attempting to read or write a .anki2 file directly.</p>
-<p>Install it with pip:</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コマンドラインの使用"><a class="header" href="#コマンドラインの使用">コマンドラインの使用</a></h1>
+<p><code>anki</code> モジュールは、Anki の GUI とは別に使用することができます。.anki2 ファイルを直接読み書きする代わりに、このモジュールを使用することを強くお勧めします。</p>
+<p>pipでインストールします。</p>
 <pre><code class="language-shell">$ pip install anki
 </code></pre>
-<p>Then you create use it in a .py file, like so:</p>
+<p>.py ファイルの中で次のように作成します:</p>
 <pre><code class="language-python">from anki.collection import Collection
 col = Collection(&quot;/path/to/collection.anki2&quot;)
 print(col.sched.deck_due_tree())
 col.close()
 </code></pre>
-<p>See <a href="./the-anki-module.html">the Anki module</a> for more.</p>
+<p>詳しくは <a href="./the-anki-module.html">Ankiモジュール</a> をご覧ください。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="hooks--filters"><a class="header" href="#hooks--filters">Hooks &amp; Filters</a></h1>
 <ul>
 <li><a href="hooks-and-filters.html#new-style-hooks">New Style Hooks</a></li>
