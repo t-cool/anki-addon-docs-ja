@@ -1,8 +1,6 @@
 # Command-Line Use
 
-The `anki` module can be used separately from Anki's GUI. It is
-strongly recommended you use it instead of attempting to read or
-write a .anki2 file directly.
+The `anki` module can be used separately from Anki's GUI. It is strongly recommended you use it instead of attempting to read or write a .anki2 file directly.
 
 Install it with pip:
 
