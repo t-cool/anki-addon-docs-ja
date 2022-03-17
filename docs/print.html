@@ -244,35 +244,32 @@ Add-ons メニュー項目を選択します。[ファイルを見る］ボタ�
 <p>ユーザーデータは <a href="addon-config.html#config-json">ユーザーがアドオンをアップグレードすると削除される</a>ので、アドオンフォルダには保存しない方がよいでしょう。</p>
 <p><a href="editor-setup.html">エディタの設定</a>セクションの手順に従った場合、myaddon フォルダを Anki のアドオンフォルダにコピーしてテストするか、Mac や Linux ではフォルダの元の場所からアドオンフォルダへシンボリックリンクを作成してください。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="a-basic-add-on"><a class="header" href="#a-basic-add-on">A Basic Add-on</a></h1>
-<p>Add the following to <code>my_first_addon/__init__.py</code> in your add-ons folder:</p>
-<pre><code class="language-python"># import the main window object (mw) from aqt
+<p>アドオンフォルダ内の <code>my_first_addon/__init__.py</code> に以下を追加してください。</p>
+<pre><code class="language-python"># aqt からメインウィンドウオブジェクト (mw) をインポートする
 from aqt import mw
-# import the &quot;show info&quot; tool from utils.py
+# utils.py から &quot;show info&quot; ツールをインポートする
 from aqt.utils import showInfo, qconnect
-# import all of the Qt GUI library
+# Qt GUI ライブラリをすべてインポートする
 from aqt.qt import *
 
-# We're going to add a menu item below. First we want to create a function to
-# be called when the menu item is activated.
+# 下にメニュー項目を追加していきます。まず、メニュー項目がアクティブになったときに呼び出される関数を作成したいと思います。
 
 def testFunction() -&gt; None:
-    # get the number of cards in the current collection, which is stored in
-    # the main window
+    # メインウィンドウに格納されている現在のコレクション内のカード枚数を取得します。
     cardCount = mw.col.cardCount()
-    # show a message box
+    # メッセージボックスを表示する
     showInfo(&quot;Card count: %d&quot; % cardCount)
 
-# create a new menu item, &quot;test&quot;
+# 新しいメニュー項目 &quot;test &quot;を作成する
 action = QAction(&quot;test&quot;, mw)
-# set it to call testFunction when it's clicked
+# クリックされたときに testFunction を呼び出すように設定する
 qconnect(action.triggered, testFunction)
-# and add it to the tools menu
+# そしてツールメニューに追加する
 mw.form.menuTools.addAction(action)
 </code></pre>
-<p>Restart Anki, and you should find a 'test' item in the tools menu.
-Running it will display a dialog with the card count.</p>
-<p>If you make a mistake when entering in the plugin, Anki will show an
-error message on startup indicating where the problem is.</p>
+<p>Anki を再起動すると、ツールメニューに「テスト」項目が表示されるはずです。
+これを実行すると、カード枚数を示すダイアログが表示されます。</p>
+<p>プラグインの入力に間違いがあった場合、起動時にエラーメッセージが表示され、問題の場所が示されます。 </p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="anki-モジュール"><a class="header" href="#anki-モジュール">'anki' モジュール</a></h1>
 <p>コレクションや関連メディアへのアクセスは、Anki のソースレポジトリの <code>pylib/anki</code> にある <code>anki</code> という Python モジュールを通して行われます。</p>
 <h2 id="コレクション"><a class="header" href="#コレクション">コレクション</a></h2>
