@@ -1,36 +1,36 @@
-# Sharing Add-ons
+# アドオンの共有
 
 <!-- toc -->
 
-## Sharing via AnkiWeb
+## AnkiWeb による共有
 
-You can package up an add-on for distribution by zipping it up, and giving it a name ending in .ankiaddon.
+アドオンを配布するためにパッケージ化するには、zip 圧縮して .ankiaddon で終わる名前をつけます。
 
-The top level folder should not be included in the zip file. For example, if you have a module like the following:
+トップレベルフォルダは zip ファイルに含めないでください。例えば、次のようなモジュールがあるとします:
 
     addons21/myaddon/__init__.py
     addons21/myaddon/my.data
 
-Then the zip file contents should be:
+ZIPファイルの中身は以下の通りです:
 
     __init__.py
     my.data
 
-If you include the folder name in the zip like the following, AnkiWeb will not accept the zip file:
+以下のように zip にフォルダ名を含めると、AnkiWeb は zip ファイルを受け付けません。:
 
     myaddon/__init__.py
     myaddon/my.data
 
-On Unix-based machines, you can create a properly-formed file with the following command:
+Unix ベースのマシンでは、次のコマンドで正しい形式のファイルを作成することができます。:
 
     $ cd myaddon && zip -r ../myaddon.ankiaddon *
 
-Python automatically creates `pycache` folders when your add-on is run. Please make sure you delete these prior to creating the zip file, as AnkiWeb can not accept zip files that contain `pycache` folders.
+Python はアドオン実行時に自動的に `pycache` フォルダを作成します。AnkiWeb は `pycache` フォルダを含む zip ファイルを受け付けないため、zip ファイルを作成する前にこれらを削除しておいてください。
 
-Once you’ve created a .ankiaddon file, you can use the Upload button on <https://ankiweb.net/shared/addons/> to share the add-on with others.
+.ankiaddon ファイルを作成したら、<https://ankiweb.net/shared/addons/> にある Upload ボタンを使ってアドオンを他の人と共有することができます。
 
-## Sharing outside AnkiWeb
+## AnkiWeb 以外での共有
 
-If you wish to distribute .ankiaddon files outside of AnkiWeb, your add-on folder needs to contain a 'manifest.json' file. The file should contain at least two keys: 'package' specifies the folder name the add-on will be stored in, and 'name' specifies the name that will be shown to the user. You can optionally include a 'conflicts' key which is a list of other packages that conflict with the add-on, and a 'mod' key which specifies when the add-on was updated.
+.ankiaddon ファイルを AnkiWeb 以外で配布する場合、アドオンフォルダに manifest.json ファイルが含まれている必要があります。このファイルには、少なくとも2つのキーを含める必要があります。 package はアドオンが格納されるフォルダ名を指定し、nameはユーザーに表示される名前を指定します。オプションで、アドオンと競合する他のパッケージのリストである conflicts キーと、アドオンがいつ更新されたかを指定する mod キーを含めることができます。
 
-When Anki downloads add-ons from AnkiWeb, only the conflicts key is used from the manifest.
+Anki が AnkiWeb からアドオンをダウンロードする場合、マニフェストから conflicts キーのみが使用されます。

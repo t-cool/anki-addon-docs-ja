@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> レビュアーの Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html" class="active"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> reviewer の Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html" class="active"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,13 +145,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="monkey-patching-and-method-wrapping"><a class="header" href="#monkey-patching-and-method-wrapping">Monkey Patching and Method Wrapping</a></h1>
-<p>If you want to modify a function that doesn’t already have a hook, it’s possible to overwrite that function with a custom version instead. This is sometimes referred to as 'monkey patching'.</p>
-<p>Monkey patching is useful in the testing stage, and while waiting for new hooks to be integrated into Anki. But please don’t rely on it long term, as monkey patching is very fragile, and will tend to break as Anki is updated in the future.</p>
-<p>The only exception to the above is if you’re making extensive changes to Anki where adding new hooks would be impractical. In that case, you may unfortunately need to modify your add-on periodically as Anki is updated.</p>
-<p>In aqt/editor.py there is a function setupButtons() which creates the buttons like bold, italics and so on that you see in the editor. Let’s imagine you want to add another button in your add-on.</p>
-<p>Anki 2.1 no longer uses setupButtons(). The code below is still useful to understand how monkey patching works, but for adding buttons to the editor please see the setupEditorButtons hook described in the previous section.</p>
-<p>The simplest way is to copy and paste the function from the Anki source code, add your text to the bottom, and then overwrite the original, like so:</p>
+                        <h1 id="モンキーパッチングとメソッドラッピング"><a class="header" href="#モンキーパッチングとメソッドラッピング">モンキーパッチングとメソッドラッピング</a></h1>
+<p>フックを持たない関数を変更したい場合、その関数をカスタムバージョンで上書きすることが可能です。これは「モンキーパッチ」と呼ばれることもあります。</p>
+<p>モンキーパッチは、テスト段階や、Anki に新しいフックが統合されるのを待っている間などに便利です。しかし、モンキーパッチは非常に壊れやすく、将来 Anki が更新されたときに壊れる可能性があるため、長期的に依存しないようにしてください。</p>
+<p>上記の唯一の例外は、新しいフックを追加することが現実的でないような大規模な変更を Anki に加えている場合です。その場合、残念ながら、Anki の更新に合わせて定期的にアドオンを修正する必要があるかもしれません。</p>
+<p>aqt/editor.py には setupButtons() という関数があり、エディタに表示される太字や斜体のようなボタンを作成することができます。アドオンで別のボタンを追加したい場合を考えてみましょう。</p>
+<p>Anki 2.1 では setupButtons() を使用しなくなりました。以下のコードは、モンキーパッチの仕組みを理解するのにまだ役立ちますが、エディタにボタンを追加するには、前のセクションで説明した setupEditorButtons フックを参照してください。</p>
+<p>最も簡単な方法は、Anki ソースコードから関数をコピー＆ペーストして、テキストを一番下に追加し、元のコードを上書きすることです:</p>
 <pre><code class="language-python">from aqt.editor import Editor
 
 def mySetupButtons(self):
@@ -160,7 +160,7 @@ def mySetupButtons(self):
 
 Editor.setupButtons = mySetupButtons
 </code></pre>
-<p>This approach is fragile however, as if the original code is updated in a future version of Anki, you would also have to update your add-on. A better approach would be to save the original, and call it in our custom version:</p>
+<p>しかし、この方法はもろいもので、Anki の将来のバージョンでオリジナルのコードが更新された場合、あなたのアドオンも更新する必要があります。より良い方法は、オリジナルを保存し、カスタムバージョンでそれを呼び出すことです:</p>
 <pre><code class="language-python">from aqt.editor import Editor
 
 def mySetupButtons(self):
@@ -170,7 +170,7 @@ def mySetupButtons(self):
 origSetupButtons = Editor.setupButtons
 Editor.setupButtons = mySetupButtons
 </code></pre>
-<p>Because this is a common operation, Anki provides a function called wrap() which makes this a little more convenient. A real example:</p>
+<p>これはよくある操作なので、Anki は wrap() という関数を用意して、これを少し便利にしています。実際の例は、次の通りです:</p>
 <pre><code class="language-python">from anki.hooks import wrap
 from aqt.editor import Editor
 from aqt.utils import showInfo
@@ -179,16 +179,14 @@ def buttonPressed(self):
     showInfo(&quot;pressed &quot; + `self`)
 
 def mySetupButtons(self):
-    # - size=False tells Anki not to use a small button
-    # - the lambda is necessary to pass the editor instance to the
-    #   callback, as we're passing in a function rather than a bound
-    #   method
+    # - size=False は、Anki が小さなボタンを使用しないように指示します
+    # - バインドメソッドではなく関数を渡しているので、lambda はコールバックにエディタインスタンスを渡すために必要です
     self._addButton(&quot;mybutton&quot;, lambda s=self: buttonPressed(self),
                     text=&quot;PressMe&quot;, size=False)
 
 Editor.setupButtons = wrap(Editor.setupButtons, mySetupButtons)
 </code></pre>
-<p>By default, wrap() runs your custom code after the original code. You can pass a third argument, &quot;before&quot;, to reverse this. If you need to run code both before and after the original version, you can do so like so:</p>
+<p>デフォルトでは、wrap() は元のコードの後にカスタムコードを実行します。これを逆転させるために、第3引数 &quot;before&quot; を渡すことができます。元のバージョンの前と後の両方でコードを実行する必要がある場合、次のようにします:</p>
 <pre><code class="language-python">from anki.hooks import wrap
 from aqt.editor import Editor
 

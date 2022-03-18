@@ -1,18 +1,18 @@
-# Add-on Config
+# アドオンの設定
 
-## Config JSON
+## 設定用の JSON
 
-If you include a config.json file with a JSON dictionary in it, Anki will allow users to edit it from the add-on manager.
+JSON 形式の config.json ファイルを含めると、Anki はユーザーがアドオンマネージャーから編集できるようになります。
 
-A simple example: in config.json:
+簡単な config.json の例:
 
     {"myvar": 5}
 
-In config.md:
+config.md の例:
 
-    This is documentation for this add-on's configuration, in *markdown* format.
+    これは、このアドオンの設定に関するドキュメントで、*markdown* 形式で書かれています。
 
-In your add-on’s code:
+アドオンのコードは以下の通りです:
 
 ```python
 from aqt import mw
@@ -20,32 +20,31 @@ config = mw.addonManager.getConfig(__name__)
 print("var is", config['myvar'])
 ```
 
-When updating your add-on, you can make changes to config.json. 
-Any newly added keys will be merged with the existing configuration.
+アドオンをアップデートする際、config.json を変更することができます。新しく追加されたキーは、既存の設定にマージされます。
 
-If you change the value of existing keys in config.json, users who have customized their configuration will continue to see the old values unless they use the "restore defaults" button.
+config.json で既存のキーの値を変更した場合、設定をカスタマイズしているユーザーは、「restore defaults」ボタンを使用しない限り、古い値を表示し続けることになります。
 
-If you need to programmatically modify the config, you can save your changes with:
+プログラム的に設定を変更する必要がある場合、変更内容を保存するには次のようにします:
 
 ```python
 mw.addonManager.writeConfig(__name__, config)
 ```
 
-If no config.json file exists, getConfig() will return None - even if you have called writeConfig().
+config.json ファイルが存在しない場合、たとえ writeConfig() を呼び出したとしても、getConfig() は None を返します。
 
-Add-ons that manage options in their own GUI can have that GUI displayed when the config button is clicked:
+独自の GUI でオプションを管理するアドオンでは、config ボタンをクリックするとその GUI が表示されます:
 
 ```python
 mw.addonManager.setConfigAction(__name__, myOptionsFunc)
 ```
 
-Avoid key names starting with an underscore - they are reserved for future use by Anki.
+アンダースコアで始まるキー名は避けてください。これらは Anki が将来使用するために予約されています。
 
-## User Files
+## ユーザーファイル
 
-When your add-on needs configuration data other than simple keys and values, it can use a special folder called user_files in the root of your add-on’s folder. Any files placed in this folder will be preserved when the add-on is upgraded. All other files in the add-on folder are
-removed on upgrade.
+アドオンが単純なキーと値以外の設定データを必要とする場合、アドオンのフォルダのルートにある user_files という特別なフォルダを使用することができます。このフォルダに配置されたファイルは、アドオンがアップグレードされても保存されます。アドオンフォルダ内の他のファイルはすべて
+アップグレード時に削除されます。
 
-To ensure the user_files folder is created for the user, you can put a README.txt or similar file inside it before zipping up your add-on.
+user_files フォルダが確実にユーザー用に作成されるようにするには、アドオンを圧縮する前に README.txt などのファイルをその中に入れておくとよいでしょう。
 
-When Anki upgrades an add-on, it will ignore any files in the .zip that already exist in the user_files folder.
+Anki がアドオンをアップグレードするとき、user_files フォルダに既に存在する .zip 内のファイルは無視されます。

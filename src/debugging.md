@@ -1,16 +1,15 @@
-# Debugging
+# デバッグ
 
-If your code throws an exception, it will be caught by Anki’s standard exception handler (which catches anything written to stderr). If you need to print information for debugging purposes, you can use aqt.utils.showInfo, or write it to stderr with sys.stderr.write("text\\n").
-
+コードが例外をスローした場合、Anki の標準的な例外ハンドラでキャッチされます（標準エラー出力に書き込まれたものはすべて捕捉されます）。デバッグのために情報を表示する必要がある場合は、aqt.utils.showInfo を使用するか、sys.stderr.write("text\n") で stderr に情報を書き込むことができます。
 
 ## Webviews
 
-If you set the env var QTWEBENGINE_REMOTE_DEBUGGING to 8080 prior to starting Anki, you can surf to http://localhost:8080 in Chrome to debug the visible webpages.
+Anki を起動する前に環境変数の QTWEBENGINE_REMOTE_DEBUGGING を 8080 に設定すると、Chrome で http://localhost:8080 にサーフィンして、見えるウェブページをデバッグすることができるようになります。
 
-## Debug Console
+## デバッグ用コンソール
 
-Anki also includes a REPL. From within the program, press the [shortcut key](https://docs.ankiweb.net/misc.html#debug-console) and a window will open up. You can enter expressions or statements into the top area, and then press ctrl+return/command+return to evaluate them. 
-An example session follows:
+Ankiには REPL も搭載されています。プログラム内から[ショートカットキー](https://docs.ankiweb.net/misc.html#debug-console)を押すと、ウィンドウが表示されます。上の領域に式や文を入力し、ctrl+return/command+return を押すと、その式や文を評価することができます。
+セッションの例を以下に示します:
 
     >>> mw
     <no output>
@@ -56,14 +55,14 @@ An example session follows:
     >>> pp(bcard()) # shortcut for selected card in browser
     <as above>
 
-Note that you need to explicitly print an expression in order to see what it evaluates to. Anki exports pp() (pretty print) in the scope to make it easier to quickly dump the details of objects, and the shortcut ctrl+shift+return will wrap the current text in the upper area with pp() and execute the result.
+評価結果を見るためには、明示的に式を表示する必要があることに注意してください。Anki は pp() (pretty print) をスコープにエクスポートして、オブジェクトの詳細を簡単にダンプできるようにしています。ショートカットの ctrl+shift+return は、上部の領域にある現在のテキストを pp() でラップして、その結果を実行するものです。
 
 ## PDB
 
-If you’re on Linux or are running Anki from source, it’s also possible to debug your script with pdb. Place the following line somewhere in your code, and when Anki reaches that point it will kick into the debugger in the terminal:
+Linux またはソースから Anki を実行している場合、pdb を使用してスクリプトをデバッグすることも可能です。次の行をコードのどこかに記述すると、Anki がその行に到達したときに、ターミナルのデバッガが起動されます。:
 
 ```python
     from aqt.qt import debug; debug()
 ```
 
-Alternatively you can export DEBUG=1 in your shell and it will kick into the debugger on an uncaught exception.
+また、シェルで DEBUG=1 を指定しておけば、キャッチできない例外が発生したときにデバッガが起動します。

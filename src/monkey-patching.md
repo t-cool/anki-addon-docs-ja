@@ -1,16 +1,16 @@
-# Monkey Patching and Method Wrapping
+# モンキーパッチングとメソッドラッピング
 
-If you want to modify a function that doesn’t already have a hook, it’s possible to overwrite that function with a custom version instead. This is sometimes referred to as 'monkey patching'.
+フックを持たない関数を変更したい場合、その関数をカスタムバージョンで上書きすることが可能です。これは「モンキーパッチ」と呼ばれることもあります。
 
-Monkey patching is useful in the testing stage, and while waiting for new hooks to be integrated into Anki. But please don’t rely on it long term, as monkey patching is very fragile, and will tend to break as Anki is updated in the future.
+モンキーパッチは、テスト段階や、Anki に新しいフックが統合されるのを待っている間などに便利です。しかし、モンキーパッチは非常に壊れやすく、将来 Anki が更新されたときに壊れる可能性があるため、長期的に依存しないようにしてください。
 
-The only exception to the above is if you’re making extensive changes to Anki where adding new hooks would be impractical. In that case, you may unfortunately need to modify your add-on periodically as Anki is updated.
+上記の唯一の例外は、新しいフックを追加することが現実的でないような大規模な変更を Anki に加えている場合です。その場合、残念ながら、Anki の更新に合わせて定期的にアドオンを修正する必要があるかもしれません。
 
-In aqt/editor.py there is a function setupButtons() which creates the buttons like bold, italics and so on that you see in the editor. Let’s imagine you want to add another button in your add-on.
+aqt/editor.py には setupButtons() という関数があり、エディタに表示される太字や斜体のようなボタンを作成することができます。アドオンで別のボタンを追加したい場合を考えてみましょう。
 
-Anki 2.1 no longer uses setupButtons(). The code below is still useful to understand how monkey patching works, but for adding buttons to the editor please see the setupEditorButtons hook described in the previous section.
+Anki 2.1 では setupButtons() を使用しなくなりました。以下のコードは、モンキーパッチの仕組みを理解するのにまだ役立ちますが、エディタにボタンを追加するには、前のセクションで説明した setupEditorButtons フックを参照してください。
 
-The simplest way is to copy and paste the function from the Anki source code, add your text to the bottom, and then overwrite the original, like so:
+最も簡単な方法は、Anki ソースコードから関数をコピー＆ペーストして、テキストを一番下に追加し、元のコードを上書きすることです:
 
 ```python
 from aqt.editor import Editor
@@ -22,7 +22,7 @@ def mySetupButtons(self):
 Editor.setupButtons = mySetupButtons
 ```
 
-This approach is fragile however, as if the original code is updated in a future version of Anki, you would also have to update your add-on. A better approach would be to save the original, and call it in our custom version:
+しかし、この方法はもろいもので、Anki の将来のバージョンでオリジナルのコードが更新された場合、あなたのアドオンも更新する必要があります。より良い方法は、オリジナルを保存し、カスタムバージョンでそれを呼び出すことです:
 
 ```python
 from aqt.editor import Editor
@@ -35,7 +35,7 @@ origSetupButtons = Editor.setupButtons
 Editor.setupButtons = mySetupButtons
 ```
 
-Because this is a common operation, Anki provides a function called wrap() which makes this a little more convenient. A real example:
+これはよくある操作なので、Anki は wrap() という関数を用意して、これを少し便利にしています。実際の例は、次の通りです:
 
 ```python
 from anki.hooks import wrap
@@ -46,17 +46,15 @@ def buttonPressed(self):
     showInfo("pressed " + `self`)
 
 def mySetupButtons(self):
-    # - size=False tells Anki not to use a small button
-    # - the lambda is necessary to pass the editor instance to the
-    #   callback, as we're passing in a function rather than a bound
-    #   method
+    # - size=False は、Anki が小さなボタンを使用しないように指示します
+    # - バインドメソッドではなく関数を渡しているので、lambda はコールバックにエディタインスタンスを渡すために必要です
     self._addButton("mybutton", lambda s=self: buttonPressed(self),
                     text="PressMe", size=False)
 
 Editor.setupButtons = wrap(Editor.setupButtons, mySetupButtons)
 ```
 
-By default, wrap() runs your custom code after the original code. You can pass a third argument, "before", to reverse this. If you need to run code both before and after the original version, you can do so like so:
+デフォルトでは、wrap() は元のコードの後にカスタムコードを実行します。これを逆転させるために、第3引数 "before" を渡すことができます。元のバージョンの前と後の両方でコードを実行する必要がある場合、次のようにします:
 
 ```python
 from anki.hooks import wrap

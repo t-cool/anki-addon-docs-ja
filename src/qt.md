@@ -1,20 +1,20 @@
-# Qt and PyQt
+# Qt と PyQt
 
-As mentioned in the overview, Anki uses PyQt for a lot of its UI, and the Qt documentation and [PyQt documentation](https://www.riverbankcomputing.com/static/Docs/PyQt6/sip-classes.html) are invaluable for learning how to display different GUI widgets.
+概要で述べたように、Ank iは UI の多くに PyQt を使用しており、Qt のドキュメントと[PyQt documentation](https://www.riverbankcomputing.com/static/Docs/PyQt6/sip-classes.html) は、さまざまな GUI ウィジェットを表示する方法を学ぶのに非常に有益です。
 
-## Qt Versions
+## Qt のバージョン
 
-From Anki 2.1.50, separate builds are provided for PyQt5 and PyQt6. Generally speaking, if you write code that works in Qt6, and make sure to import any Qt classes from aqt.qt instead of directly from PyQt6, your code should also work in Qt5.
+Anki 2.1.50 からは、PyQt5 と PyQt6 用に別々のビルドが提供されます。一般的には、Qt6 で動作するコードを書き、Qtのクラスを PyQt6 から直接ではなく、aqt.qt からインポートするようにすれば、あなたのコードは Qt5 でも動くはずです。
 
-## Designer Files
+## デザイナー向けファイル
 
-Parts of Anki's UI are defined in .ui files, located in `qt/aqt/forms`. Anki's build process converts them into .py files. If you wish to build your add-on's UI in a similar way, you will need to install Python, and install a program called Qt Designer (Designer.app on macOS). On Linux, it may be available in your distro's packages; on Windows and Mac, you'll need to install it as part of a [Qt install](https://download.qt.io/). Once installed, you will need to use a program provided in the pyqt6 pip package to compile the .ui files.
+Anki の UI の一部は、`qt/aqt/forms` にある .ui ファイルで定義されています。Anki のビルドプロセスは、それらを .py ファイルに変換します。同様の方法でアドオンの UI を構築したい場合は、Python をインストールし、Qt Designer (macOS では Designer.app) と呼ばれるプログラムをインストールする必要があります。Linuxでは、ディストロのパッケージで利用できるかもしれません。WindowsとMacでは、[Qt install](https://download.qt.io/) の一部としてインストールする必要があります。一度インストールしたら、pyqt6 pip パッケージで提供されるプログラムを使って、.ui ファイルをコンパイルする必要があります。
 
-Generated Python files for PyQt6 won't work with PyQt5 and vice versa, so if you wish to support both versions, you will need to build the .ui files twice, once with pyuic5, and once with pyuic6.
+PyQt6 用に生成された Python ファイルはPyQt5 では動作しませんし、その逆も同様です。したがって、両方のバージョンをサポートしたい場合は、.ui ファイルを2回ビルドする必要があります。
 
-## Garbage Collection
+## ガベージコレクション
 
-One particular thing to bear in mind is that objects are garbage collected in Python, so if you do something like:
+特に注意しなければならないのは、Python ではオブジェクトはガベージコレクションされるので、次のようなことをすると、ガベージコレクションされます:
 
 ```python
 def myfunc():
@@ -22,7 +22,7 @@ def myfunc():
     widget.show()
 ```
 
-…​then the widget will disappear as soon as the function exits. To prevent this, assign top level widgets to an existing object, like:
+その場合、関数が終了すると同時にウィジェットは消えてしまいます。これを防ぐには、トップレベルのウィジェットを、以下のように既存のオブジェクトに割り当ててください:
 
 ```python
 def myfunc():
@@ -30,4 +30,4 @@ def myfunc():
     widget.show()
 ```
 
-This is often not required when you create a Qt object and give it an existing object as the parent, as the parent will keep a reference to the object.
+Qt オブジェクトを作成し、既存のオブジェクトを親として与えた場合、親がオブジェクトへの参照を保持するため、これはしばしば必要ではありません。

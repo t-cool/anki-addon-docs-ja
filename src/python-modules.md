@@ -1,7 +1,7 @@
-# Python Modules
+# Python のモジュール
 
-From Anki 2.1.50, the packaged builds include most built-in Python modules. Earlier versions ship with only the standard modules necessary to run Anki.
+Anki 2.1.50 以降、パッケージビルドにはほとんどの組み込み Python モジュールが含まれています。それ以前のバージョンでは、Anki の実行に必要な標準モジュールのみが同梱されています。
 
-If your add-on uses a standard Python module that has not been included, or a package from PyPI, then your add-on will need to bundle the module.
+同梱されていない標準の Python モジュールや PyPI のパッケージをアドオンで使用する場合、アドオンでモジュールをバンドルする必要があります。
 
-For pure Python modules, this is usually as simple as putting them in a subfolder, and adjusting sys.path. For modules that that require C extensions such as numpy, things get a fair bit more complicated, as you'll need to bundle the different module versions for each platform, and ensure you're bundling a version that is compatible with the version of Python Anki is packaged with.
+純粋な Python モジュールの場合、これは通常、サブフォルダに配置し、sys.path を調整するのと同じくらい簡単です。numpy などの C 拡張を必要とするモジュールの場合は、各プラットフォームの異なるモジュールバージョンをバンドルし、Anki がパッケージングされている Python のバージョンと互換性のあるバージョンをバンドルする必要があるため、かなり複雑になります。

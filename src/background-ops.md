@@ -1,16 +1,16 @@
-# Background Operations
+# バックグラウンドの操作
 
-If your add-on performs a long-running operation directly, the user interface will freeze until the operation completes - no progress window will be shown, and the app will look as if it's stuck. This is annoying for users, so care should be taken to avoid it happening.
+アドオンが長時間実行される操作を直接行った場合、操作が完了するまでユーザーインターフェースがフリーズし、進行状況ウィンドウが表示されず、アプリが停止しているように見えます。これはユーザーにとって迷惑なことなので、このようなことが起こらないように注意する必要があります。
 
-The reason it happens is because the user interface runs on the "main thread". When your add-on performs a long-running operation directly, it also runs on the main thread, and it prevents the UI code from running again until your operation completes. The solution is to run your add-on code in a background thread, so that the UI can continue to function.
+この現象が起こる理由は、ユーザーインターフェイスが「メインスレッド」上で動作しているからです。アドオンが長時間実行される操作を直接行うと、それもメインスレッド上で実行され、操作が完了するまでUIコードが再び実行されないようにします。解決策は、アドオンのコードをバックグラウンドスレッドで実行し、UIが引き続き機能するようにすることです。
 
-A complicating factor is that any code you write that interacts with the UI also needs to be run on the main thread. If your add-on only ran in the background, and it attempted to access the UI, it would cause Anki to crash. So selectivity is required - UI operations should be run on the main thread, and long-running operations like collection and network access should be run in the background. Anki provides some tools to make this easier.
+複雑なのは、UIとやりとりするコードもメインスレッドで実行する必要があることです。アドオンがバックグラウンドでのみ実行され、UIにアクセスしようとすると、Ankiがクラッシュする原因となります。つまり、UI操作はメインスレッドで実行し、コレクションやネットワークアクセスなどの長時間実行される操作はバックグラウンドで実行するという選択性が必要です。Anki には、これを容易にするツールがいくつか用意されています。
 
-## Read-Only/Non-Undoable Operations
+## 読み取り専用操作と読み取り専用でない操作
 
-For long-running operations like gathering a group of notes, or things like network access, `QueryOp` is recommended.
+ノートのグループを集めたり、ネットワークアクセスのような長時間実行される操作には、 `QueryOp` が推奨されます。
 
-In the following example, my_ui_action() will return quickly, and the operation will continue to run in the background until it completes. If it finishes successfully, on_success will be called.
+次の例では、my_ui_action() はすぐに戻り、操作は完了するまでバックグラウンドで実行され続けます。正常に終了すると、on_success が呼び出されます。
 
 ```python
 from anki.collection import Collection
@@ -19,7 +19,7 @@ from aqt.utils import showInfo
 from aqt import mw
 
 def my_background_op(col: Collection, note_ids: list[int]) -> int:
-    # some long-running op, eg
+    # 長い時間がかかる操作の例
     for id in note_ids:
         note = col.get_note(note_id)
         # ...
@@ -31,29 +31,24 @@ def on_success(count: int) -> None:
 
 def my_ui_action(note_ids: list[int]):
     op = QueryOp(
-        # the active window (main window in this case)
+        # アクティブウィンドウ(ここではメインウィンドウ)
         parent=mw,
-        # the operation is passed the collection for convenience; you can
-        # ignore it if you wish
+        # 操作には便宜上コレクションが渡されますが、無視してもかまいません
         op=lambda col: my_background_operation(col, note_ids),
-        # this function will be called if op completes successfully,
-        # and it is given the return value of the op
+        # この関数は、op が正常に終了したときに呼び出され、op の戻り値が渡されます
         success=on_success,
     )
 
-    # if with_progress() is not called, no progress window will be shown.
-    # note: QueryOp.with_progress() was broken until Anki 2.1.50
+    # with_progress()が呼ばれない場合、プログレスウィンドウは表示されません
+    # QueryOp.with_progress() は、Anki 2.1.50 までは壊れていました
     op.with_progress().run_in_background()
 ```
 
-**Be careful not to directly call any Qt/UI routines inside the background operation!**
+**バックグラウンド操作の内部でQt/UI ルーチンを直接呼び出さないように注意してください!**
 
-- If you need to modify the UI after an operation completes (eg show a tooltip), you should do it from the success function.
-- If the operation needs data from the UI (eg a combo box value), that data should be gathered
-prior to executing the operation.
-- If you need to update the UI during the background operation (eg to update the text of the
-progress window), your operation needs to perform that update on the main thread. For example,
-in a loop:
+- 操作完了後に UI を変更する必要がある場合（例：ツールチップを表示する）、成功関数から行う必要があります。
+- 操作に UI のデータが必要な場合（例：コンボボックスの値）、そのデータは操作の実行前に収集しておく必要があります。
+- バックグラウンドでの操作中にUIを更新する必要がある場合（例：プログレスウィンドウのテキストを更新する）、操作はメインスレッドでその更新を実行する必要があります。例えば、ループ内での操作を見てみましょう:
 
 ```python
 if time.time() - last_progress >= 0.1:
@@ -67,11 +62,11 @@ if time.time() - last_progress >= 0.1:
     last_progress = time.time()
 ```
 
-## Collection Operations
+## コレクションの操作
 
-A separate `CollectionOp` is provided for undoable operations that modify the collection. It functions similarly to QueryOp, but will also update the UI as changes are made (eg refresh the Browse screen if any notes are changed).
+コレクションを修正する取り消し可能な操作のために、別の `CollectionOp` が提供されています。これは QueryOp と同様に機能しますが、変更が行われると UI も更新されます (例えば、ノートが変更されたら Browse 画面をリフレッシュします)。
 
-Many undoable ops already have a `CollectionOp` defined in aqt/operations/*.py. You can often use one of them directly rather than having to create your own. For example:
+多くの元に戻せない操作は、すでに aqt/operations/*.py で `CollectionOp` を定義しています。多くの場合、自分で作成するよりも、それらのいずれかを直接使用することができます:
 
 ```python
 from aqt.operations.note import remove_notes
@@ -80,6 +75,6 @@ def my_ui_action(note_ids: list[int]) -> None:
     remove_notes(parent=mw, note_ids=note_ids).run_in_background()
 ```
 
-By default that routine will show a tooltip on success. You can call .success() or .failure() on it to provide an alternative routine.
+デフォルトでは、このルーチンは成功時にツールチップを表示します。.success()または .failure() を呼び出すことで、別のルーチンを提供することができます。
 
-For more information on undo handling, including combining multiple operations into a single undo step, please see [this forum page](https://forums.ankiweb.net/t/add-on-porting-notes-for-anki-2-1-45/11212#undoredo-4).
+複数の操作を1つの取り消し(undo)のステップにまとめるなど、取り消しの処理に関するより詳しい情報は、[このフォーラムのページ](https://forums.ankiweb.net/t/add-on-porting-notes-for-anki-2-1-45/11212#undoredo-4) を参照してください。

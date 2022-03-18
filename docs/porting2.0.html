@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> レビュアーの Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html" class="active"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> reviewer の Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html" class="active"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,77 +145,77 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="porting-anki-20-add-ons"><a class="header" href="#porting-anki-20-add-ons">Porting Anki 2.0 add-ons</a></h1>
+                        <h1 id="20-版アドオンの移植"><a class="header" href="#20-版アドオンの移植">2.0 版アドオンの移植</a></h1>
 <ul>
 <li><a href="#python-3">Python 3</a></li>
 <li><a href="#qt5--pyqt5">Qt5 / PyQt5</a></li>
-<li><a href="#single-py-add-ons-need-their-own-folder">Single .py add-ons need their own folder</a></li>
-<li><a href="#folders-are-deleted-when-upgrading">Folders are deleted when upgrading</a></li>
-<li><a href="#supporting-both-20-and-21-in-one-codebase">Supporting both 2.0 and 2.1 in one codebase</a></li>
-<li><a href="#webview-changes">Webview Changes</a></li>
-<li><a href="#reviewer-changes">Reviewer Changes</a></li>
-<li><a href="#add-on-configuration">Add-on Configuration</a></li>
+<li><a href="#%E5%8D%98%E4%B8%80%E3%81%AE-py-%E3%82%A2%E3%83%89%E3%82%AA%E3%83%B3%E3%81%AB%E3%81%AF%E5%B0%82%E7%94%A8%E3%81%AE%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%8C%E5%BF%85%E8%A6%81">単一の .py アドオンには専用のフォルダが必要</a></li>
+<li><a href="#%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89%E6%99%82%E3%81%AB%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%81%8C%E5%89%8A%E9%99%A4%E3%81%95%E3%82%8C%E3%82%8B">アップグレード時にフォルダが削除される</a></li>
+<li><a href="#1%E3%81%A4%E3%81%AE%E3%82%B3%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%B9%E3%81%A7-20-%E3%81%A8-21-%E3%81%AE%E4%B8%A1%E6%96%B9%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%81%99%E3%82%8B">1つのコードベースで 2.0 と 2.1 の両方に対応する</a></li>
+<li><a href="#webview-%E3%81%AE%E5%A4%89%E6%9B%B4">Webview の変更</a></li>
+<li><a href="#reviewer-%E3%81%AE%E5%A4%89%E6%9B%B4">Reviewer の変更</a></li>
+<li><a href="#%E3%82%A2%E3%83%89%E3%82%AA%E3%83%B3%E3%81%AE%E8%A8%AD%E5%AE%9A">アドオンの設定</a></li>
 </ul>
 <h2 id="python-3"><a class="header" href="#python-3">Python 3</a></h2>
-<p>Anki 2.1 requires Python 3 or later. After installing Python 3 on your machine, you can use the 2to3 tool to automatically convert your existing scripts to Python 3 code on a folder by folder basis, like:</p>
+<p>Anki 2.1 には Python 3 以降が必要です。Python 3 をマシンにインストールした後、2to3 ツールを使用して、以下のように既存のスクリプトをフォルダごとに Python 3 コードに自動的に変換することができます:</p>
 <pre><code>2to3-3.8 --output-dir=aqt3 -W -n aqt
 mv aqt aqt-old
 mv aqt3 aqt
 </code></pre>
-<p>Most simple code can be converted automatically, but there may be parts of the code that you need to manually modify.</p>
+<p>単純なコードのほとんどは自動的に変換できますが、手動で修正する必要がある部分があるかもしれません。</p>
 <h2 id="qt5--pyqt5"><a class="header" href="#qt5--pyqt5">Qt5 / PyQt5</a></h2>
-<p>The syntax for connecting signals and slots has changed in PyQt5. Recent PyQt4 versions support the new syntax as well, so the same syntax can be used for both Anki 2.0 and 2.1 add-ons.</p>
-<p>More info is available at <a href="http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html">http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html</a></p>
-<p>One add-on author reported that the following tool was useful to automatically convert the code:
+<p>PyQt5では、シグナルとスロットを接続するための構文が変更されました。最近の PyQt4 バージョンでは新しい構文もサポートしているので、Anki 2.0 と 2.1 の両方のアドオンに同じ構文を使用することができます。</p>
+<p>詳細は、<a href="http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html">http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html</a> にあります。</p>
+<p>あるアドオン作者は、コードを自動変換するために、以下のツールが便利であったと報告しています。
 <a href="https://github.com/rferrazz/pyqt4topyqt5">https://github.com/rferrazz/pyqt4topyqt5</a></p>
-<p>The Qt modules are in 'PyQt5' instead of 'PyQt4'. You can do a conditional import, but an easier way is to import from aqt.qt - eg</p>
+<p>Qt モジュールは PyQt4 ではなく PyQt5 になっています。条件付きでインポートすることもできますが、より簡単な方法は、次のように aqt.qt からインポートすることです:</p>
 <pre><code>from aqt.qt import *
 </code></pre>
-<p>That will import all the Qt objects like QDialog without having to specify the Qt version.</p>
-<h2 id="single-py-add-ons-need-their-own-folder"><a class="header" href="#single-py-add-ons-need-their-own-folder">Single .py add-ons need their own folder</a></h2>
-<p>Each add-on is now stored in its own folder. If your add-on was previously called <code>demo.py</code>, you’ll need to create a <code>demo</code> folder with an <code>__init__.py</code> file.</p>
-<p>If you don’t care about 2.0 compatibility, you can just rename <code>demo.py</code> to <code>demo/__init__.py</code>.</p>
-<p>If you plan to support 2.0 with the same file, you can copy your original file into the folder (<code>demo.py</code> → <code>demo/demo.py</code>), and then import it relatively by adding the following to <code>demo/__init__.py</code>:</p>
+<p>これにより、Qt のバージョンを指定することなく、QDialog のようなすべての Qt オブジェクトをインポートすることができます。</p>
+<h2 id="単一の-py-アドオンには専用のフォルダが必要"><a class="header" href="#単一の-py-アドオンには専用のフォルダが必要">単一の .py アドオンには専用のフォルダが必要</a></h2>
+<p>各アドオンは独自のフォルダに格納されるようになりました。もし、あなたのアドオンが以前は <code>demo.py</code> という名前だった場合、<code>demo</code> フォルダを作成して <code>__init__.py</code> ファイルを作成する必要があります。</p>
+<p>2.0 との互換性を気にしないのであれば、 <code>demo.py</code> を <code>demo/__init__.py</code> にリネームすればよいでしょう。</p>
+<p>もし、同じファイルで 2.0 に対応するつもりなら、元のファイルをフォルダにコピーし(<code>demo.py</code> → <code>demo/demo.py</code> )、<code>demo/__init__.py</code> に以下を追加して相対的にインポートすることが可能です:</p>
 <pre><code>from . import demo
 </code></pre>
-<p>The folder needs to be zipped up when uploading to AnkiWeb. For more info, please see <a href="sharing.html">sharing add-ons</a>.</p>
-<h2 id="folders-are-deleted-when-upgrading"><a class="header" href="#folders-are-deleted-when-upgrading">Folders are deleted when upgrading</a></h2>
-<p>When an add-on is upgraded, all files in the add-on folder are deleted. The only exception is the special <a href="addon-config.html#user-files">user_files folder</a>. If your add-on requires more than simple key/value configuration, make sure you store the associated files in the user_files folder, or they will be lost on upgrade.</p>
-<h2 id="supporting-both-20-and-21-in-one-codebase"><a class="header" href="#supporting-both-20-and-21-in-one-codebase">Supporting both 2.0 and 2.1 in one codebase</a></h2>
-<p>Most Python 3 code will run on Python 2 as well, so it is possible to update your add-ons in such a way that they run on both Anki 2.0 and 2.1. Whether this is worth it depends on the changes you need to make.</p>
-<p>Most add-ons that affect the scheduler should require only minor changes to work on 2.1. Add-ons that alter the behaviour of the reviewer, browser or editor may require more work.</p>
-<p>The most difficult part is the change from the unsupported QtWebKit to QtWebEngine. If you do any non-trivial work with webviews, some work will be required to port your code to Anki 2.1, and you may find it difficult to support both Anki versions in the one codebase.</p>
-<p>If you find your add-on runs without modification, or requires only minor changes, you may find it easiest to add some if statements to your code and upload the same file for both 2.0.x and 2.1.x.</p>
-<p>If your add-on requires more significant changes, you may find it easier to stop providing updates for 2.0.x, or to maintain separate files for the two Anki versions.</p>
-<h2 id="webview-changes"><a class="header" href="#webview-changes">Webview Changes</a></h2>
-<p>Qt 5 has dropped WebKit in favour of the Chromium-based WebEngine, so Anki’s webviews are now using WebEngine. Of note:</p>
+<p>AnkiWeb にアップロードする際は、フォルダを ZIP で圧縮する必要があります。詳しくは、<a href="sharing.html">アドオンの共有</a>を参照してください。</p>
+<h2 id="アップグレード時にフォルダが削除される"><a class="header" href="#アップグレード時にフォルダが削除される">アップグレード時にフォルダが削除される</a></h2>
+<p>アドオンをアップグレードすると、アドオンフォルダ内のファイルはすべて削除されます。唯一の例外は、特別な <a href="addon-config.html#user-files">user_files folder</a> です。アドオンが単純なキー/値設定以上のものを必要とする場合、関連するファイルを user_files フォルダに保存していることを確認してください。そうしなければ、アップグレード時に失われるでしょう。</p>
+<h2 id="1つのコードベースで-20-と-21-の両方に対応する"><a class="header" href="#1つのコードベースで-20-と-21-の両方に対応する">1つのコードベースで 2.0 と 2.1 の両方に対応する</a></h2>
+<p>Python 3 のコードのほとんどは Python 2 でも実行できるため、Anki 2.0 と 2.1 の両方で実行できるようにアドオンを更新することができます。その価値があるかどうかは、必要な変更によります。</p>
+<p>スケジューラに影響を与えるほとんどのアドオンは、2.1 で動作させるためにわずかな変更で済むはずです。レビューア、ブラウザ、エディタの動作を変更するアドオンは、より多くの作業を必要とする可能性があります。</p>
+<p>最も難しいのは、サポートされていないQtWebKit から QtWebEngine への変更です。WebView を使用する場合、Anki 2.1 にコードを移植する作業が必要になり、1 つのコード ベースで両方の Anki バージョンをサポートすることが難しくなる可能性があります。</p>
+<p>アドオンが修正なしで動作する場合や、わずかな変更で済む場合は、コードに if 文を追加して、2.0.x と 2.1.x の両方に同じファイルをアップロードするのが最も簡単でしょう。</p>
+<p>アドオンに大幅な変更が必要な場合は、2.0.x の更新を停止するか、2 つの Anki バージョン用に別々のファイルを維持する方が簡単かもしれません。</p>
+<h2 id="webview-の変更"><a class="header" href="#webview-の変更">Webview の変更</a></h2>
+<p>Qt 5 では WebKit が廃止され、Chromium ベースの WebEngine が採用されたため、Anki のウェブビューは WebEngine を使用するようになりました。注目すべきは以下の点です : </p>
 <ul>
 <li>
-<p>You can now debug the webviews using an external Chrome instance, by setting the env var QTWEBENGINE_REMOTE_DEBUGGING to 8080 prior to starting Anki, then surfing to localhost:8080 in Chrome.</p>
+<p>Anki を起動する前に環境変数  QTWEBENGINE_REMOTE_DEBUGGING を 8080 に設定し、Chrome で localhost:8080 にアクセスすると、外部の Chrome インスタンスを使用して WebView をデバッグすることができるようになりました。</p>
 </li>
 <li>
-<p>WebEngine uses a different method of communicating back to Python. AnkiWebView() is a wrapper for webviews which provides a pycmd(str) function in Javascript which will call the ankiwebview’s onBridgeCmd(str) method. Various parts of Anki’s UI like reviewer.py and deckbrowser.py have had to be modified to use this.</p>
+<p>WebEngine は、Python に戻る通信に別の方法を使用します。AnkiWebView() はウェブビューのラッパーで、Javascript で pycmd(str) 関数を提供し、ankiwebview の onBridgeCmd(str) メソッドを呼び出すことができます。reviewer.py や deckbrowser.py など、Anki の UI のさまざまな部分は、これを使用するために修正する必要がありました。</p>
 </li>
 <li>
-<p>Javascript is evaluated asynchronously, so if you need the result of a JS expression you can use ankiwebview’s evalWithCallback().</p>
+<p>Javascript は非同期に評価されるので、JS 式の結果が必要な場合は、ankiwebview の evalWithCallback() を使用します。</p>
 </li>
 <li>
-<p>As a result of this asynchronous behaviour, editor.saveNow() now requires a callback. If your add-on performs actions in the browser, you likely need to call editor.saveNow() first and then run the rest of your code in the callback. Calls to .onSearch() will need to be changed to .search()/.onSearchActivated() as well. See the browser’s .deleteNotes() for an example.</p>
+<p>この非同期動作の結果、editor.saveNow()はコールバックを必要とするようになりました。アドオンがブラウザ上でアクションを実行する場合、まず editor.saveNow() を呼び出し、その後コールバックで残りのコードを実行する必要があるでしょう。.onSearch()への呼び出しは、同様に .search()/.onSearchActivated() に変更する必要があります。例として、ブラウザの .deleteNotes() を参照してください。</p>
 </li>
 <li>
-<p>Various operations that were supported by WebKit like setScrollPosition() now need to be implemented in javascript.</p>
+<p>setScrollPosition() のように WebKit でサポートされていたさまざまな操作は、javascript で実装する必要があります。</p>
 </li>
 <li>
-<p>Page actions like mw.web.triggerPageAction(QWebEnginePage.Copy) are also asynchronous, and need to be rewritten to use javascript or a delay.</p>
+<p>mw.web.triggerPageAction(QWebEnginePage.Copy) のようなページアクションも非同期なので、JavaScript や遅延を使うように書き直す必要があります。</p>
 </li>
 <li>
-<p>WebEngine doesn’t provide a keyPressEvent() like WebKit did, so the code that catches shortcuts not attached to a menu or button has had to be changed. setStateShortcuts() fires a hook that can be used to adjust the shortcuts for a given state.</p>
+<p>WebEngine は WebKit のようにkeyPressEvent() を提供しないので、メニューやボタンに付属しないショートカットをキャッチするコードを変更する必要がありました。 setStateShortcuts() は、与えられた状態に対するショートカットを調整するために使用するフックを発生させます。</p>
 </li>
 </ul>
-<h2 id="reviewer-changes"><a class="header" href="#reviewer-changes">Reviewer Changes</a></h2>
-<p>Anki now fades the previous card out before fading the next card in, so the next card won’t be available in the DOM when the showQuestion hook fires. There are some new hooks you can use to run Javascript at the appropriate time - see <a href="reviewer-javascript.html">here</a> for more.</p>
-<h2 id="add-on-configuration"><a class="header" href="#add-on-configuration">Add-on Configuration</a></h2>
-<p>Many small 2.0 add-ons relied on users editing the sourcecode to customize them. This is no longer a good idea in 2.1, because changes made by the user will be overwritten when they check for and download updates. 2.1 provides a <a href="addon-config.html#config-json">Configuration</a> system to work around this. If you need to continue supporting 2.0 as well, you could use code like the following:</p>
+<h2 id="reviewer-の変更"><a class="header" href="#reviewer-の変更">Reviewer の変更</a></h2>
+<p>Anki は、前のカードをフェードアウトしてから次のカードをフェードインするようになったため、showQuestion フックが発生したときに次のカードが DOM に表示されなくなります。適切なタイミングで Javascript を実行するために使用できる新しいフックがいくつかあります - 詳しくは <a href="reviewer-javascript.html">こちら</a> をご覧ください。</p>
+<h2 id="アドオンの設定"><a class="header" href="#アドオンの設定">アドオンの設定</a></h2>
+<p>2.0 の小さなアドオンの多くは、ユーザーがソースコードを編集してカスタマイズすることに依存していました。これは、2.1 ではもはや良いアイデアではありません。なぜなら、ユーザーによってなされた変更は、アップデートをチェックしダウンロードするときに上書きされるからです。2.1 では、これを回避するために <a href="addon-config.html#config-json">設定</a> のシステムを提供しています。2.0 もサポートし続ける必要がある場合は、以下のようなコードを使用することができます:</p>
 <pre><code class="language-python">if getattr(getattr(mw, &quot;addonManager&quot;, None), &quot;getConfig&quot;, None):
     config = mw.addonManager.getConfig(__name__)
 else:

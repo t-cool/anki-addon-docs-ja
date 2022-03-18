@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> レビュアーの Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html" class="active"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> reviewer の Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html" class="active"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,33 +145,33 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="sharing-add-ons"><a class="header" href="#sharing-add-ons">Sharing Add-ons</a></h1>
+                        <h1 id="アドオンの共有"><a class="header" href="#アドオンの共有">アドオンの共有</a></h1>
 <ul>
-<li><a href="#sharing-via-ankiweb">Sharing via AnkiWeb</a></li>
-<li><a href="#sharing-outside-ankiweb">Sharing outside AnkiWeb</a></li>
+<li><a href="#ankiweb-%E3%81%AB%E3%82%88%E3%82%8B%E5%85%B1%E6%9C%89">AnkiWeb による共有</a></li>
+<li><a href="#ankiweb-%E4%BB%A5%E5%A4%96%E3%81%A7%E3%81%AE%E5%85%B1%E6%9C%89">AnkiWeb 以外での共有</a></li>
 </ul>
-<h2 id="sharing-via-ankiweb"><a class="header" href="#sharing-via-ankiweb">Sharing via AnkiWeb</a></h2>
-<p>You can package up an add-on for distribution by zipping it up, and giving it a name ending in .ankiaddon.</p>
-<p>The top level folder should not be included in the zip file. For example, if you have a module like the following:</p>
+<h2 id="ankiweb-による共有"><a class="header" href="#ankiweb-による共有">AnkiWeb による共有</a></h2>
+<p>アドオンを配布するためにパッケージ化するには、zip 圧縮して .ankiaddon で終わる名前をつけます。</p>
+<p>トップレベルフォルダは zip ファイルに含めないでください。例えば、次のようなモジュールがあるとします:</p>
 <pre><code>addons21/myaddon/__init__.py
 addons21/myaddon/my.data
 </code></pre>
-<p>Then the zip file contents should be:</p>
+<p>ZIPファイルの中身は以下の通りです:</p>
 <pre><code>__init__.py
 my.data
 </code></pre>
-<p>If you include the folder name in the zip like the following, AnkiWeb will not accept the zip file:</p>
+<p>以下のように zip にフォルダ名を含めると、AnkiWeb は zip ファイルを受け付けません。:</p>
 <pre><code>myaddon/__init__.py
 myaddon/my.data
 </code></pre>
-<p>On Unix-based machines, you can create a properly-formed file with the following command:</p>
+<p>Unix ベースのマシンでは、次のコマンドで正しい形式のファイルを作成することができます。:</p>
 <pre><code>$ cd myaddon &amp;&amp; zip -r ../myaddon.ankiaddon *
 </code></pre>
-<p>Python automatically creates <code>pycache</code> folders when your add-on is run. Please make sure you delete these prior to creating the zip file, as AnkiWeb can not accept zip files that contain <code>pycache</code> folders.</p>
-<p>Once you’ve created a .ankiaddon file, you can use the Upload button on <a href="https://ankiweb.net/shared/addons/">https://ankiweb.net/shared/addons/</a> to share the add-on with others.</p>
-<h2 id="sharing-outside-ankiweb"><a class="header" href="#sharing-outside-ankiweb">Sharing outside AnkiWeb</a></h2>
-<p>If you wish to distribute .ankiaddon files outside of AnkiWeb, your add-on folder needs to contain a 'manifest.json' file. The file should contain at least two keys: 'package' specifies the folder name the add-on will be stored in, and 'name' specifies the name that will be shown to the user. You can optionally include a 'conflicts' key which is a list of other packages that conflict with the add-on, and a 'mod' key which specifies when the add-on was updated.</p>
-<p>When Anki downloads add-ons from AnkiWeb, only the conflicts key is used from the manifest.</p>
+<p>Python はアドオン実行時に自動的に <code>pycache</code> フォルダを作成します。AnkiWeb は <code>pycache</code> フォルダを含む zip ファイルを受け付けないため、zip ファイルを作成する前にこれらを削除しておいてください。</p>
+<p>.ankiaddon ファイルを作成したら、<a href="https://ankiweb.net/shared/addons/">https://ankiweb.net/shared/addons/</a> にある Upload ボタンを使ってアドオンを他の人と共有することができます。</p>
+<h2 id="ankiweb-以外での共有"><a class="header" href="#ankiweb-以外での共有">AnkiWeb 以外での共有</a></h2>
+<p>.ankiaddon ファイルを AnkiWeb 以外で配布する場合、アドオンフォルダに manifest.json ファイルが含まれている必要があります。このファイルには、少なくとも2つのキーを含める必要があります。 package はアドオンが格納されるフォルダ名を指定し、nameはユーザーに表示される名前を指定します。オプションで、アドオンと競合する他のパッケージのリストである conflicts キーと、アドオンがいつ更新されたかを指定する mod キーを含めることができます。</p>
+<p>Anki が AnkiWeb からアドオンをダウンロードする場合、マニフェストから conflicts キーのみが使用されます。</p>
 
                     </main>
 

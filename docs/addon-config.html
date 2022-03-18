@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html" class="active"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> レビュアーの Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html" class="active"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> reviewer の Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,36 +145,35 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="add-on-config"><a class="header" href="#add-on-config">Add-on Config</a></h1>
-<h2 id="config-json"><a class="header" href="#config-json">Config JSON</a></h2>
-<p>If you include a config.json file with a JSON dictionary in it, Anki will allow users to edit it from the add-on manager.</p>
-<p>A simple example: in config.json:</p>
+                        <h1 id="アドオンの設定"><a class="header" href="#アドオンの設定">アドオンの設定</a></h1>
+<h2 id="設定用の-json"><a class="header" href="#設定用の-json">設定用の JSON</a></h2>
+<p>JSON 形式の config.json ファイルを含めると、Anki はユーザーがアドオンマネージャーから編集できるようになります。</p>
+<p>簡単な config.json の例:</p>
 <pre><code>{&quot;myvar&quot;: 5}
 </code></pre>
-<p>In config.md:</p>
-<pre><code>This is documentation for this add-on's configuration, in *markdown* format.
+<p>config.md の例:</p>
+<pre><code>これは、このアドオンの設定に関するドキュメントで、*markdown* 形式で書かれています。
 </code></pre>
-<p>In your add-on’s code:</p>
+<p>アドオンのコードは以下の通りです:</p>
 <pre><code class="language-python">from aqt import mw
 config = mw.addonManager.getConfig(__name__)
 print(&quot;var is&quot;, config['myvar'])
 </code></pre>
-<p>When updating your add-on, you can make changes to config.json. 
-Any newly added keys will be merged with the existing configuration.</p>
-<p>If you change the value of existing keys in config.json, users who have customized their configuration will continue to see the old values unless they use the &quot;restore defaults&quot; button.</p>
-<p>If you need to programmatically modify the config, you can save your changes with:</p>
+<p>アドオンをアップデートする際、config.json を変更することができます。新しく追加されたキーは、既存の設定にマージされます。</p>
+<p>config.json で既存のキーの値を変更した場合、設定をカスタマイズしているユーザーは、「restore defaults」ボタンを使用しない限り、古い値を表示し続けることになります。</p>
+<p>プログラム的に設定を変更する必要がある場合、変更内容を保存するには次のようにします:</p>
 <pre><code class="language-python">mw.addonManager.writeConfig(__name__, config)
 </code></pre>
-<p>If no config.json file exists, getConfig() will return None - even if you have called writeConfig().</p>
-<p>Add-ons that manage options in their own GUI can have that GUI displayed when the config button is clicked:</p>
+<p>config.json ファイルが存在しない場合、たとえ writeConfig() を呼び出したとしても、getConfig() は None を返します。</p>
+<p>独自の GUI でオプションを管理するアドオンでは、config ボタンをクリックするとその GUI が表示されます:</p>
 <pre><code class="language-python">mw.addonManager.setConfigAction(__name__, myOptionsFunc)
 </code></pre>
-<p>Avoid key names starting with an underscore - they are reserved for future use by Anki.</p>
-<h2 id="user-files"><a class="header" href="#user-files">User Files</a></h2>
-<p>When your add-on needs configuration data other than simple keys and values, it can use a special folder called user_files in the root of your add-on’s folder. Any files placed in this folder will be preserved when the add-on is upgraded. All other files in the add-on folder are
-removed on upgrade.</p>
-<p>To ensure the user_files folder is created for the user, you can put a README.txt or similar file inside it before zipping up your add-on.</p>
-<p>When Anki upgrades an add-on, it will ignore any files in the .zip that already exist in the user_files folder.</p>
+<p>アンダースコアで始まるキー名は避けてください。これらは Anki が将来使用するために予約されています。</p>
+<h2 id="ユーザーファイル"><a class="header" href="#ユーザーファイル">ユーザーファイル</a></h2>
+<p>アドオンが単純なキーと値以外の設定データを必要とする場合、アドオンのフォルダのルートにある user_files という特別なフォルダを使用することができます。このフォルダに配置されたファイルは、アドオンがアップグレードされても保存されます。アドオンフォルダ内の他のファイルはすべて
+アップグレード時に削除されます。</p>
+<p>user_files フォルダが確実にユーザー用に作成されるようにするには、アドオンを圧縮する前に README.txt などのファイルをその中に入れておくとよいでしょう。</p>
+<p>Anki がアドオンをアップグレードするとき、user_files フォルダに既に存在する .zip 内のファイルは無視されます。</p>
 
                     </main>
 

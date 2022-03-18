@@ -1,10 +1,10 @@
-# Reviewer Javascript
+# reviewer の Javascript
 
-For a general solution not specific to card review, see [the webview section](hooks-and-filters.md#webview).
+カードレビューに特化しない一般的な解決策については、[webview セクション](hooks-and-filters.md) を参照してください。
 
-Anki provides a hook to modify the question and answer HTML before it is displayed in the review screen, preview dialog, and card layout screen. This can be useful for adding Javascript to the card.
+Anki は、レビュー画面、プレビューダイアログ、カードレイアウト画面に表示される前に、質問と回答の HTML を修正するフックを提供します。これは、カードに Javascript を追加するのに便利です。
 
-An example:
+例は、以下の通りです。
 
 ```python
 from aqt import gui_hooks
@@ -16,15 +16,15 @@ document.body.style.background = "blue";
 gui_hooks.card_will_show.append(prepare)
 ```
 
-The hook takes three arguments: the HTML of the question or answer, the current card object (so you can limit your add-on to specific note types for example), and a string representing the context the hook is running in.
+このフックは 3 つの引数を取ります: 質問または回答の HTML 、現在のカードオブジェクト（例えばアドオンを特定のノートタイプに制限できる）、フックが実行されているコンテキストを表す文字列です。
 
-Make sure you return the modified HTML.
+修正された HTML を返すことを確認してください。
 
-Context is one of: "reviewQuestion", "reviewAnswer", "clayoutQuestion", "clayoutAnswer", "previewQuestion" or "previewAnswer".
+コンテキストは以下のいずれかです。contextは、"reviewQuestion", "reviewAnswer", "clayoutQuestion", "clayoutAnswer", "previewQuestion", "previewAnswer "のうちの1つです。
 
-The answer preview in the card layout screen, and the previewer set to "show both sides" will only use the "Answer" context. This means Javascript you append on the back side of the card should not depend on Javascript that is only added on the front.
+カードレイアウト画面での回答プレビュー、および「両面表示」に設定されたプレビューアでは、「回答」コンテキストのみが使用されます。つまり、カードの裏側に追加するJavascript は、表側だけに追加されるJavascript に依存しないようにする必要があります。
 
-Because Anki fades the previous text out before revealing the new text, Javascript hooks are required to perform actions like scrolling at the correct time. You can use them like so:
+Anki は新しいテキストを表示する前に前のテキストをフェードアウトさせるため、正しいタイミングでスクロールなどのアクションを実行するには、Javascript のフックが必要です。以下のように使用します:
 
 ```python
 from aqt import gui_hooks
@@ -38,8 +38,8 @@ onUpdateHook.push(function () {
 gui_hooks.card_will_show.append(prepare)
 ```
 
-- onUpdateHook fires after the new card has been placed in the DOM, but before it is shown.
+- onUpdateHook は、新しいカードが DOM に配置された後、表示される前に起動されます。
 
-- onShownHook fires after the card has faded in.
+- onShownHook は、カードがフェードインした後に発生します。
 
-The hooks are reset each time the question or answer is shown.
+フックは、質問と回答が表示されるたびにリセットされます。

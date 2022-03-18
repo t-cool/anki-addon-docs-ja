@@ -13,7 +13,7 @@
 - [Qt と PyQt](qt.md)
 - [Python のモジュール](python-modules.md)
 - [アドオンの設定](addon-config.md)
-- [レビュアーの Javascript](reviewer-javascript.md)
+- [reviewer の Javascript](reviewer-javascript.md)
 - [デバッグ](debugging.md)
 - [モンキーパッチ](monkey-patching.md)
 - [アドオンの共有](sharing.md)

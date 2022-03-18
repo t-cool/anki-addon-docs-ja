@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html" class="active"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> レビュアーの Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html" class="active"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> reviewer の Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,25 +145,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="qt-and-pyqt"><a class="header" href="#qt-and-pyqt">Qt and PyQt</a></h1>
-<p>As mentioned in the overview, Anki uses PyQt for a lot of its UI, and the Qt documentation and <a href="https://www.riverbankcomputing.com/static/Docs/PyQt6/sip-classes.html">PyQt documentation</a> are invaluable for learning how to display different GUI widgets.</p>
-<h2 id="qt-versions"><a class="header" href="#qt-versions">Qt Versions</a></h2>
-<p>From Anki 2.1.50, separate builds are provided for PyQt5 and PyQt6. Generally speaking, if you write code that works in Qt6, and make sure to import any Qt classes from aqt.qt instead of directly from PyQt6, your code should also work in Qt5.</p>
-<h2 id="designer-files"><a class="header" href="#designer-files">Designer Files</a></h2>
-<p>Parts of Anki's UI are defined in .ui files, located in <code>qt/aqt/forms</code>. Anki's build process converts them into .py files. If you wish to build your add-on's UI in a similar way, you will need to install Python, and install a program called Qt Designer (Designer.app on macOS). On Linux, it may be available in your distro's packages; on Windows and Mac, you'll need to install it as part of a <a href="https://download.qt.io/">Qt install</a>. Once installed, you will need to use a program provided in the pyqt6 pip package to compile the .ui files.</p>
-<p>Generated Python files for PyQt6 won't work with PyQt5 and vice versa, so if you wish to support both versions, you will need to build the .ui files twice, once with pyuic5, and once with pyuic6.</p>
-<h2 id="garbage-collection"><a class="header" href="#garbage-collection">Garbage Collection</a></h2>
-<p>One particular thing to bear in mind is that objects are garbage collected in Python, so if you do something like:</p>
+                        <h1 id="qt-と-pyqt"><a class="header" href="#qt-と-pyqt">Qt と PyQt</a></h1>
+<p>概要で述べたように、Ank iは UI の多くに PyQt を使用しており、Qt のドキュメントと<a href="https://www.riverbankcomputing.com/static/Docs/PyQt6/sip-classes.html">PyQt documentation</a> は、さまざまな GUI ウィジェットを表示する方法を学ぶのに非常に有益です。</p>
+<h2 id="qt-のバージョン"><a class="header" href="#qt-のバージョン">Qt のバージョン</a></h2>
+<p>Anki 2.1.50 からは、PyQt5 と PyQt6 用に別々のビルドが提供されます。一般的には、Qt6 で動作するコードを書き、Qtのクラスを PyQt6 から直接ではなく、aqt.qt からインポートするようにすれば、あなたのコードは Qt5 でも動くはずです。</p>
+<h2 id="デザイナー向けファイル"><a class="header" href="#デザイナー向けファイル">デザイナー向けファイル</a></h2>
+<p>Anki の UI の一部は、<code>qt/aqt/forms</code> にある .ui ファイルで定義されています。Anki のビルドプロセスは、それらを .py ファイルに変換します。同様の方法でアドオンの UI を構築したい場合は、Python をインストールし、Qt Designer (macOS では Designer.app) と呼ばれるプログラムをインストールする必要があります。Linuxでは、ディストロのパッケージで利用できるかもしれません。WindowsとMacでは、<a href="https://download.qt.io/">Qt install</a> の一部としてインストールする必要があります。一度インストールしたら、pyqt6 pip パッケージで提供されるプログラムを使って、.ui ファイルをコンパイルする必要があります。</p>
+<p>PyQt6 用に生成された Python ファイルはPyQt5 では動作しませんし、その逆も同様です。したがって、両方のバージョンをサポートしたい場合は、.ui ファイルを2回ビルドする必要があります。</p>
+<h2 id="ガベージコレクション"><a class="header" href="#ガベージコレクション">ガベージコレクション</a></h2>
+<p>特に注意しなければならないのは、Python ではオブジェクトはガベージコレクションされるので、次のようなことをすると、ガベージコレクションされます:</p>
 <pre><code class="language-python">def myfunc():
     widget = QWidget()
     widget.show()
 </code></pre>
-<p>…​then the widget will disappear as soon as the function exits. To prevent this, assign top level widgets to an existing object, like:</p>
+<p>その場合、関数が終了すると同時にウィジェットは消えてしまいます。これを防ぐには、トップレベルのウィジェットを、以下のように既存のオブジェクトに割り当ててください:</p>
 <pre><code class="language-python">def myfunc():
     mw.myWidget = widget = QWidget()
     widget.show()
 </code></pre>
-<p>This is often not required when you create a Qt object and give it an existing object as the parent, as the parent will keep a reference to the object.</p>
+<p>Qt オブジェクトを作成し、既存のオブジェクトを親として与えた場合、親がオブジェクトへの参照を保持するため、これはしばしば必要ではありません。</p>
 
                     </main>
 

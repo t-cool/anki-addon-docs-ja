@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> レビュアーの Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html" class="active"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="support.html"><strong aria-hidden="true">2.</strong> サポート</a></li><li class="chapter-item expanded "><a href="editor-setup.html"><strong aria-hidden="true">3.</strong> エディターの設定</a></li><li class="chapter-item expanded "><a href="mypy.html"><strong aria-hidden="true">4.</strong> MyPy</a></li><li class="chapter-item expanded "><a href="addon-folders.html"><strong aria-hidden="true">5.</strong> アドオンのフォルダー</a></li><li class="chapter-item expanded "><a href="a-basic-addon.html"><strong aria-hidden="true">6.</strong> 基本的なアドオン</a></li><li class="chapter-item expanded "><a href="the-anki-module.html"><strong aria-hidden="true">7.</strong> anki のモジュール</a></li><li class="chapter-item expanded "><a href="command-line-use.html"><strong aria-hidden="true">8.</strong> コマンドラインの使用</a></li><li class="chapter-item expanded "><a href="hooks-and-filters.html"><strong aria-hidden="true">9.</strong> フックとフィルター</a></li><li class="chapter-item expanded "><a href="background-ops.html"><strong aria-hidden="true">10.</strong> バックグラウンドの操作</a></li><li class="chapter-item expanded "><a href="qt.html"><strong aria-hidden="true">11.</strong> Qt と PyQt</a></li><li class="chapter-item expanded "><a href="python-modules.html"><strong aria-hidden="true">12.</strong> Python のモジュール</a></li><li class="chapter-item expanded "><a href="addon-config.html"><strong aria-hidden="true">13.</strong> アドオンの設定</a></li><li class="chapter-item expanded "><a href="reviewer-javascript.html"><strong aria-hidden="true">14.</strong> reviewer の Javascript</a></li><li class="chapter-item expanded "><a href="debugging.html" class="active"><strong aria-hidden="true">15.</strong> デバッグ</a></li><li class="chapter-item expanded "><a href="monkey-patching.html"><strong aria-hidden="true">16.</strong> モンキーパッチ</a></li><li class="chapter-item expanded "><a href="sharing.html"><strong aria-hidden="true">17.</strong> アドオンの共有</a></li><li class="chapter-item expanded "><a href="porting2.0.html"><strong aria-hidden="true">18.</strong> 2.0 版アドオンの移植</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,13 +145,13 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="debugging"><a class="header" href="#debugging">Debugging</a></h1>
-<p>If your code throws an exception, it will be caught by Anki’s standard exception handler (which catches anything written to stderr). If you need to print information for debugging purposes, you can use aqt.utils.showInfo, or write it to stderr with sys.stderr.write(&quot;text\n&quot;).</p>
+                        <h1 id="デバッグ"><a class="header" href="#デバッグ">デバッグ</a></h1>
+<p>コードが例外をスローした場合、Anki の標準的な例外ハンドラでキャッチされます（標準エラー出力に書き込まれたものはすべて捕捉されます）。デバッグのために情報を表示する必要がある場合は、aqt.utils.showInfo を使用するか、sys.stderr.write(&quot;text\n&quot;) で stderr に情報を書き込むことができます。</p>
 <h2 id="webviews"><a class="header" href="#webviews">Webviews</a></h2>
-<p>If you set the env var QTWEBENGINE_REMOTE_DEBUGGING to 8080 prior to starting Anki, you can surf to http://localhost:8080 in Chrome to debug the visible webpages.</p>
-<h2 id="debug-console"><a class="header" href="#debug-console">Debug Console</a></h2>
-<p>Anki also includes a REPL. From within the program, press the <a href="https://docs.ankiweb.net/misc.html#debug-console">shortcut key</a> and a window will open up. You can enter expressions or statements into the top area, and then press ctrl+return/command+return to evaluate them. 
-An example session follows:</p>
+<p>Anki を起動する前に環境変数の QTWEBENGINE_REMOTE_DEBUGGING を 8080 に設定すると、Chrome で http://localhost:8080 にサーフィンして、見えるウェブページをデバッグすることができるようになります。</p>
+<h2 id="デバッグ用コンソール"><a class="header" href="#デバッグ用コンソール">デバッグ用コンソール</a></h2>
+<p>Ankiには REPL も搭載されています。プログラム内から<a href="https://docs.ankiweb.net/misc.html#debug-console">ショートカットキー</a>を押すと、ウィンドウが表示されます。上の領域に式や文を入力し、ctrl+return/command+return を押すと、その式や文を評価することができます。
+セッションの例を以下に示します:</p>
 <pre><code>&gt;&gt;&gt; mw
 &lt;no output&gt;
 
@@ -196,12 +196,12 @@ NameError: name 'invalidName' is not defined
 &gt;&gt;&gt; pp(bcard()) # shortcut for selected card in browser
 &lt;as above&gt;
 </code></pre>
-<p>Note that you need to explicitly print an expression in order to see what it evaluates to. Anki exports pp() (pretty print) in the scope to make it easier to quickly dump the details of objects, and the shortcut ctrl+shift+return will wrap the current text in the upper area with pp() and execute the result.</p>
+<p>評価結果を見るためには、明示的に式を表示する必要があることに注意してください。Anki は pp() (pretty print) をスコープにエクスポートして、オブジェクトの詳細を簡単にダンプできるようにしています。ショートカットの ctrl+shift+return は、上部の領域にある現在のテキストを pp() でラップして、その結果を実行するものです。</p>
 <h2 id="pdb"><a class="header" href="#pdb">PDB</a></h2>
-<p>If you’re on Linux or are running Anki from source, it’s also possible to debug your script with pdb. Place the following line somewhere in your code, and when Anki reaches that point it will kick into the debugger in the terminal:</p>
+<p>Linux またはソースから Anki を実行している場合、pdb を使用してスクリプトをデバッグすることも可能です。次の行をコードのどこかに記述すると、Anki がその行に到達したときに、ターミナルのデバッガが起動されます。:</p>
 <pre><code class="language-python">    from aqt.qt import debug; debug()
 </code></pre>
-<p>Alternatively you can export DEBUG=1 in your shell and it will kick into the debugger on an uncaught exception.</p>
+<p>また、シェルで DEBUG=1 を指定しておけば、キャッチできない例外が発生したときにデバッガが起動します。</p>
 
                     </main>
 

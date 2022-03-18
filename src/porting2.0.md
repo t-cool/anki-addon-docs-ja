@@ -1,85 +1,85 @@
-# Porting Anki 2.0 add-ons
+# 2.0 版アドオンの移植
 
 <!-- toc -->
 
 ## Python 3
 
-Anki 2.1 requires Python 3 or later. After installing Python 3 on your machine, you can use the 2to3 tool to automatically convert your existing scripts to Python 3 code on a folder by folder basis, like:
+Anki 2.1 には Python 3 以降が必要です。Python 3 をマシンにインストールした後、2to3 ツールを使用して、以下のように既存のスクリプトをフォルダごとに Python 3 コードに自動的に変換することができます:
 
     2to3-3.8 --output-dir=aqt3 -W -n aqt
     mv aqt aqt-old
     mv aqt3 aqt
 
-Most simple code can be converted automatically, but there may be parts of the code that you need to manually modify.
+単純なコードのほとんどは自動的に変換できますが、手動で修正する必要がある部分があるかもしれません。
 
 ## Qt5 / PyQt5
 
-The syntax for connecting signals and slots has changed in PyQt5. Recent PyQt4 versions support the new syntax as well, so the same syntax can be used for both Anki 2.0 and 2.1 add-ons.
+PyQt5では、シグナルとスロットを接続するための構文が変更されました。最近の PyQt4 バージョンでは新しい構文もサポートしているので、Anki 2.0 と 2.1 の両方のアドオンに同じ構文を使用することができます。
 
-More info is available at <http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html>
+詳細は、<http://pyqt.sourceforge.net/Docs/PyQt4/new_style_signals_slots.html> にあります。
 
-One add-on author reported that the following tool was useful to automatically convert the code:
+あるアドオン作者は、コードを自動変換するために、以下のツールが便利であったと報告しています。
 <https://github.com/rferrazz/pyqt4topyqt5>
 
-The Qt modules are in 'PyQt5' instead of 'PyQt4'. You can do a conditional import, but an easier way is to import from aqt.qt - eg
+Qt モジュールは PyQt4 ではなく PyQt5 になっています。条件付きでインポートすることもできますが、より簡単な方法は、次のように aqt.qt からインポートすることです:
 
     from aqt.qt import *
 
-That will import all the Qt objects like QDialog without having to specify the Qt version.
+これにより、Qt のバージョンを指定することなく、QDialog のようなすべての Qt オブジェクトをインポートすることができます。
 
-## Single .py add-ons need their own folder
+## 単一の .py アドオンには専用のフォルダが必要
 
-Each add-on is now stored in its own folder. If your add-on was previously called `demo.py`, you’ll need to create a `demo` folder with an `__init__.py` file.
+各アドオンは独自のフォルダに格納されるようになりました。もし、あなたのアドオンが以前は `demo.py` という名前だった場合、`demo` フォルダを作成して `__init__.py` ファイルを作成する必要があります。
 
-If you don’t care about 2.0 compatibility, you can just rename `demo.py` to `demo/__init__.py`.
+2.0 との互換性を気にしないのであれば、 `demo.py` を `demo/__init__.py` にリネームすればよいでしょう。
 
-If you plan to support 2.0 with the same file, you can copy your original file into the folder (`demo.py` → `demo/demo.py`), and then import it relatively by adding the following to `demo/__init__.py`:
+もし、同じファイルで 2.0 に対応するつもりなら、元のファイルをフォルダにコピーし(`demo.py` → `demo/demo.py` )、`demo/__init__.py` に以下を追加して相対的にインポートすることが可能です:
 
     from . import demo
 
-The folder needs to be zipped up when uploading to AnkiWeb. For more info, please see [sharing add-ons](sharing.md).
+AnkiWeb にアップロードする際は、フォルダを ZIP で圧縮する必要があります。詳しくは、[アドオンの共有](sharing.md)を参照してください。
 
-## Folders are deleted when upgrading
+## アップグレード時にフォルダが削除される
 
-When an add-on is upgraded, all files in the add-on folder are deleted. The only exception is the special [user\_files folder](addon-config.md#user-files). If your add-on requires more than simple key/value configuration, make sure you store the associated files in the user\_files folder, or they will be lost on upgrade.
+アドオンをアップグレードすると、アドオンフォルダ内のファイルはすべて削除されます。唯一の例外は、特別な [user_files folder](addon-config.md#user-files) です。アドオンが単純なキー/値設定以上のものを必要とする場合、関連するファイルを user_files フォルダに保存していることを確認してください。そうしなければ、アップグレード時に失われるでしょう。
 
-## Supporting both 2.0 and 2.1 in one codebase
+## 1つのコードベースで 2.0 と 2.1 の両方に対応する
 
-Most Python 3 code will run on Python 2 as well, so it is possible to update your add-ons in such a way that they run on both Anki 2.0 and 2.1. Whether this is worth it depends on the changes you need to make.
+Python 3 のコードのほとんどは Python 2 でも実行できるため、Anki 2.0 と 2.1 の両方で実行できるようにアドオンを更新することができます。その価値があるかどうかは、必要な変更によります。
 
-Most add-ons that affect the scheduler should require only minor changes to work on 2.1. Add-ons that alter the behaviour of the reviewer, browser or editor may require more work.
+スケジューラに影響を与えるほとんどのアドオンは、2.1 で動作させるためにわずかな変更で済むはずです。レビューア、ブラウザ、エディタの動作を変更するアドオンは、より多くの作業を必要とする可能性があります。
 
-The most difficult part is the change from the unsupported QtWebKit to QtWebEngine. If you do any non-trivial work with webviews, some work will be required to port your code to Anki 2.1, and you may find it difficult to support both Anki versions in the one codebase.
+最も難しいのは、サポートされていないQtWebKit から QtWebEngine への変更です。WebView を使用する場合、Anki 2.1 にコードを移植する作業が必要になり、1 つのコード ベースで両方の Anki バージョンをサポートすることが難しくなる可能性があります。
 
-If you find your add-on runs without modification, or requires only minor changes, you may find it easiest to add some if statements to your code and upload the same file for both 2.0.x and 2.1.x.
+アドオンが修正なしで動作する場合や、わずかな変更で済む場合は、コードに if 文を追加して、2.0.x と 2.1.x の両方に同じファイルをアップロードするのが最も簡単でしょう。
 
-If your add-on requires more significant changes, you may find it easier to stop providing updates for 2.0.x, or to maintain separate files for the two Anki versions.
+アドオンに大幅な変更が必要な場合は、2.0.x の更新を停止するか、2 つの Anki バージョン用に別々のファイルを維持する方が簡単かもしれません。
 
-## Webview Changes
+## Webview の変更
 
-Qt 5 has dropped WebKit in favour of the Chromium-based WebEngine, so Anki’s webviews are now using WebEngine. Of note:
+Qt 5 では WebKit が廃止され、Chromium ベースの WebEngine が採用されたため、Anki のウェブビューは WebEngine を使用するようになりました。注目すべきは以下の点です : 
 
--   You can now debug the webviews using an external Chrome instance, by setting the env var QTWEBENGINE\_REMOTE\_DEBUGGING to 8080 prior to starting Anki, then surfing to localhost:8080 in Chrome.
+- Anki を起動する前に環境変数  QTWEBENGINE_REMOTE_DEBUGGING を 8080 に設定し、Chrome で localhost:8080 にアクセスすると、外部の Chrome インスタンスを使用して WebView をデバッグすることができるようになりました。
 
--   WebEngine uses a different method of communicating back to Python. AnkiWebView() is a wrapper for webviews which provides a pycmd(str) function in Javascript which will call the ankiwebview’s onBridgeCmd(str) method. Various parts of Anki’s UI like reviewer.py and deckbrowser.py have had to be modified to use this.
+- WebEngine は、Python に戻る通信に別の方法を使用します。AnkiWebView() はウェブビューのラッパーで、Javascript で pycmd(str) 関数を提供し、ankiwebview の onBridgeCmd(str) メソッドを呼び出すことができます。reviewer.py や deckbrowser.py など、Anki の UI のさまざまな部分は、これを使用するために修正する必要がありました。
 
--   Javascript is evaluated asynchronously, so if you need the result of a JS expression you can use ankiwebview’s evalWithCallback().
+- Javascript は非同期に評価されるので、JS 式の結果が必要な場合は、ankiwebview の evalWithCallback() を使用します。
 
--   As a result of this asynchronous behaviour, editor.saveNow() now requires a callback. If your add-on performs actions in the browser, you likely need to call editor.saveNow() first and then run the rest of your code in the callback. Calls to .onSearch() will need to be changed to .search()/.onSearchActivated() as well. See the browser’s .deleteNotes() for an example.
+- この非同期動作の結果、editor.saveNow()はコールバックを必要とするようになりました。アドオンがブラウザ上でアクションを実行する場合、まず editor.saveNow() を呼び出し、その後コールバックで残りのコードを実行する必要があるでしょう。.onSearch()への呼び出しは、同様に .search()/.onSearchActivated() に変更する必要があります。例として、ブラウザの .deleteNotes() を参照してください。
 
--   Various operations that were supported by WebKit like setScrollPosition() now need to be implemented in javascript.
+- setScrollPosition() のように WebKit でサポートされていたさまざまな操作は、javascript で実装する必要があります。
 
--   Page actions like mw.web.triggerPageAction(QWebEnginePage.Copy) are also asynchronous, and need to be rewritten to use javascript or a delay.
+- mw.web.triggerPageAction(QWebEnginePage.Copy) のようなページアクションも非同期なので、JavaScript や遅延を使うように書き直す必要があります。
 
--   WebEngine doesn’t provide a keyPressEvent() like WebKit did, so the code that catches shortcuts not attached to a menu or button has had to be changed. setStateShortcuts() fires a hook that can be used to adjust the shortcuts for a given state.
+- WebEngine は WebKit のようにkeyPressEvent() を提供しないので、メニューやボタンに付属しないショートカットをキャッチするコードを変更する必要がありました。 setStateShortcuts() は、与えられた状態に対するショートカットを調整するために使用するフックを発生させます。
 
-## Reviewer Changes
+## Reviewer の変更
 
-Anki now fades the previous card out before fading the next card in, so the next card won’t be available in the DOM when the showQuestion hook fires. There are some new hooks you can use to run Javascript at the appropriate time - see [here](reviewer-javascript.md) for more.
+Anki は、前のカードをフェードアウトしてから次のカードをフェードインするようになったため、showQuestion フックが発生したときに次のカードが DOM に表示されなくなります。適切なタイミングで Javascript を実行するために使用できる新しいフックがいくつかあります - 詳しくは [こちら](reviewer-javascript.md) をご覧ください。
 
-## Add-on Configuration
+## アドオンの設定
 
-Many small 2.0 add-ons relied on users editing the sourcecode to customize them. This is no longer a good idea in 2.1, because changes made by the user will be overwritten when they check for and download updates. 2.1 provides a [Configuration](addon-config.md#config-json) system to work around this. If you need to continue supporting 2.0 as well, you could use code like the following:
+2.0 の小さなアドオンの多くは、ユーザーがソースコードを編集してカスタマイズすることに依存していました。これは、2.1 ではもはや良いアイデアではありません。なぜなら、ユーザーによってなされた変更は、アップデートをチェックしダウンロードするときに上書きされるからです。2.1 では、これを回避するために [設定](addon-config.md#config-json) のシステムを提供しています。2.0 もサポートし続ける必要がある場合は、以下のようなコードを使用することができます:
 
 ```python
 if getattr(getattr(mw, "addonManager", None), "getConfig", None):
