@@ -56,7 +56,7 @@ gui_hooks.reviewer_did_show_question.append(myfunc)
 以前のセクションで説明したように、型補完を設定している場合は、IDE でフックを確認することもできます:
 
 <video controls autoplay loop muted>
- <source src="../img/autocomplete.mp4" type="video/mp4">
+ <source src="./img/autocomplete.mp4" type="video/mp4">
 </video>
 
 上のビデオでは、command/ctrl キーを押しながらホバーすると、引数やドキュメントが存在する場合はそれを含むツールチップが表示されます。コールバックの引数名と型は、下の方に表示されています。
